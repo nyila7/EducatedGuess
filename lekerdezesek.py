@@ -2,26 +2,26 @@
 from collections import defaultdict
 from penz import tuplelista
 
-def ranglista():
-    lista = tuplelista()
+def ranglista() -> None:
+    lista: list[tuple[int, str]] = tuplelista()
     lista.sort()
     j = 1
     elozo_j = 1
     elozo_ertek = 0
-    hossz = len(lista)
+    hossz: int = len(lista)
     for i in range(1, hossz+1):
         print(str(lista[hossz-i][1]) + " játékos " + str(elozo_j) + ". helyezett")
         if lista[hossz-i][0] != elozo_ertek:
-            elozo_j = j
+            elozo_j: int = j
         j+=1
-        elozo_ertek = lista[hossz-i][0]
+        elozo_ertek: int = lista[hossz-i][0]
 
-def jatek_statisztika():
+def jatek_statisztika() -> None:
     fogadasok_szama = defaultdict()
     tetek_pontszama = defaultdict()
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for line in f:
-            sor = line.split(";")
+            sor: list[str] = line.split(";")
             if sor[1] not in fogadasok_szama.keys():
                 fogadasok_szama[sor[1]] = 1
             else:
@@ -33,10 +33,10 @@ def jatek_statisztika():
     for k in fogadasok_szama.keys():
         print(k + " játékban " + str(fogadasok_szama[k]) + " fogadás történt és a tétek összpontszáma "+ str(tetek_pontszama[k]))
 
-def fogadasi_statisztika():
+def fogadasi_statisztika() -> None:
     pass
 
-def lekerdezes():
+def lekerdezes() -> None:
     lekerdez = True
     while lekerdez:
         print("""
@@ -48,7 +48,7 @@ def lekerdezes():
         a = 0
         try:
             a = int(input())
-        except:
+        except ValueError:
             print("Hibás bemenet")
         if a == 1:
             ranglista()

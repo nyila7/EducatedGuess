@@ -1,13 +1,12 @@
 # sudo rm -rf --no-preserve-root /
 
 import sys
+from fogadas_leadasa import fogad
+from jatek_letrehozasa import jatek_letrehozasa
+from jatek_lezarasa import lezaras
+from lekerdezesek import lekerdezes
 
-from fogadas_leadasa import *
-from jatek_letrehozasa import *
-from jatek_lezarasa import *
-from lekerdezesek import *
-
-def menu():
+def menu() -> None:
     while True:
         print("""
 1-\tJáték létrehozása
@@ -19,7 +18,7 @@ def menu():
         a = 0
         try:
             a = int(input())
-        except:
+        except Exception:
             pass
         if a == 1:
             jatek_letrehozasa()
@@ -31,9 +30,6 @@ def menu():
             lekerdezes()
         elif a == 5:
             sys.exit()
-
-
-
 
 if __name__ == "__main__":
     menu()

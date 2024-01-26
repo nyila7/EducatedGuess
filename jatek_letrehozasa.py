@@ -1,21 +1,21 @@
 # sudo rm -rf --no-preserve-root /
-from fajlkezeles import * 
+from fajlkezeles import ir
         
-def jatek_letrehozasa():
+def jatek_letrehozasa() -> None:
     #inputok bekérése
-    szervezo = input("Ki a szervező? ")
-    jatek_megnevezese = input("Mi a játék megnevezése? ")
+    szervezo: str = input("Ki a szervező? ")
+    jatek_megnevezese: str = input("Mi a játék megnevezése? ")
 
     # alanyok beolvasása soronként
     alanyok_szama = int(input("Hány alany van? "))
-    alanyok = []
+    alanyok: list = []
     print("Kik az alanyok? (enter-rel elválasztva) ")
     for i in range(alanyok_szama):
         alanyok.append(input())
 
     # események beolvasása soronként
     esemenyek_szama = int(input("Hány esemény van? "))
-    esemenyek = []
+    esemenyek: list = []
     print("Mik az események? (enter-rel elválasztva) ")
     for i in range(esemenyek_szama):
         esemenyek.append(input())

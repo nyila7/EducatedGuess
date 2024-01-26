@@ -7,46 +7,46 @@ def olvas(fajlnev: str) -> list:
     with open(fajlnev,  mode = "r", encoding = "utf-8") as f:
         return f.readlines()
 
-def ir(fajlnev, lista):
+def ir(fajlnev, lista) -> None:
     sor = ""
     for l in lista: 
         sor += ";"+str(l)
-    sor = sor[1:] + "\n"
+    sor: str = sor[1:] + "\n"
     with open( fajlnev, mode = "a", encoding = "utf-8", ) as f:
         f.write(sor)
 
-def sor_olvas(fajlnev, sorszam):
+def sor_olvas(fajlnev, sorszam) -> list[str]:
     sor = ""
     with open(fajlnev,  mode = "r", encoding = "utf-8") as f:
-        for i in range(sorszam):
-            sor = f.readline()
-    lista = sor.split(";")
+        for _ in range(sorszam):
+            sor: str = f.readline()
+    lista: list[str] = sor.split(";")
     if lista[-1][-1] == "\n":
         lista[-1] = lista[-1][:-1]
     return lista
 
-def keres(fajlnev, keresendo):
+def keres(fajlnev, keresendo) -> int:
     sor = ""
-    lista = []
+    lista: list = []
     i = 0
-    n = len(keresendo)
+    n: int = len(keresendo)
     with open(fajlnev,  mode = "r", encoding = "utf-8") as f:
         while (lista[:(n)] != keresendo) and (sor != ""):
             print(lista[:(n)])
             i+=1
-            sor = f.readline()
+            sor: str = f.readline()
             lista = sor.split(";")
     if sor != "": return i 
     else: return -1
 
 def jatek_torol(jatek_nev:str) -> None:
-    jatekok = olvas("jatekok.txt")
+    jatekok: list = olvas("jatekok.txt")
     for i, line in enumerate(jatekok):
        # print(line)
         if ";" in line:
-            jatek_fejlec = line.split(";")
+            jatek_fejlec: list = line.split(";")
             if jatek_fejlec[1] == jatek_nev:
-                x = i+int(jatek_fejlec[2])+int(jatek_fejlec[3])
+                x: int = i+int(jatek_fejlec[2])+int(jatek_fejlec[3])
                 for k in range(i, x+1):
                     jatekok[k] = ""
 
