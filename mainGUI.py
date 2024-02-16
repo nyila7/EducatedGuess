@@ -9,6 +9,8 @@ class App(customtkinter.CTk):
 
         self.title("Fogadói rendszer")
         self.geometry("1280x720")
+        customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
+        self.resizable(False, False)
 
         container = customtkinter.CTkFrame(self)  
         container.pack(side = "top", fill = "both", expand = True) 
