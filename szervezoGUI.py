@@ -1,6 +1,9 @@
 import customtkinter
 import random
+from fajlkezeles import ir
+from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
 class SzervezoFrame(customtkinter.CTkFrame):
+    #TODO kulon fileba rendezes
     def __init__(self, parent, controller):
         global alany_inputok, esemenyek_inputok
         customtkinter.CTkFrame.__init__(self, parent)
@@ -12,14 +15,15 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         self.names = ["Fruzsina","Ábel","Benjámin","Genovéva","Angel","Leona","Titusz","Simon","Boldizsár","Attila","Ramóna","Gyöngyvér","Marcell","Melánia","Ágota","Erno","Veronika","Bódog","Loránd","Loránt","Gusztáv","Antal","Antónia","Piroska","Sára","Márió","Sebestyén","Fábián","Ágnes","Artúr" ]
         self.fonts = ("Comic Sans MS", 30)
+        self.jatekok_szamolo = 0
 
         #oldal bar?
-        bar = customtkinter.CTkFrame(self)
+        """bar = customtkinter.CTkFrame(self)
         bar.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         bar.columnconfigure(0, weight=1)
 
         letrehozas_button = customtkinter.CTkButton(bar, text="Új fogadás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray")
-        letrehozas_button.grid(row=0, column=0, padx=10, pady=10)
+        letrehozas_button.grid(row=0, column=0, padx=10, pady=10)"""
 
         # form
         self.form = customtkinter.CTkFrame(self)
@@ -35,7 +39,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         self.jatek_megnevezes_input = customtkinter.CTkEntry(self.form, font=self.fonts, width=400, placeholder_text="Lajos és Bettina programjának futása")
         self.jatek_megnevezes_input.grid(row=1, column=0, padx=10, pady=20, columnspan=2)
-#        self.jatek_megnevezes_input.bind("<1>", lambda event: print("clicked"))
 
 
         ## ALANYOK
@@ -66,16 +69,95 @@ class SzervezoFrame(customtkinter.CTkFrame):
         esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
 
 
-        ## LEADAS
-        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray")
+        #############################################################################################################
+        #################### LEADAS #################################################################################
+        #############################################################################################################
+
+        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_leadas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
 
         # jelenlegi gambok
+        ## gambo
+        self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)
+        self.jelenlegi_jatekok.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+
+        jelenlegi_jatekok_label = customtkinter.CTkLabel(self.jelenlegi_jatekok, text="Jelenlegi játékok", font=self.fonts)
+        jelenlegi_jatekok_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
+        
+        with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+            for i, sor in enumerate(f):
+                if sor.find(";") != -1:
+                    jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
+                    jelenlegi_jatekok_list.grid(row=i+1, column=0, padx=10, pady=10, sticky="nesw")
+                    jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo: self.jatek_lezaras(x,y), fg_color="red", hover_color="gray")
+                    jelenlegi_jatek_lezaras_butt.grid(row=i+1, column=1, padx=10, pady=10, sticky="nesw")
+                    self.jatekok_szamolo = i+1
+
+
+        print(len(self.jelenlegi_jatekok.winfo_children()))
+        print(self.jatekok_szamolo)
+
+    #self.jelenlegi_jatekok.grid_remove()
+
+    def jatek_lezaras(self, nev, sorszam):
+        #TODO pop-up ablak
+        print(nev, sorszam)
+        #TODO FUNCTION EXPORT
+        with(open("jatekok.txt", mode="r", encoding="utf-8")) as f:
+            sorok = f.readlines()
+        counter = 0
+        sorsz = -1
+        for i, sor in enumerate(sorok):
+            if sor.find(";") != -1:
+                if counter == sorszam:
+                    sorsz = i + 1
+                    break
+                counter += 1
+        
+        ir("eredmenyek.txt", [nev])
+
+        esemenyek = esemenyek_lekerdez(sorsz)
+        szemelyek = szemelyek_lekerdez(sorsz)
+        #TODO EREDMENY???????,
+        
+
+
+    def jatek_leadas(self):
+        #TODO: SZERVEZO NEV INPUT?
+        szervezo = "Lajos"
+        #TODO NEV NEMEL HJET HUGYNAZ
+        #TODO NEV TUL HOSSZU
+        #TODO URES INPUT IBNAZPUDTMEG
+        jatek_megnevezese = self.jatek_megnevezes_input.get()
+        alanyok_szama = len(alany_inputok) -1
+        alanyok = [alany.get() for alany in alany_inputok]
+        esemenyek_szama = len(esemenyek_inputok) -1
+        esemenyek = [esemenyek.get() for esemenyek in esemenyek_inputok]
+
+        ir("jatekok.txt", [szervezo, jatek_megnevezese, alanyok_szama, esemenyek_szama])
+        for i in range(alanyok_szama):
+            ir("jatekok.txt", [alanyok[i]])
+        for i in range(esemenyek_szama):
+            ir("jatekok.txt", [esemenyek[i]])
+
+        uj_jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=jatek_megnevezese, font=self.fonts, fg_color="gray", corner_radius=10)
+        uj_jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
+
+
+        jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = jatek_megnevezese: self.jatek_lezaras(x), fg_color="red", hover_color="gray")
+        jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
+        self.jatekok_szamolo += 1
+        
+        
+        #print  jelenlegi_jatek_lezaras_butt row
+        print(jelenlegi_jatek_lezaras_butt)
+        print(len(self.jelenlegi_jatekok.winfo_children()))
+        print(self.jatekok_szamolo)
+
 
         
-    
-
+        
 
     def alany_input_click(self, event):
         if(alany_inputok[-2].get() != "" and len(alany_inputok) < 6):

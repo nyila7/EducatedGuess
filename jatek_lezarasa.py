@@ -3,7 +3,7 @@
 import os
 from fajlkezeles import ir, sor_olvas, jatek_torol
 from penz import penzvon
-
+## TODO FUNCTINOK EXCPORT MASIK FAJL ? IDK
 def szorzo_szamitas(jatek, szemely, esemeny):
     k = 0
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:

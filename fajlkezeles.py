@@ -15,17 +15,19 @@ def ir(fajlnev, lista) -> None:
     with open( fajlnev, mode = "a", encoding = "utf-8", ) as f:
         f.write(sor)
 
-def sor_olvas(fajlnev, sorszam) -> list[str]:
+def sor_olvas(fajlnev, sorszam) -> list[str]: #??????????????????????????? EZ MII
     sor = ""
     with open(fajlnev,  mode = "r", encoding = "utf-8") as f:
         for _ in range(sorszam):
-            sor: str = f.readline()
+            sor: str = f.readline() # <-- NAGYON CURSED
+
+
     lista: list[str] = sor.split(";")
-    if lista[-1][-1] == "\n":
+    if lista[-1][-1] == "\n": #? 
         lista[-1] = lista[-1][:-1]
     return lista
 
-def keres(fajlnev, keresendo) -> int:
+def keres(fajlnev, keresendo) -> int: #??????????????????????????? EZ MII
     sor = ""
     lista: list = []
     i = 0
@@ -42,7 +44,7 @@ def keres(fajlnev, keresendo) -> int:
 def jatek_torol(jatek_nev:str) -> None:
     jatekok: list = olvas("jatekok.txt")
     for i, line in enumerate(jatekok):
-       # print(line)
+        # print(line)
         if ";" in line:
             jatek_fejlec: list = line.split(";")
             if jatek_fejlec[1] == jatek_nev:

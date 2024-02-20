@@ -64,13 +64,3 @@ def fogad() -> None:
     else:
         penz.penzvon(nev, mennyi)
         ir("fogadasok.txt", [nev, jatek[0], mennyi, jatek[2][ember_fogad-1].strip(), jatek[1][esemeny_fogad-1].strip(),ertek_fogad])
-        
-
-"""
-misi
-1
-1
-2
-9
-80
-"""
