@@ -20,7 +20,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.toplevel_window = None
         self.names = ["Fruzsina","Ábel","Benjámin","Genovéva","Angel","Leona","Titusz","Simon","Boldizsár","Attila","Ramóna","Gyöngyvér","Marcell","Melánia","Ágota","Erno","Veronika","Bódog","Loránd","Loránt","Gusztáv","Antal","Antónia","Piroska","Sára","Márió","Sebestyén","Fábián","Ágnes","Artúr" ]
         self.fonts = ("Comic Sans MS", 30)
-        self.jatekok_szamolo = 0
+        self.jatekok_szamolo = 1
 
         #oldal bar?
         """bar = customtkinter.CTkFrame(self)
@@ -93,14 +93,15 @@ class SzervezoFrame(customtkinter.CTkFrame):
         ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
         populate_games(self)
         print(self.szerzo_neve)
-
+        print(self.jatekok_szamolo)
 
     #self.jelenlegi_jatekok.grid_remove()
 
     def jatek_lezaras(self, nev, sorszam):
-        #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban
+        #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban - 1
+        sorszam -= 1
         line_num = get_jatekline_by_num(sorszam)
-        print(nev, sorszam)
+        print(nev, sorszam, line_num)
         #TODO PONTSZAMITAS
 
     def jatek_leadas(self):
@@ -124,6 +125,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
         uj_jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=jatek_megnevezese, font=self.fonts, fg_color="gray", corner_radius=10)
         uj_jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
 
+
+        jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = jatek_megnevezese, y = self.jatekok_szamolo: self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
+        jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
         self.jatekok_szamolo += 1
         
         
