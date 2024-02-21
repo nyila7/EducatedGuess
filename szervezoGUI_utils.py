@@ -26,3 +26,5 @@ def get_jatekline_by_num(num) -> int:
                 break
             counter += 1
     return sorsz
+
+

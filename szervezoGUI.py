@@ -22,15 +22,10 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.fonts = ("Comic Sans MS", 30)
         self.jatekok_szamolo = 1
 
-        #oldal bar?
-        """bar = customtkinter.CTkFrame(self)
-        bar.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
-        bar.columnconfigure(0, weight=1)
-
-        letrehozas_button = customtkinter.CTkButton(bar, text="Új fogadás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray")
-        letrehozas_button.grid(row=0, column=0, padx=10, pady=10)"""
-
-        # form
+        
+        ########################################################################################################################
+        ############################## Játék létrehozása #######################################################################
+        ########################################################################################################################
         self.form = customtkinter.CTkFrame(self)
         self.form.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
 
@@ -74,16 +69,14 @@ class SzervezoFrame(customtkinter.CTkFrame):
         esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
 
 
-        #############################################################################################################
-        #################### LEADAS #################################################################################
-        #############################################################################################################
-
         leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_leadas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
 
-        # jelenlegi gambok
-        ## gambo
+        ########################################################################################################################
+        ############################## Jelenlegi játékok #######################################################################
+        ########################################################################################################################
+        
         self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)
         self.jelenlegi_jatekok.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
 
@@ -92,10 +85,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         
         ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
         populate_games(self)
-        print(self.szerzo_neve)
-        print(self.jatekok_szamolo)
+        
 
-    #self.jelenlegi_jatekok.grid_remove()
 
     def jatek_lezaras(self, nev, sorszam):
         #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban - 1
@@ -103,6 +94,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
         line_num = get_jatekline_by_num(sorszam)
         print(nev, sorszam, line_num)
         #TODO PONTSZAMITAS
+
+
+
 
     def jatek_leadas(self):
         szervezo: str = self.szerzo_neve
