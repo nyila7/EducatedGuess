@@ -2,12 +2,12 @@ import customtkinter
 import random
 from fajlkezeles import ir
 from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
-from szervezoGUI_utils import populate_games, get_jatekline_by_num
+from szervezoGUI_utils import populate_games, get_jatekline_by_num, get_game_names, toplevel_error
 
 
 class SzervezoFrame(customtkinter.CTkFrame):
     #TODO kulon fileba rendezes
-    def __init__(self, parent, nev):
+    def __init__(self, parent, controller):
         global alany_inputok, esemenyek_inputok
         customtkinter.CTkFrame.__init__(self, parent)
         
@@ -69,7 +69,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
 
 
-        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_leadas)
+        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_letrehozas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
 
@@ -98,13 +98,20 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
 
 
-    def jatek_leadas(self):
+    def jatek_letrehozas(self):
         szervezo: str = self.szerzo_neve
 
-        #TODO NEV NEMEL HJET HUGYNAZ
+        
         #TODO NEV TUL HOSSZU
         #TODO URES INPUT IBNAZPUDTMEG
+
+        ## Check if the game name already exists
+        game_names = get_game_names()
         jatek_megnevezese = self.jatek_megnevezes_input.get()
+        if jatek_megnevezese in game_names:
+            return toplevel_error(self, "Ez a játék már létezik")
+
+
         alanyok_szama = len(alany_inputok) -1
         alanyok = [alany.get() for alany in alany_inputok]
         esemenyek_szama = len(esemenyek_inputok) -1

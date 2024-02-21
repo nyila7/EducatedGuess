@@ -27,4 +27,20 @@ def get_jatekline_by_num(num) -> int:
             counter += 1
     return sorsz
 
+def get_game_names():
+    game_names = []
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        for _, sor in enumerate(f):
+            if sor.find(";") != -1:
+                game_names.append(sor.split(";")[1])
+    return game_names
 
+
+
+def toplevel_error(self, message):
+    Up = customtkinter.CTkToplevel(self)
+    Up.title("Error")
+    Up.geometry("400x200")
+    Up.resizable(False, False)
+    customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
+    customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
