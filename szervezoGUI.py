@@ -110,7 +110,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
         szervezo: str = self.szerzo_neve
 
         
-        #TODO URES INPUT IBNAZPUDTMEG
 
         ## Check if the game name already exists
         game_names = get_game_names()
@@ -118,7 +117,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         jatek_megnevezese = self.jatek_megnevezes_input.get()
         if jatek_megnevezese in game_names:
             return toplevel_error(self, "Ez a játék már létezik")
-
+        elif jatek_megnevezese == "":
+            return toplevel_error(self, "A játék neve nem lehet üres")
 
         alanyok_szama = len(alany_inputok) -1
         alanyok = [alany.get() for alany in alany_inputok]
