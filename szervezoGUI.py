@@ -2,9 +2,12 @@ import customtkinter
 import random
 from fajlkezeles import ir
 from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
+from szervezoGUI_utils import populate_games, get_jatekline_by_num
+
+
 class SzervezoFrame(customtkinter.CTkFrame):
     #TODO kulon fileba rendezes
-    def __init__(self, parent, controller):
+    def __init__(self, parent, nev):
         global alany_inputok, esemenyek_inputok
         customtkinter.CTkFrame.__init__(self, parent)
         
@@ -13,6 +16,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(2, weight=16)
         self.grid_rowconfigure(0, weight=1)
 
+        self.szerzo_neve = None
+        self.toplevel_window = None
         self.names = ["Fruzsina","Ábel","Benjámin","Genovéva","Angel","Leona","Titusz","Simon","Boldizsár","Attila","Ramóna","Gyöngyvér","Marcell","Melánia","Ágota","Erno","Veronika","Bódog","Loránd","Loránt","Gusztáv","Antal","Antónia","Piroska","Sára","Márió","Sebestyén","Fábián","Ágnes","Artúr" ]
         self.fonts = ("Comic Sans MS", 30)
         self.jatekok_szamolo = 0
@@ -85,47 +90,22 @@ class SzervezoFrame(customtkinter.CTkFrame):
         jelenlegi_jatekok_label = customtkinter.CTkLabel(self.jelenlegi_jatekok, text="Jelenlegi játékok", font=self.fonts)
         jelenlegi_jatekok_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
-        with open("jatekok.txt", mode="r", encoding="utf-8") as f:
-            for i, sor in enumerate(f):
-                if sor.find(";") != -1:
-                    jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
-                    jelenlegi_jatekok_list.grid(row=i+1, column=0, padx=10, pady=10, sticky="nesw")
-                    jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo: self.jatek_lezaras(x,y), fg_color="red", hover_color="gray")
-                    jelenlegi_jatek_lezaras_butt.grid(row=i+1, column=1, padx=10, pady=10, sticky="nesw")
-                    self.jatekok_szamolo = i+1
+        ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
+        populate_games(self)
+        print(self.szerzo_neve)
 
-
-        print(len(self.jelenlegi_jatekok.winfo_children()))
-        print(self.jatekok_szamolo)
 
     #self.jelenlegi_jatekok.grid_remove()
 
     def jatek_lezaras(self, nev, sorszam):
-        #TODO pop-up ablak
-        print(nev, sorszam)
-        #TODO FUNCTION EXPORT
-        with(open("jatekok.txt", mode="r", encoding="utf-8")) as f:
-            sorok = f.readlines()
-        counter = 0
-        sorsz = -1
-        for i, sor in enumerate(sorok):
-            if sor.find(";") != -1:
-                if counter == sorszam:
-                    sorsz = i + 1
-                    break
-                counter += 1
-        
-        ir("eredmenyek.txt", [nev])
-
-        esemenyek = esemenyek_lekerdez(sorsz)
-        szemelyek = szemelyek_lekerdez(sorsz)
-        #TODO EREDMENY???????,
-        
-
+        #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban
+        line_num = get_jatekline_by_num(sorszam)
+        print(self.szerzo_neve)
+        #TODO PONTSZAMITAS
 
     def jatek_leadas(self):
-        #TODO: SZERVEZO NEV INPUT?
-        szervezo = "Lajos"
+        szervezo: str = self.szerzo_neve
+        
         #TODO NEV NEMEL HJET HUGYNAZ
         #TODO NEV TUL HOSSZU
         #TODO URES INPUT IBNAZPUDTMEG
@@ -150,13 +130,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.jatekok_szamolo += 1
         
         
-        #print  jelenlegi_jatek_lezaras_butt row
-        print(jelenlegi_jatek_lezaras_butt)
-        print(len(self.jelenlegi_jatekok.winfo_children()))
-        print(self.jatekok_szamolo)
 
 
-        
+
+    def set_nev(self, nev):
+        self.szerzo_neve = nev
         
 
     def alany_input_click(self, event):

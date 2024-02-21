@@ -28,9 +28,38 @@ class App(customtkinter.CTk):
 
         self.show_frame(menuFrame)
 
+    def nev_input_toplevel(self):
+            Up = customtkinter.CTkToplevel(self)
+            Up.title("Név megadása")
+            Up.geometry("400x200")
+            Up.resizable(False, False)
+            customtkinter.CTkLabel(Up, text="Név:").grid(row=0, column=0, padx=10, pady=10)
+            nev = customtkinter.StringVar()
+            nev_input = customtkinter.CTkEntry(Up, font=("Comic Sans MS", 20), width=200, placeholder_text="Név", textvariable=nev)
+            nev_input.grid(row=0, column=1, padx=10, pady=10)
+            nev_input.bind("<Return>", lambda x: Up.destroy())
+            nev_input.focus_set()
+            customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+            
+
+            Up.wait_window()
+            
+            return nev.get()
+
+
     def show_frame(self, cont):
+        if(cont == szervezoGUI.SzervezoFrame):
+            # Top level window for name input
+            nev = self.nev_input_toplevel()
+            if nev == "":
+                return
+            ## Pass the name to the frame
+            self.frames[cont].set_nev(nev)
+
         frame = self.frames[cont]
         frame.tkraise()
+        
+
         
 class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
