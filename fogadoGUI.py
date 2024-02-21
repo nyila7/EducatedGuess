@@ -4,7 +4,7 @@ class FogadoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
         
-        self.grid_columnconfigure(0, weight=8)
+        self.grid_columnconfigure(0, weight=6)
         self.grid_columnconfigure(1, weight=6)
         self.grid_columnconfigure(2, weight=6)
         self.grid_rowconfigure(0, weight=1)
@@ -31,7 +31,9 @@ class FogadoFrame(customtkinter.CTkFrame):
         sorszam -= 1
         print(nev, sorszam)
         
-        
+        # esemenyek clear
+        for widget in self.esemenyek.winfo_children():
+            widget.destroy()
         # ESEMÉNYEK KIÍRÁSA
         esemenyek = esemenyek_sorszam(sorszam)
         for i,esemeny in enumerate(esemenyek):
