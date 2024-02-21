@@ -100,12 +100,12 @@ class SzervezoFrame(customtkinter.CTkFrame):
     def jatek_lezaras(self, nev, sorszam):
         #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban
         line_num = get_jatekline_by_num(sorszam)
-        print(self.szerzo_neve)
+        print(nev, sorszam)
         #TODO PONTSZAMITAS
 
     def jatek_leadas(self):
         szervezo: str = self.szerzo_neve
-        
+
         #TODO NEV NEMEL HJET HUGYNAZ
         #TODO NEV TUL HOSSZU
         #TODO URES INPUT IBNAZPUDTMEG
@@ -124,9 +124,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
         uj_jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=jatek_megnevezese, font=self.fonts, fg_color="gray", corner_radius=10)
         uj_jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
 
-
-        jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = jatek_megnevezese: self.jatek_lezaras(x), fg_color="red", hover_color="gray")
-        jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
         self.jatekok_szamolo += 1
         
         
