@@ -2,7 +2,7 @@ import customtkinter
 import random
 from fajlkezeles import ir
 from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
-from szervezoGUI_utils import populate_games, get_jatekline_by_num, get_game_names, toplevel_error
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error
 
 
 class SzervezoFrame(customtkinter.CTkFrame):

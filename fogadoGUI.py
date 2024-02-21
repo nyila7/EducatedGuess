@@ -1,39 +1,43 @@
 import customtkinter
-
+from util import populate_games_fogado, esemenyek_sorszam
 class FogadoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
         
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=16)
-        self.grid_columnconfigure(2, weight=16)
+        self.grid_columnconfigure(0, weight=8)
+        self.grid_columnconfigure(1, weight=6)
+        self.grid_columnconfigure(2, weight=6)
         self.grid_rowconfigure(0, weight=1)
+        self.jatekok_szamolo = 1
+        self.esemeny_value = customtkinter.StringVar()
 
+        self.fonts = ("Comic Sans MS", 30)
 
+        self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)
+        self.jelenlegi_jatekok.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
-        szerepkorFont = ("Comic Sans MS", 30)
+        jelenlegi_jatekok_label = customtkinter.CTkLabel(self.jelenlegi_jatekok, text="Jelenlegi játékok", font=self.fonts)
+        jelenlegi_jatekok_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
+        
+        ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
+        populate_games_fogado(self)
 
-        #oldal bar?
-        bar = customtkinter.CTkFrame(self)
-        bar.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
-        bar.columnconfigure(0, weight=1)
-
-        letrehozas_button = customtkinter.CTkButton(bar, text="Új fogadás", corner_radius=10, font=szerepkorFont, fg_color="transparent", hover_color="gray")
-        letrehozas_button.grid(row=0, column=0, padx=10, pady=10)
-
-        # form
-        form = customtkinter.CTkFrame(self)
-        form.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
-
-        form.grid_columnconfigure(0, weight=1)
-        form.grid_columnconfigure(1, weight=1)
+        self.esemenyek = customtkinter.CTkScrollableFrame(self)
+        self.esemenyek.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
+        
+     
+    
+    def fogadas(self, nev, sorszam):
+        sorszam -= 1
+        print(nev, sorszam)
         
         
+        # ESEMÉNYEK KIÍRÁSA
+        esemenyek = esemenyek_sorszam(sorszam)
+        for i,esemeny in enumerate(esemenyek):
+            esemeny = esemeny.strip()
+            customtkinter.CTkRadioButton(self.esemenyek, text=esemeny, font=self.fonts, variable=self.esemeny_value, value=esemeny, command=self.comm).grid(row=i, column=0, padx=10, pady=10, sticky="nesw")
         
-        jatek_megvenezes_label = customtkinter.CTkLabel(form, text="Játék megnevezése", font=szerepkorFont)
-        jatek_megvenezes_label.grid(row=0, column=0, padx=10, pady=10, columnspan=2, sticky="nesw")
 
-        self.jatek_megnevezes_input = customtkinter.CTkEntry(form, font=szerepkorFont, width=400, placeholder_text="Lajos és Bettina programjának futása")
-        self.jatek_megnevezes_input.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
-
-        # jelenlegi gambok
+    def comm(self):
+        print(self.esemeny_value.get())
