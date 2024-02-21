@@ -33,11 +33,13 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.form.grid_columnconfigure(1, weight=1)
         
         
-        
         jatek_megvenezes_label = customtkinter.CTkLabel(self.form, text="Játék megnevezése", font=self.fonts)
         jatek_megvenezes_label.grid(row=0, column=0, padx=10, columnspan=2, sticky="nesw")
 
-        self.jatek_megnevezes_input = customtkinter.CTkEntry(self.form, font=self.fonts, width=400, placeholder_text="Lajos és Bettina programjának futása")
+        ## JÁTÉK MEGNEVEZÉSE, tul hosszú input ellenőrzése
+        self.jatek_nev_stringvar = customtkinter.StringVar()
+        self.jatek_nev_stringvar.trace("w", self.nev_ellenorzes)
+        self.jatek_megnevezes_input = customtkinter.CTkEntry(self.form, font=self.fonts, width=400, placeholder_text="Lajos és Bettina programjának futása", textvariable=self.jatek_nev_stringvar)
         self.jatek_megnevezes_input.grid(row=1, column=0, padx=10, pady=20, columnspan=2)
 
 
@@ -96,17 +98,23 @@ class SzervezoFrame(customtkinter.CTkFrame):
         #TODO PONTSZAMITAS
 
 
+    ## tul hosszú input ellenőrzése
+    def nev_ellenorzes(self, *args):
+        value = self.jatek_nev_stringvar.get()
+        if len(value) > 20:
+            self.jatek_nev_stringvar.set(value[:20])
+            return
 
 
     def jatek_letrehozas(self):
         szervezo: str = self.szerzo_neve
 
         
-        #TODO NEV TUL HOSSZU
         #TODO URES INPUT IBNAZPUDTMEG
 
         ## Check if the game name already exists
         game_names = get_game_names()
+        
         jatek_megnevezese = self.jatek_megnevezes_input.get()
         if jatek_megnevezese in game_names:
             return toplevel_error(self, "Ez a játék már létezik")
