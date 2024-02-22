@@ -115,7 +115,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ############################################################################################################
 
     def jatek_letrehozas(self):
-        szervezo: str = self.szerzo_neve
         jatek_nevek = get_game_names()
         alanyok_szama = len(alany_inputok) -1
         alanyok = [alany.get() for alany in alany_inputok]
@@ -131,7 +130,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         ## FÁJLBA ÍRÁS ##
         # Fejléc
-        ir("jatekok.txt", [szervezo, self.jatek_megnevezese, alanyok_szama, esemenyek_szama]) 
+        ir("jatekok.txt", [self.szerzo_neve, self.jatek_megnevezese, alanyok_szama, esemenyek_szama]) 
         # Alanyok
         for i in range(alanyok_szama):
             ir("jatekok.txt", [alanyok[i]])

@@ -77,7 +77,7 @@ class FogadoFrame(customtkinter.CTkFrame):
             return
         
         jatek_nev = name_sorszam(sorszam)
-        eredmeny = toplevel_input(self, f"Mi a tipped a {self.esemeny_value}-hoz?")
+        eredmeny = toplevel_input(self, "Mi a tipped?")
         if eredmeny == "":
             return toplevel_error(self, "Hibás bemenet")
 
