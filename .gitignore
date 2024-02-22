@@ -8,3 +8,6 @@ pyvenv.cfg
 eredmenyek.txt
 fogadasok.txt
 jatekok.txt
+.vscode/*
+penz.txt
+valtozok.txt

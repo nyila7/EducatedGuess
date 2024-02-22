@@ -1,33 +1,51 @@
 import customtkinter
 import szervezoGUI
 import fogadoGUI
-
+import ranglistGUI
+import penz
+import os
 
 class App(customtkinter.CTk):
     def __init__(self):
         customtkinter.CTk.__init__(self)
 
+        ## Ablak beállítások ##
         self.title("Fogadói rendszer")
         self.geometry("1280x720")
-        customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
         self.resizable(False, False)
-
-        container = customtkinter.CTkFrame(self)  
-        container.pack(side = "top", fill = "both", expand = True) 
-
+        customtkinter.set_appearance_mode("dark")  # Módok: system (default), light, dark
+        container = customtkinter.CTkFrame(self)
+        container.pack(side = "top", fill = "both", expand = True)
         container.grid_rowconfigure(0, weight = 1)
-        container.grid_columnconfigure(0, weight = 1)        
+        container.grid_columnconfigure(0, weight = 1)
 
+        # A három frame dictionaryje
         self.frames = {}
 
-        for F in (menuFrame, szervezoGUI.SzervezoFrame, fogadoGUI.FogadoFrame):
+        # A három frame hozzáadása a containerhez
+        for F in (menuFrame, szervezoGUI.SzervezoFrame, fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
             frame = F(container, self)
-
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
+        
+        # A fájlok létrehozása, ha nem léteznek
+        if not os.path.exists("penz.txt"):
+            with open("penz.txt", mode="w", encoding="utf-8") as f:
+                f.write("")
+        if not os.path.exists("fogadasok.txt"):
+            with open("fogadasok.txt", mode="w", encoding="utf-8") as f:
+                f.write("")
+        if not os.path.exists("jatekok.txt"):
+            with open("jatekok.txt", mode="w", encoding="utf-8") as f:
+                f.write("")
+        if not os.path.exists("eredmenyek.txt"):
+            with open("eredmenyek.txt", mode="w", encoding="utf-8") as f:
+                f.write("")
 
+        # A menü frame megjelenítése
         self.show_frame(menuFrame)
 
+    #TODO Magyar nevek
     def nev_input_toplevel(self):
             Up = customtkinter.CTkToplevel(self)
             Up.title("Név megadása")
@@ -40,7 +58,7 @@ class App(customtkinter.CTk):
             nev_input.bind("<Return>", lambda x: Up.destroy())
             nev_input.focus_set()
             customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
-            
+            Up.focus_force()
 
             Up.wait_window()
             
@@ -48,24 +66,24 @@ class App(customtkinter.CTk):
 
 
     def show_frame(self, cont):
-        if(cont == szervezoGUI.SzervezoFrame):
-            # Top level window for name input
+        if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
+            # Név bekérése
             nev = self.nev_input_toplevel()
-            if nev == "":
+            ## HIBAKERESÉS ##
+            if nev == "": # Ha nem adott meg nevet
                 return
-            ## Pass the name to the frame
+            if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
+                penz.penzinit(nev)
+            # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
-
         frame = self.frames[cont]
         frame.tkraise()
-        
 
-        
 class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
         
-        self.grid_columnconfigure((0, 1), weight=1)
+        self.grid_columnconfigure((0, 1, 2), weight=1)
         self.grid_rowconfigure(0, weight=1)
 
         szerepkorFont = ("Comic Sans MS", 30)
@@ -73,6 +91,9 @@ class menuFrame(customtkinter.CTkFrame):
         self.buttonL = customtkinter.CTkButton(self, text="Szervező", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(szervezoGUI.SzervezoFrame))
         self.buttonL.grid(row=0, column=0, padx=10, pady=10, sticky="news")
         self.buttonR = customtkinter.CTkButton(self, text="Fogadó", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(fogadoGUI.FogadoFrame))
-        self.buttonR.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")        
+        self.buttonR.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
+        self.buttonR = customtkinter.CTkButton(self, text="Ranglista", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(ranglistGUI.RanglistaFrame))
+        self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")        
+
 app = App()
 app.mainloop()
