@@ -67,9 +67,10 @@ def lezaras() -> None:
 
         esemenyek = esemenyek_lekerdez(sorszam)
         szemelyek = szemelyek_lekerdez(sorszam)
-
+        print(esemenyek, szemelyek)
         for szemely in szemelyek:
             for esemeny in esemenyek:
+                print(szemely, esemeny)
                 szorzo = szorzo_szamitas(jatek, szemely, esemeny)
                 eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
 
@@ -79,8 +80,3 @@ def lezaras() -> None:
         jatek_torol(jatek)
     else:
         print("A játék sajnos nem található.")
-
-
-
-            
-

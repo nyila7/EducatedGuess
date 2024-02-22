@@ -1,7 +1,6 @@
 # sudo rm -rf --no-preserve-root /
 
 def penzvon(nev:str, osszeg:int) -> None:
-    
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):

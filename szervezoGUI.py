@@ -2,14 +2,15 @@ import customtkinter
 import random
 from fajlkezeles import ir
 from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name
 
 
 class SzervezoFrame(customtkinter.CTkFrame):
     #TODO Külön fájlba rendezés
     def __init__(self, parent, controller):
-        global alany_inputok, esemenyek_inputok
+        global alany_inputok, esemenyek_inputok, entryk
         
+        self.entryk = []
         ## GRID BEÁLLÍTÁS ##
         customtkinter.CTkFrame.__init__(self, parent)
         self.grid_columnconfigure(0, weight=1)
@@ -25,6 +26,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.szerzo_neve = ""
         self.toplevel_window = None
         self.jatekok_szamolo = 1
+        self.jatek_megnevezese = ""
 
         
         ########################################################################
@@ -85,7 +87,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         ## LEADÁS ##
         # Létrehozás gomb
-        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_leadas)
+        leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_letrehozas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
 
@@ -106,13 +108,110 @@ class SzervezoFrame(customtkinter.CTkFrame):
         
 
 
-    def jatek_lezaras(self, nev, sorszam):
-        #TODO Játék lezárása
-        sorszam -= 1
-        line_num = get_jatekline_by_num(sorszam)        
-        #nev: jatek neve, sorszam: sorszam a jelenlegi_jatekok-ban - 1, line_num: sorszam a jatekok.txt-ben
-        print(nev, sorszam, line_num)
+
+
+    ############################################################################################################
+    #################################### JATEK LÉTREHOZÁSA #####################################################
+    ############################################################################################################
+
+    def jatek_letrehozas(self):
+        szervezo: str = self.szerzo_neve
+        jatek_nevek = get_game_names()
+        alanyok_szama = len(alany_inputok) -1
+        alanyok = [alany.get() for alany in alany_inputok]
+        esemenyek_szama = len(esemenyek_inputok) -1
+        esemenyek = [esemenyek.get() for esemenyek in esemenyek_inputok]
+
+        ## HIBAKEZELÉS ##
+        self.jatek_megnevezese = self.jatek_megnevezes_input.get()
+        if self.jatek_megnevezese in jatek_nevek:
+            return toplevel_error(self, "Ez a játék már létezik")
+        if self.jatek_megnevezese == "":
+            return toplevel_error(self, "A játék neve nem lehet üres")
+
+        ## FÁJLBA ÍRÁS ##
+        # Fejléc
+        ir("jatekok.txt", [szervezo, self.jatek_megnevezese, alanyok_szama, esemenyek_szama]) 
+        # Alanyok
+        for i in range(alanyok_szama):
+            ir("jatekok.txt", [alanyok[i]])
+        # Események
+        for i in range(esemenyek_szama):
+            ir("jatekok.txt", [esemenyek[i]])
+
+        self.jatekok_szamolo += 1
+
+        ## JÁTÉK MEGJELENÍTÉSE ##
+        uj_jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=self.jatek_megnevezese, font=self.fonts, fg_color="gray", corner_radius=10)
+        uj_jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
+        uj_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = self.jatek_megnevezese, y = self.jatekok_szamolo: self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
+        uj_jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
+
+
+    ############################################################################################################
+    #################################### JÁTÉK LEZÁRÁSA ########################################################
+    ############################################################################################################
+
+
+    def jatek_lezaras(self, jatek_nev, sorszam): #TODO passthrough
+        #TODO Játék lezárása     
         #TODO Pontszámítás
+        esemenyek = esemenyek_sorszam(sorszam-1)
+        szemelyek = alanyok_sorszam(sorszam-1)
+        #print(esemenyek, szemelyek)
+
+        kivalaszto = customtkinter.CTkToplevel(self)
+        kivalaszto.title("Fogadás leadása")
+        kivalaszto.geometry("800x600")
+        kivalaszto.grid_rowconfigure(0, weight=5)
+        kivalaszto.grid_rowconfigure(1, weight=1)
+        matrix = customtkinter.CTkFrame(kivalaszto)
+        matrix.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+        
+        for i in range(len(szemelyek)):
+            matrix.grid_columnconfigure(i+1, weight=1)
+        for i in range(len(esemenyek)):
+            matrix.grid_rowconfigure(i+1, weight=1)
+
+        for i in esemenyek:
+            customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
+            for j in szemelyek:
+                customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10, sticky="nesw")
+                lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts)
+                lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
+                self.entryk.append(lezaras_inputok)
+        customtkinter.CTkButton(kivalaszto, text="Lezárás",\
+        command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek : self.lezaras_fileba(x, y, z, a, b))\
+        .grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
+        kivalaszto.transient(self)
+        kivalaszto.grab_set()
+        kivalaszto.focus_force()
+        kivalaszto.wait_window()
+            
+    def lezaras_fileba(self, szemelyek_szama, jatek_nev, sorszam, esemenyek, szemelyek): #TODO passthrough
+        eredmeny_matrix = []
+        for i in range(len(self.entryk)):
+            if i % szemelyek_szama == 0:
+                eredmeny_matrix.append([])
+            eredmeny_matrix[-1].append(self.entryk[i].get())
+            ## Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
+        szerzo_nev = get_szervezo_by_name(jatek_nev)
+        line_num = get_jatekline_by_num(sorszam - 1)
+        lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek)
+        self.entryk = []
+
+    
+    
+    
+
+
+        
+
+
+
+    ##############################################################################################
+    #################################### FÜGGVÉNYEK ##############################################
+    ##############################################################################################
 
     # Túl hosszú input ellenőrzése
     def nev_ellenorzes(self, *args):
@@ -123,46 +222,12 @@ class SzervezoFrame(customtkinter.CTkFrame):
             self.jatek_nev_stringvar.set(ertek[:max_hossz])
             return
 
-
-    def jatek_leadas(self):
-        szervezo: str = self.szerzo_neve
-        jatek_nevek = get_game_names()
-        alanyok_szama = len(alany_inputok) -1
-        alanyok = [alany.get() for alany in alany_inputok]
-        esemenyek_szama = len(esemenyek_inputok) -1
-        esemenyek = [esemenyek.get() for esemenyek in esemenyek_inputok]
-
-        ## HIBAKEZELÉS ##
-        jatek_megnevezese = self.jatek_megnevezes_input.get()
-        if jatek_megnevezese in jatek_nevek:
-            return toplevel_error(self, "Ez a játék már létezik")
-        if jatek_megnevezese == "":
-            return toplevel_error(self, "A játék neve nem lehet üres")
-
-        ## FÁJLBA ÍRÁS ##
-        # Fejléc
-        ir("jatekok.txt", [szervezo, jatek_megnevezese, alanyok_szama, esemenyek_szama]) 
-        # Alanyok
-        for i in range(alanyok_szama):
-            ir("jatekok.txt", [alanyok[i]])
-        # Események
-        for i in range(esemenyek_szama):
-            ir("jatekok.txt", [esemenyek[i]])
-
-        ## JÁTÉK MEGJELENÍTÉSE ##
-        uj_jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=jatek_megnevezese, font=self.fonts, fg_color="gray", corner_radius=10)
-        uj_jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
-        uj_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = jatek_megnevezese, y = self.jatekok_szamolo: self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
-        uj_jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
-
-        self.jatekok_szamolo += 1
-
     # Main GUI-ban van meghívva
     def set_nev(self, nev):
         self.szerzo_neve = nev
         
     # Új alany input mező létrehozása
-    def alany_input_click(self, event):
+    def alany_input_click(self, event): #TODO passthrough
         if(alany_inputok[-2].get() != "" and len(alany_inputok) < 6): # Ha az előző input mező nem üres, és nincs több, mint 6 input mező
             alany_inputok[-1].unbind("<1>")
             placeholder = random.choice(self.names)
@@ -171,7 +236,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             alany_inputok[-1].bind("<1>", self.alany_input_click)
 
     # Új esemény input mező létrehozása
-    def esemenyek_input_click(self, event):
+    def esemenyek_input_click(self, event): #TODO passthrough
         if(esemenyek_inputok[-2].get() != "" and len(esemenyek_inputok) < 6): # Ha az előző input mező nem üres, és nincs több, mint 6 input mező
             esemenyek_inputok[-1].unbind("<1>")
             esemenyek_inputok.append(customtkinter.CTkEntry(self.form, font=self.fonts, placeholder_text="asd"))
