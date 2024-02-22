@@ -13,7 +13,7 @@ def fogad() -> None:
     jatekok: list[str] = olvas("jatekok.txt")
     reszlet: list[tuple[str, list[str], list[str]]] = []
     i: int = 1
-    
+
     for s, lines in enumerate(jatekok):
         # ha fejlécben ; van
         if ";" in lines:
@@ -33,7 +33,7 @@ def fogad() -> None:
         return
     jatek: tuple[str, list[str], list[str]]  = reszlet[jatek_megnevezes-1]
     i = 1
-    
+
     # események kiírása
     for esemeny in jatek[1]:
         print(f"{i}-\t{esemeny.strip()}")
@@ -54,11 +54,11 @@ def fogad() -> None:
         return
     ertek_fogad: str = input("Mi a tipped? ")
     try:
-        mennyi = int(input(f"Mennyit szeretnél fogadni? Jelenlegi egyenleged: {penz.penzkerdez(nev)}"))
+        mennyi = int(input(f"Mennyit szeretnél fogadni? Jelenlegi egyenleged: {penz.penzkerdez(nev)} "))
     except ValueError:
         print("hibas bemenet")
         return
-        
+
     if mennyi > penz.penzkerdez(nev):
         print("Nincs elég pénzed")
     else:

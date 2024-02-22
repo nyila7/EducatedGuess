@@ -1,16 +1,16 @@
 # sudo rm -rf --no-preserve-root /
-
+import os
 def penzvon(nev:str, osszeg:int) -> None:
     
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
-        sorok = f.readlines()
+        sorok = [s.strip() for s in f.readlines()]
         for i, sor in enumerate(sorok):
             if sor.find(nev) != -1:
                 balance = penzkerdez(nev)
                 if balance == -1:
                     return
-                print(f"{nev} egyenlege: {balance}")
-                print(sorok[i])
+                #print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
+                #print(sorok[i])
                 sorok[i] = f"{nev}:{balance-osszeg}"
         
         f.truncate(0)
@@ -31,7 +31,9 @@ def penzinit(nev:str):
 
 def penzkerdez(nev: str) -> int:
     """ Returns -1 if the name is not found"""
-    
+    if not os.path.exists("penz.txt"):
+        f=open("penz.txt", "w")
+        f.close()
     with open("penz.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:

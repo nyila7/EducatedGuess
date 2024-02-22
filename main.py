@@ -5,6 +5,7 @@ from fogadas_leadasa import fogad
 from jatek_letrehozasa import jatek_letrehozasa
 from jatek_lezarasa import lezaras
 from lekerdezesek import lekerdezes
+import penz
 
 def menu() -> None:
     while True:
@@ -14,7 +15,9 @@ def menu() -> None:
 3-\tJáték lezárása
 4-\tLekérdezések
 5-\tKilépés
-""")
+""")    
+        if penz.penzkerdez("esias") == -1: # Ha a nev nem létezik a penz.txt-ben
+            penz.penzinit("esias")
         a = 0
         try:
             a = int(input())

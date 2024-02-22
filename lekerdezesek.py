@@ -1,6 +1,7 @@
 # sudo rm -rf --no-preserve-root /
 from collections import defaultdict
 from penz import tuplelista
+from fajlkezeles import olvas
 
 def ranglista() -> None:
     lista: list[tuple[int, str]] = tuplelista()
@@ -27,14 +28,45 @@ def jatek_statisztika() -> None:
             else:
                 fogadasok_szama[sor[1]] += 1
             if sor[1] not in tetek_pontszama.keys():
-                tetek_pontszama[sor[1]] = sor[2]
+                tetek_pontszama[sor[1]] = int(sor[2])
             else:
-                tetek_pontszama[sor[1]] += sor[2]
+                tetek_pontszama[sor[1]] += int(sor[2])
     for k in fogadasok_szama.keys():
         print(k + " játékban " + str(fogadasok_szama[k]) + " fogadás történt és a tétek összpontszáma "+ str(tetek_pontszama[k]))
 
 def fogadasi_statisztika() -> None:
-    pass
+    jatekok_fajl: list[str] = olvas("jatekok.txt")
+    jatekok: list[str] = []
+    jatek: str = ""
+    i: int = 1
+
+    for s, lines in enumerate(jatekok_fajl):
+        # ha fejlécben ; van
+        if ";" in lines:
+            fejlec_lista: list[str] = lines.split(";")
+            print(f"{i}-\t{fejlec_lista[1]}")
+            i += 1
+            jatekok.append(fejlec_lista[1])
+    jatek_sorszam: int = int(input("Melyikre játékra vagy kíváncsi? Add meg a sorszámát! "))
+    jatek = jatekok[jatek_sorszam-1]
+
+    fogadasok_szama: dict = dict()
+    osszes_tet: float = 0
+    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        for line in  f:
+            sor: list[str] = line.split(";")
+            if sor[1] == jatek:
+                osszes_tet += int(sor[2])
+                if (sor[4], sor[3]) not in fogadasok_szama.keys():
+                    fogadasok_szama[(sor[4], sor[3])] = 1 #esemény-alany sorrendben
+                else:
+                    fogadasok_szama[(sor[4], sor[3])] += 1
+    print(f"A tétek összepontszáma: {osszes_tet}")
+    print("Az egyes alany-esemény pároshoz tartozó fogadások száma: ")
+    for key in fogadasok_szama.keys():
+        print(f"{key[1]} - {key[0]}: {fogadasok_szama[key]} fogadás")
+
+
 
 def lekerdezes() -> None:
     lekerdez = True

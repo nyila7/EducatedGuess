@@ -9,7 +9,7 @@ def olvas(fajlnev: str) -> list:
 
 def ir(fajlnev, lista) -> None:
     sor = ""
-    for l in lista: 
+    for l in lista:
         sor += ";"+str(l)
     sor: str = sor[1:] + "\n"
     with open( fajlnev, mode = "a", encoding = "utf-8", ) as f:
@@ -19,15 +19,15 @@ def sor_olvas(fajlnev, sorszam) -> list[str]: #??????????????????????????? EZ MI
     sor = ""
     with open(fajlnev,  mode = "r", encoding = "utf-8") as f:
         for _ in range(sorszam):
-            sor: str = f.readline() # <-- NAGYON CURSED
+            sor: str = f.readline() # <-- NAGYON CURSED # máshogy nem nagyon megy
+    #Ezt nagyon bénán oldottam meg, mert nem tudtam, hogy létezik a strip()
+    # javítva
 
-
-    lista: list[str] = sor.split(";")
-    if lista[-1][-1] == "\n": #? 
-        lista[-1] = lista[-1][:-1]
+    lista: list[str] = sor.strip().split(";")
     return lista
 
-def keres(fajlnev, keresendo) -> int: #??????????????????????????? EZ MII
+def keres(fajlnev, keresendo) -> int: #?? EZ MII #Ez megmondja, hogy az adott string benne
+    #van-e a fájlban, és ha igen, hanyas sorban
     sor = ""
     lista: list = []
     i = 0
@@ -38,7 +38,7 @@ def keres(fajlnev, keresendo) -> int: #??????????????????????????? EZ MII
             i+=1
             sor: str = f.readline()
             lista = sor.split(";")
-    if sor != "": return i 
+    if sor != "": return i
     else: return -1
 
 def jatek_torol(jatek_nev:str) -> None:
@@ -55,8 +55,8 @@ def jatek_torol(jatek_nev:str) -> None:
     os.remove("jatekok.txt")
     with open("jatekok.txt", "w", encoding="utf-8") as f:
         f.write("".join(jatekok))
-            
-   
+
+
 
 # def jatek_esemeny_keresese(s): #s = sor indexe ahonnan kezdődik
 #     with open("jatekok.txt",  mode = "r", encoding = "utf-8") as f:
