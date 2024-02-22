@@ -10,7 +10,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         global alany_inputok, esemenyek_inputok
         
-        # Az ablak három részre osztása (1:16:16 arányban)
+        ## GRID BEÁLLÍTÁS ##
         customtkinter.CTkFrame.__init__(self, parent)
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=16)
@@ -27,9 +27,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.jatekok_szamolo = 1
 
         
-        ###############################################################################
-        ############################## Játék létrehozása ##############################
-        ###############################################################################
+        ########################################################################
+        ################################# Form #################################
+        ########################################################################
         
         # A form frame létrehozása, és a grid beállítása
         self.form = customtkinter.CTkFrame(self)
@@ -89,9 +89,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
 
-        ###############################################################################
-        ############################## Jelenlegi játékok ##############################
-        ###############################################################################
+        ########################################################################
+        ########################## Jelenlegi játékok ###########################
+        ########################################################################
         
         # Jelenlegi játékok frame létrehozása, és a grid beállítása
         self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)

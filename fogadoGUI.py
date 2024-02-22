@@ -67,9 +67,9 @@ class FogadoFrame(customtkinter.CTkFrame):
         
         #print(alany, sorszam)
         try:
-            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni?"))
+            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni? Egyenleged: " + str(penzkerdez(self.nev)) + "Duduridu"))
         except ValueError:
-            return toplevel_error(self, "Hibás bemenet")
+            return
         if penz_input == "":
             return
         if penz_input > penzkerdez(self.nev):

@@ -29,18 +29,11 @@ class App(customtkinter.CTk):
             frame.grid(row = 0, column = 0, sticky ="nsew")
         
         # A fájlok létrehozása, ha nem léteznek
-        if not os.path.exists("penz.txt"):
-            with open("penz.txt", mode="w", encoding="utf-8") as f:
-                f.write("")
-        if not os.path.exists("fogadasok.txt"):
-            with open("fogadasok.txt", mode="w", encoding="utf-8") as f:
-                f.write("")
-        if not os.path.exists("jatekok.txt"):
-            with open("jatekok.txt", mode="w", encoding="utf-8") as f:
-                f.write("")
-        if not os.path.exists("eredmenyek.txt"):
-            with open("eredmenyek.txt", mode="w", encoding="utf-8") as f:
-                f.write("")
+        for F in("penz.txt", "fogadasok.txt", "jatekok.txt", "eredmenyek.txt"):
+            if not os.path.exists(F):
+                with open(F, mode="w", encoding="utf-8") as f:
+                    f.write("")
+
 
         # A menü frame megjelenítése
         self.show_frame(menuFrame)
@@ -83,11 +76,12 @@ class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
         
+        ## GRID BEÁLLÍTÁSOK ##
         self.grid_columnconfigure((0, 1, 2), weight=1)
         self.grid_rowconfigure(0, weight=1)
-
         szerepkorFont = ("Comic Sans MS", 30)
 
+        ## GOMBOK ##
         self.buttonL = customtkinter.CTkButton(self, text="Szervező", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(szervezoGUI.SzervezoFrame))
         self.buttonL.grid(row=0, column=0, padx=10, pady=10, sticky="news")
         self.buttonR = customtkinter.CTkButton(self, text="Fogadó", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(fogadoGUI.FogadoFrame))
