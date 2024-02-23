@@ -107,6 +107,9 @@ def toplevel_error(self, message):
     Up.resizable(False, False)
     customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
     customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+    if os.name != "posix":
+        self.Up.grab_set()
+
 
 def esemenyek_sorszam(line_num):
     #print(line_num)
@@ -153,6 +156,7 @@ def toplevel_input(self, message) -> str | None:
     self.Up = customtkinter.CTkInputDialog(text=message, title="Input")
     if os.name != "posix":
         self.Up.grab_set()
+    self.Up.geometry("400x200")
 
 
     return self.Up.get_input()
