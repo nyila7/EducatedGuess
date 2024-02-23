@@ -4,6 +4,7 @@ import fogadoGUI
 import ranglistGUI
 import penz
 import os
+import util
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -42,35 +43,13 @@ class App(customtkinter.CTk):
         # A menü frame megjelenítése
         self.show_frame(menuFrame)
 
-    #TODO Magyar nevek
-    def nev_input_toplevel(self):
-            Up = customtkinter.CTkToplevel(self)
-            Up.title("Név megadása")
-            Up.geometry("400x200")
-            Up.resizable(False, False)
-            customtkinter.CTkLabel(Up, text="Név:").grid(row=0, column=0, padx=10, pady=10)
-            nev = customtkinter.StringVar()
-            nev_input = customtkinter.CTkEntry(Up, font=("Comic Sans MS", 20), width=200, placeholder_text="Név", textvariable=nev)
-            nev_input.grid(row=0, column=1, padx=10, pady=10)
-            nev_input.bind("<Return>", lambda x: Up.destroy())
-            nev_input.focus_set()
-            customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
-            #Up.transient(self)
-            Up.focus_force()
-            if os.name != "posix":
-                Up.grab_set()
-            Up.lift()
-
-            Up.wait_window()
-            
-            return nev.get()
-
 
     def show_frame(self, cont):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
-            nev = self.nev_input_toplevel()
-
+            nev = util.toplevel_input(self, "Név megadása")
+            if nev == None:
+                return
             ## HIBAKERESÉS ##
             if nev == "": # Ha nem adott meg nevet
                 return
