@@ -41,11 +41,11 @@ class FogadoFrame(customtkinter.CTkFrame):
         
         
         ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
-        populate_games_fogado(self)
 
 
     def set_nev(self, nev):
         self.nev = nev
+        populate_games_fogado(self)
     
     def fogadas(self, nev, sorszam):
         
