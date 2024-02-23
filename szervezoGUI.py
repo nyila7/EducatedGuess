@@ -1,7 +1,7 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num
 
 
 
@@ -159,6 +159,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         line_num = line_num_by_name(jatek_nev)
         esemenyek = esemenyek_sorszam(line_num)
         szemelyek = alanyok_sorszam(line_num)
+        sorszam = sorszam_by_line_num(line_num)
 
         # Toplevel létrehozása
         kivalaszto = customtkinter.CTkToplevel(self)
@@ -207,7 +208,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # A lezárás function passthrougholjásai
         szerzo_nev = get_szervezo_by_name(jatek_nev) 
-        line_num = get_jatekline_by_num(sorszam - 1)
+        line_num = get_jatekline_by_num(sorszam)
 
         lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
         # Entryk törlése
