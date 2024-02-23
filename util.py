@@ -150,13 +150,10 @@ def alanyok_sorszam(line_num):
         return alany
 
 def toplevel_input(self, message) -> str | None:
-    Up = customtkinter.CTkInputDialog(self, text=message, title="Input")
+    Up = customtkinter.CTkInputDialog(text=message, title="Input")
 
     if os.name != "posix":
         Up.grab_set()
-    
-    
-    Up.wait_window()
 
 
     return Up.get_input()

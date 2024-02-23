@@ -4,7 +4,6 @@ import fogadoGUI
 import ranglistGUI
 import penz
 import os
-import os
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -88,7 +87,9 @@ class App(customtkinter.CTk):
         if cont == fogadoGUI.FogadoFrame or cont == ranglistGUI.RanglistaFrame: 
             print("asd")
             frame.populate_window()
-        frame.tkraise()
+        #wait 0.1 sec before continuing
+        self.after(150, lambda: frame.tkraise())
+        
 
 class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):

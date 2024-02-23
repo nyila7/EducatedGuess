@@ -14,6 +14,8 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
 
+        self.nev = ""
+
         self.fonts = ("Comic Sans MS", 30)
         
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
@@ -86,7 +88,7 @@ class FogadoFrame(customtkinter.CTkFrame):
     def populate_window(self):
         self.jatekok_szamolo = 0
         self.esemeny_value = customtkinter.StringVar()
-        self.nev = ""
+        
 
 
 
