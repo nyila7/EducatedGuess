@@ -36,7 +36,7 @@ def szerzo_jatekai(szerzo):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if sor.find(szerzo) != -1:
-                jatekok.append(sor.strip().split(";")[0])
+                jatekok.append(sor.strip().split(";")[1])
     return jatekok
 
 def populate_games(self) -> None:        
