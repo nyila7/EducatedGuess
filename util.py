@@ -165,7 +165,7 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
             sor: list[str] = line.split(";")
             if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
                 k += 1
-                m += sor[2]
+                m += int(sor[2])
     if k==0 or m==0: return 0
     else:
         return round(1+5/(1+2.7182**(3-m/k**2/20)),2)

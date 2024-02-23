@@ -57,7 +57,6 @@ class App(customtkinter.CTk):
             nev_input.focus_set()
             customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
             #Up.transient(self)
-            print(type(nev_input.winfo_class()))
             Up.focus_force()
             #Up.grab_set() (windows rossz)
 

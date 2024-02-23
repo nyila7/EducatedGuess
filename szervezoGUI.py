@@ -192,7 +192,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Toplevel megjelenítésének beállításai (fuj windows)
         kivalaszto.transient(self) # type: ignore
-        kivalaszto.grab_set()
+        #kivalaszto.grab_set()
         kivalaszto.focus_force()
         kivalaszto.wait_window()
 
@@ -217,9 +217,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         for widget in self.jelenlegi_jatekok.winfo_children():
             #dont delete the label
             if widget.winfo_class() != "CTkLabel":
-
-            
                 widget.destroy()
+            
         populate_games(self)
 
 
