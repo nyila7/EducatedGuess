@@ -9,12 +9,20 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(0, weight=6)
         self.grid_columnconfigure(1, weight=4)
         self.grid_columnconfigure(2, weight=6)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=100)
+        self.grid_rowconfigure(1, weight=1)
+
         self.fonts = ("Comic Sans MS", 30)
 
-        self.jatekok_szamolo = 1
+        self.jatekok_szamolo = 0
         self.esemeny_value = customtkinter.StringVar()
         self.nev = ""
+
+        self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
+        self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
+
+        self.kijelentkezes = customtkinter.CTkButton(self.topbar, text="Kijelentkezés", font=self.fonts, command=lambda : controller.show_frame("main"))
+        self.kijelentkezes.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
         self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)
         self.jelenlegi_jatekok.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
@@ -40,7 +48,6 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.nev = nev
     
     def fogadas(self, nev, sorszam):
-        print(nev, sorszam-1)
         
         # esemenyek clear
         for widget in self.esemenyek.winfo_children():
@@ -81,7 +88,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         if penz_input > penzkerdez(self.nev):
             toplevel_error(self, "Nincs elég pénzed")
             return
-        
+        print(sorszam)
         jatek_nev = name_sorszam(sorszam)
         eredmeny = toplevel_input(self, "Mi a tipped?")
         if eredmeny == "":

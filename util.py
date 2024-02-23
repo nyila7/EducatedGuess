@@ -15,7 +15,7 @@ def fogadasok_by_name(jatek_nev):
 
 def fogadas_statisztika(jatek_nev:str):
     fogadasok = fogadasok_by_name(jatek_nev)
-    line_num = get_jatekline_by_num(line_num_by_name(jatek_nev))
+    line_num = line_num_by_name(jatek_nev)
     esemenyek: list[str] = esemenyek_sorszam(line_num)
     alanyok: list[str] = alanyok_sorszam(line_num)
 
@@ -46,12 +46,13 @@ def populate_games(self) -> None:
 def populate_games_fogado(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";"):
+            if sor.find(";") != -1:
                 self.jatekok_szamolo += 1
-                jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
+                jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.strip().split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
                 jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="Fogadás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo: self.fogadas(x,y), fg_color="blue", hover_color="gray")
                 jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
+
 def populate_games_statisztika(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
