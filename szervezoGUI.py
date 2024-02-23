@@ -257,6 +257,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             self.jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
             self.jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = i, y = self.jatekok_szamolo: self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
             self.jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
+            self.jatekok_szamolo += 1
 
         
     # Új alany input mező létrehozása
