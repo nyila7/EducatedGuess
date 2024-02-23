@@ -2,7 +2,7 @@ import customtkinter
 import random
 from fajlkezeles import ir
 from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num
-
+import os
 
 
 class SzervezoFrame(customtkinter.CTkFrame):
@@ -193,7 +193,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Toplevel megjelenítésének beállításai (fuj windows)
         kivalaszto.transient(self) # type: ignore
-        #kivalaszto.grab_set()
+        if os.name != "posix":
+            kivalaszto.grab_set()
+            
         kivalaszto.focus_force()
         kivalaszto.wait_window()
 
@@ -214,7 +216,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
         # Entryk törlése
         self.entryk = []
         self.jatekok_szamolo -= 1
-        #TODO Jelenlegi játékok frissítése (repopulate?)
         for widget in self.jelenlegi_jatekok.winfo_children():
             #dont delete the label
            

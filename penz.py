@@ -2,10 +2,10 @@
 import os
 def penzvon(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
-        sorok = [s.strip() for s in f.readlines()]
+        sorok: list[str] = [s.strip() for s in f.readlines()]
         for i, sor in enumerate(sorok):
             if sor.find(nev) != -1:
-                balance = penzkerdez(nev)
+                balance: float = penzkerdez(nev)
                 if balance == -1:
                     return
                 print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
@@ -22,10 +22,10 @@ def penzvon(nev:str, osszeg:int) -> None:
             
 def penzad(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
-        sorok = f.readlines()
+        sorok: list[str] = f.readlines()
         for i, sor in enumerate(sorok):
             if sor.find(nev) != -1:
-                balance = penzkerdez(nev)
+                balance: float = penzkerdez(nev)
                 if balance == -1:
                     return
                 print(f"{nev} egyenlege: {balance}")
@@ -40,7 +40,7 @@ def penzad(nev:str, osszeg:int) -> None:
         for i, sor in enumerate(sorok):
             f.write(sor.strip() + "\n")
 
-def penzinit(nev:str):
+def penzinit(nev:str) -> None:
     """sor = "a"
     with open("penz.txt", mode="r", encoding="utf-8") as f:
         while (sor != "") or (sor != "\n"):
@@ -50,25 +50,25 @@ def penzinit(nev:str):
         #    f.write("\n")
         f.write(f"{nev}:100\n")
 
-def penzkerdez(nev: str) -> int:
+def penzkerdez(nev: str) -> float:
     """ Returns -1 if the name is not found"""
     if not os.path.exists("penz.txt"):
         f=open("penz.txt", "w")
         f.close()
     with open("penz.txt", mode="r", encoding="utf-8") as f:
-        sorok = f.readlines()
+        sorok: list[str] = f.readlines()
         for sor in sorok:
             if sor.find(nev) != -1:
-                return int(sor.split(":")[1])
+                return float(sor.split(":")[1].strip())
     return -1
 
 
-def tuplelista():
+def tuplelista() -> list[tuple[str, float]]:
     with open("penz.txt", mode="r", encoding="utf-8") as f:
-        sorok = f.readlines()
-        kulcsok  = [float(sor.split(":")[1].strip()) for sor in sorok]
-        ertekek = [sor.split(":")[0] for sor in sorok]
+        sorok: list[str] = f.readlines()
+        kulcsok: list[float]  = [float(sor.split(":")[1].strip()) for sor in sorok]
+        ertekek: list[str] = [sor.split(":")[0] for sor in sorok]
 
-    tuplelist: list[tuple[str, int]] = [(ertekek[i], kulcsok[i]) for i in range(len(sorok))]
+    tuplelist: list[tuple[str, float]] = [(ertekek[i], kulcsok[i]) for i in range(len(sorok))]
     return tuplelist
 

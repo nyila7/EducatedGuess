@@ -58,7 +58,9 @@ class App(customtkinter.CTk):
             customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
             #Up.transient(self)
             Up.focus_force()
-            #Up.grab_set() (windows rossz)
+            if os.name != "posix":
+                Up.grab_set()
+
 
             Up.wait_window()
             

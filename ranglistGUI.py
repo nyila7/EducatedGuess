@@ -10,6 +10,11 @@ class RanglistaFrame(customtkinter.CTkFrame):
         
         self.fonts = ("Comic Sans MS", 30)
         
+        #######################################################################################################
+        ############################ PENZ RANGLISTA MEGJELENÍTÉSE #############################################
+        #######################################################################################################
+
+
         self.ranglista = customtkinter.CTkScrollableFrame(self)
         self.ranglista.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
@@ -17,6 +22,9 @@ class RanglistaFrame(customtkinter.CTkFrame):
         ranglista_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
         self.populate_ranglista()
+
+        
+
         
     def populate_ranglista(self):
         ranglista = util.get_ranglista()
