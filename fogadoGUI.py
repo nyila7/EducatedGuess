@@ -73,11 +73,11 @@ class FogadoFrame(customtkinter.CTkFrame):
         if penz_input == "":
             return
         if penz_input > penzkerdez(self.nev):
-            toplevel_input(self, "Nincs elég pénzed")
+            toplevel_error(self, "Nincs elég pénzed")
             return
         
         jatek_nev = name_sorszam(sorszam)
-        eredmeny = toplevel_input(self, f"Mi a tipped a {self.esemeny_value}-hoz?")
+        eredmeny = toplevel_input(self, "Mi a tipped?")
         if eredmeny == "":
             return toplevel_error(self, "Hibás bemenet")
 

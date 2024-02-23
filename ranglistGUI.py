@@ -24,8 +24,10 @@ class RanglistaFrame(customtkinter.CTkFrame):
         elozo = 0
         for i,elem in enumerate(ranglista):
             split = elem.split(":")
-            if int(split[1]) < elozo:
+            if float(split[1].strip()) < elozo:
                 helyezet += 1
+            if float(split[1].strip()) != elozo:
+                helyezet = i + 1
             customtkinter.CTkLabel(self.ranglista, text=f"{helyezet}. {split[0]}", font=self.fonts, anchor="w").grid(row=i+1, column=0, padx=10, pady=10, sticky="nesw")
             customtkinter.CTkLabel(self.ranglista, text=split[1], font=self.fonts, anchor="e").grid(row=i+1, column=1, padx=10, pady=10, sticky="nesw")
-            elozo = int(split[1])
+            elozo = float(split[1].strip())

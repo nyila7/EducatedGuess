@@ -1,6 +1,6 @@
 import customtkinter
-import penz
-
+from penz import penzvon, tuplelista, penzad
+from fajlkezeles import ir, jatek_torol
 
 def populate_games(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
@@ -46,6 +46,12 @@ def get_game_names():
                 game_names.append(sor.split(";")[1])
     return game_names
 
+def get_szervezo_by_name(jatek_nev):
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        sorok = f.readlines()
+        for sor in sorok:
+            if sor.find(jatek_nev) != -1:
+                return sor.split(";")[0]
 
 
 def toplevel_error(self, message):
@@ -64,6 +70,7 @@ def esemenyek_sorszam(sorszam):
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         esemenyek = sorok[line_num-1+alanyok_szama+1:line_num-1+alanyok_szama+1+esemenyek_szama]
+        esemenyek = [x.strip() for x in esemenyek]
         return esemenyek
 
 def alanyok_sorszam(sorszam):
@@ -73,6 +80,8 @@ def alanyok_sorszam(sorszam):
         sorok = f.readlines()
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         alany = sorok[line_num-1+1:line_num-1+alanyok_szama+1]
+        #strip all \n
+        alany = [x.strip() for x in alany]
         return alany
 
 def toplevel_input(self, message) -> str:
@@ -109,6 +118,49 @@ def toplevel_success(self, message):
     customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
 def get_ranglista():
-    penzek = penz.tuplelista()
+    penzek = tuplelista()
     penzek.sort(key=lambda x: x[1], reverse=True)
     return [f"{elem[0]}: {elem[1]}" for elem in penzek]
+
+def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) -> None: #sorszam a 1, 5, 9, 16
+    print(szerzo, jatek_nev, line_num, eredmeny_matrix)
+
+
+    ir("eredmenyek.txt", [jatek_nev])    
+    for i, esemeny in enumerate(esemenyek):
+        for j, szemely in enumerate(szemelyek):
+            ## igen
+            szorzo = szorzo_szamitas(jatek_nev, szemely, esemeny)
+            #eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
+            eredmeny = eredmeny_matrix[i][j]
+            
+            ir("eredmenyek.txt", [szemely, esemeny, eredmeny, szorzo])
+            pontszamitas(jatek_nev, eredmeny, szorzo)
+
+        jatek_torol(jatek_nev)
+
+
+        
+def szorzo_szamitas(jatek, szemely, esemeny):
+    k = 0
+    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        for line in f:
+            sor: list[str] = line.split(";")
+            if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
+                k += 1
+    if k==0: return 0
+    else:
+        return round(1+5/(2**(k-1)),2)
+
+def pontszamitas(jatek, eredmeny, szorzo) -> None:
+    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        print("B BBBBBBBBBBBBBBB")
+        for line in f:
+            sor: list[str] = line.split(";")
+            print(sor)
+            if sor[1] == jatek:
+                print("CCCCCCCCCCCCC")
+                fogado, tipp, tet = sor[0], sor[5], sor[2]
+                if tipp.strip() == eredmeny:
+                    print(fogado, tet, szorzo, "AAAAAAAAAAA")
+                    penzad(fogado,float(tet)*szorzo)

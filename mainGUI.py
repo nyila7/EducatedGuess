@@ -4,6 +4,7 @@ import fogadoGUI
 import ranglistGUI
 import penz
 import os
+import os
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -22,17 +23,20 @@ class App(customtkinter.CTk):
         # A három frame dictionaryje
         self.frames = {}
 
+        # A fájlok létrehozása, ha nem léteznek
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+
+        for F in ("penz.txt", "fogadasok.txt", "jatekok.txt", "eredmenyek.txt"):
+            file_path = os.path.join(current_dir, F)
+            if not os.path.exists(file_path):
+                with open(file_path, mode="w", encoding="utf-8") as f:
+                    f.write("")
         # A három frame hozzáadása a containerhez
         for F in (menuFrame, szervezoGUI.SzervezoFrame, fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
         
-        # A fájlok létrehozása, ha nem léteznek
-        for F in("penz.txt", "fogadasok.txt", "jatekok.txt", "eredmenyek.txt"):
-            if not os.path.exists(F):
-                with open(F, mode="w", encoding="utf-8") as f:
-                    f.write("")
 
 
         # A menü frame megjelenítése
@@ -51,7 +55,9 @@ class App(customtkinter.CTk):
             nev_input.bind("<Return>", lambda x: Up.destroy())
             nev_input.focus_set()
             customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+            Up.transient(self)
             Up.focus_force()
+            Up.grab_set()
 
             Up.wait_window()
             

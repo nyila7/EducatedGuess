@@ -1,0 +1,3 @@
+Csak akkor működik a fájl alapú olvasás/írás ha a root mappából futtatod LLLLLLLLLLLLLLLLl
+A penz.txt new linenal kezd -
+

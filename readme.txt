@@ -1,1 +1,0 @@
-A main.py fájlt kell elindítani, feltéve ha az összes modul jelen van és a mappa nem írásvédett.
