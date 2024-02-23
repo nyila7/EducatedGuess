@@ -49,6 +49,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         print(jatek_nev, sorszam)
         print("statisztika")
         line_num = get_jatekline_by_num(sorszam)
+        print("BBBB ", line_num)
         print(esemenyek_sorszam(line_num))
         print(alanyok_sorszam(line_num))
 

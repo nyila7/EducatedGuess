@@ -112,6 +112,7 @@ def esemenyek_sorszam(line_num):
     #print(line_num)
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
+        #print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         esemenyek = sorok[line_num-1+alanyok_szama+1:line_num-1+alanyok_szama+1+esemenyek_szama]
