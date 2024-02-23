@@ -154,6 +154,7 @@ def alanyok_sorszam(line_num):
 
 def toplevel_input(self, message) -> str | None:
     self.Up = customtkinter.CTkInputDialog(text=message, title="Input")
+    
     if os.name != "posix":
         self.Up.grab_set()
     self.Up.geometry("400x200")
