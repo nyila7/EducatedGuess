@@ -1,5 +1,5 @@
 import customtkinter
-from penz import penzvon, tuplelista
+from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
 
 def populate_games(self) -> None:
@@ -154,9 +154,13 @@ def szorzo_szamitas(jatek, szemely, esemeny):
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        print("B BBBBBBBBBBBBBBB")
         for line in f:
             sor: list[str] = line.split(";")
+            print(sor)
             if sor[1] == jatek:
+                print("CCCCCCCCCCCCC")
                 fogado, tipp, tet = sor[0], sor[5], sor[2]
-                if tipp == eredmeny:
-                    penzvon(fogado,-tet*szorzo)
+                if tipp.strip() == eredmeny:
+                    print(fogado, tet, szorzo, "AAAAAAAAAAA")
+                    penzad(fogado,float(tet)*szorzo)

@@ -1,8 +1,8 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from jatek_lezarasa import esemenyek_lekerdez, pontszamitas, szemelyek_lekerdez, szorzo_szamitas
 from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name
+
 
 
 class SzervezoFrame(customtkinter.CTkFrame):
@@ -68,7 +68,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Alanyok input belekattintáskor új input mező létrehozása
         alany_inputok[-1].bind("<1>", self.alany_input_click)
-
+        alany_inputok[-1].bind("<Tab>", self.alany_input_click)
 
         ## ESEMÉNYEK ##
         # Események label
@@ -84,6 +84,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         esemenyek_inputok.append(esemenyek_input2)
         # Események input belekattintáskor új input mező létrehozása
         esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
+        esemenyek_inputok[-1].bind("<Tab>", self.esemenyek_input_click)
 
         ## LEADÁS ##
         # Létrehozás gomb
@@ -155,6 +156,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     def jatek_lezaras(self, jatek_nev, sorszam): #TODO passthrough
         #TODO Játék lezárása     
         #TODO Pontszámítás
+        #TODO Szerzo lezarni sajat jatek
         esemenyek = esemenyek_sorszam(sorszam-1)
         szemelyek = alanyok_sorszam(sorszam-1)
         #print(esemenyek, szemelyek)
@@ -187,12 +189,14 @@ class SzervezoFrame(customtkinter.CTkFrame):
         kivalaszto.focus_force()
         kivalaszto.wait_window()
             
+            
+
     def lezaras_fileba(self, szemelyek_szama, jatek_nev, sorszam, esemenyek, szemelyek): #TODO passthrough
         eredmeny_matrix = []
         for i in range(len(self.entryk)):
             if i % szemelyek_szama == 0:
                 eredmeny_matrix.append([])
-            eredmeny_matrix[-1].append(self.entryk[i].get())
+            eredmeny_matrix[-1].append(self.entryk[i].get().strip())
             ## Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
         szerzo_nev = get_szervezo_by_name(jatek_nev)
         line_num = get_jatekline_by_num(sorszam - 1)
@@ -233,6 +237,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             alany_inputok.append(customtkinter.CTkEntry(self.form, font=self.fonts, placeholder_text=placeholder))
             alany_inputok[-1].grid(row=len(alany_inputok)+2, column=0, padx=30, pady=10, sticky="news")
             alany_inputok[-1].bind("<1>", self.alany_input_click)
+            alany_inputok[-1].bind("<Tab>", self.alany_input_click)
 
     # Új esemény input mező létrehozása
     def esemenyek_input_click(self, event): #TODO passthrough
@@ -241,4 +246,5 @@ class SzervezoFrame(customtkinter.CTkFrame):
             esemenyek_inputok.append(customtkinter.CTkEntry(self.form, font=self.fonts, placeholder_text="asd"))
             esemenyek_inputok[-1].grid(row=len(esemenyek_inputok)+2, column=1, padx=30, pady=10, sticky="news")
             esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
+            esemenyek_inputok[-1].bind("<Tab>", self.esemenyek_input_click)
             

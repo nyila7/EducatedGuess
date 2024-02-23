@@ -73,7 +73,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         if penz_input == "":
             return
         if penz_input > penzkerdez(self.nev):
-            toplevel_input(self, "Nincs elég pénzed")
+            toplevel_error(self, "Nincs elég pénzed")
             return
         
         jatek_nev = name_sorszam(sorszam)
