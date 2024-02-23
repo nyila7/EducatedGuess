@@ -217,7 +217,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         #TODO Jelenlegi játékok frissítése (repopulate?)
         for widget in self.jelenlegi_jatekok.winfo_children():
             #dont delete the label
-            if widget.winfo_class() != "CTkLabel":
+           
+            if widget.cget("text") != "Jelenlegi játékok":
                 widget.destroy()
             
         populate_games(self)
