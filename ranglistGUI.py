@@ -8,14 +8,19 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(0, weight=2)
         self.grid_columnconfigure(1, weight=2)
         self.grid_columnconfigure(2, weight=3)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=100)
+        self.grid_rowconfigure(1, weight=1)
         
-        self.fonts = ("Comic Sans MS", 25)
+        self.fonts = ("Comic Sans MS", 22)
         self.jatekok_szamolo = 0    
         #######################################################################################################
         ############################ PENZ RANGLISTA MEGJELENÍTÉSE #############################################
         #######################################################################################################
+        self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
+        self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
 
+        self.kijelentkezes = customtkinter.CTkButton(self.topbar, text="Vissza", font=self.fonts, command=lambda : controller.show_frame("main"))
+        self.kijelentkezes.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
         self.ranglista = customtkinter.CTkScrollableFrame(self)
         self.ranglista.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")

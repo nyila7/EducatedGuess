@@ -76,8 +76,11 @@ class App(customtkinter.CTk):
                 return
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
+        
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
+        if(cont == "main"):
+            cont = menuFrame
         frame = self.frames[cont]
         frame.tkraise()
 

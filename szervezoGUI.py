@@ -16,7 +16,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=16)
         self.grid_columnconfigure(2, weight=16)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=100)
+        self.grid_rowconfigure(1, weight=1)
 
         # Default nevek
         self.names = ["Fruzsina","Ábel","Benjámin","Genovéva","Angel","Leona","Titusz","Simon","Boldizsár","Attila","Ramóna","Gyöngyvér","Marcell","Melánia","Ágota","Erno","Veronika","Bódog","Loránd","Loránt","Gusztáv","Antal","Antónia","Piroska","Sára","Márió","Sebestyén","Fábián","Ágnes","Artúr" ]
@@ -28,6 +29,12 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.jatekok_szamolo = 1
         self.jatek_megnevezese = ""
 
+
+        self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
+        self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
+
+        self.kijelentkezes = customtkinter.CTkButton(self.topbar, text="Kijelentkezés", font=self.fonts, command=lambda : controller.show_frame("main"))
+        self.kijelentkezes.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
         ########################################################################
         ################################# Form #################################
