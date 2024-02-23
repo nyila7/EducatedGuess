@@ -80,6 +80,18 @@ def line_num_by_name(name):
                 return i+1
 
 
+def sorszam_by_line_num(line_num):
+    sorszam = 0
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        sorok = f.readlines()
+        for i, sor in enumerate(sorok):
+            if ";" in sor:
+                sorszam += 1
+            if i+1 == line_num:
+                print("sorszambylinenume", sorszam)
+                return sorszam
+
+
 def alanyok_sorszam(line_num):
     #print(line_num)
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
