@@ -3,6 +3,36 @@ from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
 import os
 
+
+
+def fogadasok_by_name(jatek_nev):
+    fogadasok = []
+    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        for _, sor in enumerate(f):
+            if sor.find(jatek_nev) != -1:
+                fogadasok.append(sor)
+    return fogadasok
+
+def fogadas_statisztika(jatek_nev:str):
+    fogadasok = fogadasok_by_name(jatek_nev)
+    line_num = get_jatekline_by_num(line_num_by_name(jatek_nev))
+    esemenyek: list[str] = esemenyek_sorszam(line_num)
+    alanyok: list[str] = alanyok_sorszam(line_num)
+
+    for esemeny in esemenyek:
+        for alany in alanyok:
+            fogadasok_esemeny = []
+            for fogadas in fogadasok:
+                if fogadas.find(esemeny) != -1 and fogadas.find(alany) != -1:
+                    fogadasok_esemeny.append(fogadas)
+            print(fogadasok_esemeny)
+            osszes_tet = 0
+            for fogadas in fogadasok_esemeny:
+                osszes_tet += int(fogadas.split(";")[2])
+            yield (esemeny, alany, osszes_tet)
+
+
+
 def populate_games(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
@@ -22,7 +52,15 @@ def populate_games_fogado(self) -> None:
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
                 jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="Fogadás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo: self.fogadas(x,y), fg_color="blue", hover_color="gray")
                 jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
-
+def populate_games_statisztika(self) -> None:
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        for _, sor in enumerate(f):
+            if sor.find(";") != -1:
+                self.jatekok_szamolo += 1
+                jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
+                jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
+                jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="Statisztika", font=self.fonts, command=lambda x=sor.split(";")[1], y = self.jatekok_szamolo: self.statisztika(x,y), fg_color="blue", hover_color="gray")
+                jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
 
 
 

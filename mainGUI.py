@@ -12,8 +12,8 @@ class App(customtkinter.CTk):
 
         ## Ablak beállítások ##
         self.title("Fogadói rendszer")
-        self.geometry("1280x720")
-        self.resizable(False, False)
+        self.geometry("1600x900")
+        #self.resizable(False, False)
         customtkinter.set_appearance_mode("dark")  # Módok: system (default), light, dark
         container = customtkinter.CTkFrame(self)
         container.pack(side = "top", fill = "both", expand = True)
