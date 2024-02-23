@@ -91,7 +91,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_letrehozas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
-
+        ## Kilépés ##
+        #kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )
         ########################################################################
         ########################## Jelenlegi játékok ###########################
         ########################################################################

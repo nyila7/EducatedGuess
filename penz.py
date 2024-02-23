@@ -8,8 +8,8 @@ def penzvon(nev:str, osszeg:int) -> None:
                 balance = penzkerdez(nev)
                 if balance == -1:
                     return
-                #print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
-                #print(sorok[i])
+                print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
+                print(sorok[i])
                 sorok[i] = f"{nev}:{balance-osszeg}"
         
         f.truncate(0)
@@ -40,8 +40,13 @@ def penzad(nev:str, osszeg:int) -> None:
             f.write(sor.strip() + "\n")
 
 def penzinit(nev:str):
-
+    """sor = "a"
+    with open("penz.txt", mode="r", encoding="utf-8") as f:
+        while (sor != "") or (sor != "\n"):
+            sor = f.readline()"""
     with open("penz.txt", mode="a", encoding="utf-8") as f:
+        #if sor == "":
+        #    f.write("\n")
         f.write(f"{nev}:100\n")
 
 def penzkerdez(nev: str) -> int:

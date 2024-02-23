@@ -130,7 +130,7 @@ def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) 
     for i, esemeny in enumerate(esemenyek):
         for j, szemely in enumerate(szemelyek):
             ## igen
-            szorzo = szorzo_szamitas(jatek_nev, szemely, esemeny)
+            szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
             #eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
             eredmeny = eredmeny_matrix[i][j]
             
@@ -141,8 +141,8 @@ def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) 
 
 
         
-def szorzo_szamitas(jatek, szemely, esemeny):
-    k = 0
+def szorzo_szamitas1(jatek, szemely, esemeny) -> float:
+    k: int = 0
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
@@ -151,16 +151,29 @@ def szorzo_szamitas(jatek, szemely, esemeny):
     if k==0: return 0
     else:
         return round(1+5/(2**(k-1)),2)
+def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
+    k: int = 0
+    m: int = 0
+    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+        for line in f:
+            sor: list[str] = line.split(";")
+            if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
+                k += 1
+                m += sor[2]
+    if k==0 or m==0: return 0
+    else:
+        return round(1+5/(1+2.7182**(3-m/k**2/20)),2)
+
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
-        print("B BBBBBBBBBBBBBBB")
+        #print("B BBBBBBBBBBBBBBB")
         for line in f:
             sor: list[str] = line.split(";")
-            print(sor)
+            #print(sor)
             if sor[1] == jatek:
-                print("CCCCCCCCCCCCC")
+                #print("CCCCCCCCCCCCC")
                 fogado, tipp, tet = sor[0], sor[5], sor[2]
                 if tipp.strip() == eredmeny:
-                    print(fogado, tet, szorzo, "AAAAAAAAAAA")
+                    #print(fogado, tet, szorzo, "AAAAAAAAAAA")
                     penzad(fogado,float(tet)*szorzo)
