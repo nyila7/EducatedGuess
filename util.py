@@ -46,7 +46,7 @@ def populate_games(self) -> None:
 def populate_games_fogado(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1:
+            if sor.find(";"):
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
