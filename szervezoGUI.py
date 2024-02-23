@@ -1,7 +1,7 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num, szerzo_jatekai
 import os
 
 
@@ -110,11 +110,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Jelenlegi játékok label
         jelenlegi_jatekok_label = customtkinter.CTkLabel(self.jelenlegi_jatekok, text="Jelenlegi játékok", font=self.fonts)
-        jelenlegi_jatekok_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
-        
-        # A frame populálása a szervezoGUI_utils.py-ból
-        populate_games(self)
-
+        jelenlegi_jatekok_label.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")       
 
     ############################################################################################################
     #################################### JATEK LÉTREHOZÁSA #####################################################
@@ -249,6 +245,19 @@ class SzervezoFrame(customtkinter.CTkFrame):
     # Szerző nevének beállítása
     def set_nev(self, nev):
         self.szerzo_neve = nev
+
+        for widget in self.jelenlegi_jatekok.winfo_children():
+            if widget.cget("text") != "Jelenlegi játékok":
+                widget.destroy()
+
+        ## itt kell a jelenlegi jatekokat megjeleniteni mert itt kapja meg a nevet a frame
+        sajat_jatekok = szerzo_jatekai(self.szerzo_neve)
+        for i in sajat_jatekok:
+            self.jatek = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=i, font=self.fonts, fg_color="gray", corner_radius=10)
+            self.jatek.grid(row=self.jatekok_szamolo + 1, column=0, padx=10, pady=10, sticky="nesw")
+            self.jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = i, y = self.jatekok_szamolo: self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
+            self.jatek_lezaras_butt.grid(row=self.jatekok_szamolo + 1, column=1, padx=10, pady=10, sticky="nesw")
+
         
     # Új alany input mező létrehozása
     def alany_input_click(self, event): #TODO passthrough

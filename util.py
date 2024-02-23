@@ -31,9 +31,15 @@ def fogadas_statisztika(jatek_nev:str):
                 osszes_tet += int(fogadas.split(";")[2])
             yield (esemeny, alany, osszes_tet)
 
+def szerzo_jatekai(szerzo):
+    jatekok = []
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        for _, sor in enumerate(f):
+            if sor.find(szerzo) != -1:
+                jatekok.append(sor.strip().split(";")[0])
+    return jatekok
 
-
-def populate_games(self) -> None:
+def populate_games(self) -> None:        
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if sor.find(";") != -1:
