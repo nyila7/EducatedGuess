@@ -90,22 +90,22 @@ class menuFrame(customtkinter.CTkFrame):
         
         ## GRID BEÁLLÍTÁSOK ##
         self.grid_columnconfigure((0, 1, 2), weight=1)
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=100)
+        self.grid_rowconfigure(0, weight=100)
+        self.grid_rowconfigure(1, weight=1)
         szerepkorFont = ("Comic Sans MS", 30)
         
         topbar = customtkinter.CTkFrame(self, fg_color="transparent")
-        topbar.grid(row=0, column=0, sticky="nesw")
+        topbar.grid(row=1, column=0, sticky="nesw")
         register = customtkinter.CTkButton(topbar, text="Regisztráció", font=("Comic Sans MS", 20), command=lambda : self.register())
         register.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
         ## GOMBOK ##
         self.buttonL = customtkinter.CTkButton(self, text="Szervező", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(szervezoGUI.SzervezoFrame))
-        self.buttonL.grid(row=1, column=0, padx=10, pady=10, sticky="news")
+        self.buttonL.grid(row=0, column=0, padx=10, pady=10, sticky="news")
         self.buttonR = customtkinter.CTkButton(self, text="Fogadó", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(fogadoGUI.FogadoFrame))
-        self.buttonR.grid(row=1, column=1, padx=10, pady=10, sticky="nesw")
+        self.buttonR.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
         self.buttonR = customtkinter.CTkButton(self, text="Ranglista", corner_radius=10, font=szerepkorFont, command=lambda : controller.show_frame(ranglistGUI.RanglistaFrame))
-        self.buttonR.grid(row=1, column=2, padx=10, pady=10, sticky="nesw")        
+        self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")        
     
     def register(self):
         username = util.toplevel_input(self, "Felhasználónév megadása")
