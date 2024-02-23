@@ -151,14 +151,6 @@ def alanyok_sorszam(line_num):
 
 def toplevel_input(self, message) -> str | None:
     Up = customtkinter.CTkInputDialog(self, text=message, title="Input")
-
-    if os.name != "posix":
-        Up.grab_set()
-    
-    
-    Up.wait_window()
-
-
     return Up.get_input()
 
 def name_sorszam(sorszam):
