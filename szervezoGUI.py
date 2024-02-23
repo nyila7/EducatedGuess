@@ -171,7 +171,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         kivalaszto.grid_rowconfigure(0, weight=5)
         kivalaszto.grid_rowconfigure(1, weight=1)
         matrix = customtkinter.CTkFrame(kivalaszto)
-        matrix.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+        matrix.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
         # Grid beállítás      
         for i in range(len(szemelyek)):
@@ -181,11 +181,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Lezárás inputok
         for i in esemenyek:
-            customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
+            customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10)
             for j in szemelyek:
-                customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10, sticky="nesw")
+                customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10)
                 lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts)
-                lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
+                lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10)
                 self.entryk.append(lezaras_inputok)
 
         # Lezárás gomb
@@ -216,12 +216,14 @@ class SzervezoFrame(customtkinter.CTkFrame):
         line_num = get_jatekline_by_num(sorszam)
 
         lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
+        
         # Entryk törlése
         self.entryk = []
         self.jatekok_szamolo -= 1
+
         for widget in self.jelenlegi_jatekok.winfo_children():
+
             #dont delete the label
-           
             if widget.cget("text") != "Jelenlegi játékok":
                 widget.destroy()
             

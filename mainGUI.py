@@ -80,7 +80,7 @@ class App(customtkinter.CTk):
         if cont == fogadoGUI.FogadoFrame or cont == ranglistGUI.RanglistaFrame: 
             print("asd")
             frame.populate_window()
-        #wait 0.1 sec before continuing
+        #wait 0.15 sec before continuing
         self.after(150, lambda: frame.tkraise())
         
 
