@@ -106,9 +106,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
         
         # A frame populálása a szervezoGUI_utils.py-ból
         populate_games(self)
-        
-
-
 
 
     ############################################################################################################
@@ -154,13 +151,13 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
 
     def jatek_lezaras(self, jatek_nev, sorszam): #TODO passthrough
-        #TODO Játék lezárása     
+        #TODO Játék eltüntetése     
         #TODO Pontszámítás
-        #TODO Szerzo lezarni sajat jatek
+        #TODO Szerző csak a saját játékát tudja lezárni
         esemenyek = esemenyek_sorszam(sorszam-1)
         szemelyek = alanyok_sorszam(sorszam-1)
-        #print(esemenyek, szemelyek)
 
+        # Toplevel létrehozása
         kivalaszto = customtkinter.CTkToplevel(self)
         kivalaszto.title("Fogadás leadása")
         kivalaszto.geometry("800x600")
@@ -168,12 +165,14 @@ class SzervezoFrame(customtkinter.CTkFrame):
         kivalaszto.grid_rowconfigure(1, weight=1)
         matrix = customtkinter.CTkFrame(kivalaszto)
         matrix.grid(row=0, column=0, padx=10, pady=10, sticky="e")
-        
+
+        # Grid beállítás      
         for i in range(len(szemelyek)):
             matrix.grid_columnconfigure(i+1, weight=1)
         for i in range(len(esemenyek)):
             matrix.grid_rowconfigure(i+1, weight=1)
 
+        # Lezárás inputok
         for i in esemenyek:
             customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
             for j in szemelyek:
@@ -181,36 +180,36 @@ class SzervezoFrame(customtkinter.CTkFrame):
                 lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts)
                 lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="nesw")
                 self.entryk.append(lezaras_inputok)
+
+        # Lezárás gomb
         customtkinter.CTkButton(kivalaszto, text="Lezárás",\
         command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek : self.lezaras_fileba(x, y, z, a, b))\
         .grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
+
+        # Toplevel megjelenítésének beállításai
         kivalaszto.transient(self)
         kivalaszto.grab_set()
         kivalaszto.focus_force()
         kivalaszto.wait_window()
-            
-            
+        return
 
     def lezaras_fileba(self, szemelyek_szama, jatek_nev, sorszam, esemenyek, szemelyek): #TODO passthrough
+        
+        # Eredmények kiolvasása, és 2D mátrixba rendezése
         eredmeny_matrix = []
         for i in range(len(self.entryk)):
             if i % szemelyek_szama == 0:
                 eredmeny_matrix.append([])
             eredmeny_matrix[-1].append(self.entryk[i].get().strip())
-            ## Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
-        szerzo_nev = get_szervezo_by_name(jatek_nev)
+
+        # A lezárás function passthrougholjásai
+        szerzo_nev = get_szervezo_by_name(jatek_nev) 
         line_num = get_jatekline_by_num(sorszam - 1)
-        lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek)
-        self.entryk = []
 
-    
-    
-    
-
-
+        lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
         
-
-
+        # Entryk törlése
+        self.entryk = []
 
     ##############################################################################################
     #################################### FÜGGVÉNYEK ##############################################
@@ -225,7 +224,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             self.jatek_nev_stringvar.set(ertek[:max_hossz])
             return
 
-    # Main GUI-ban van meghívva
+    # Szerző nevének beállítása
     def set_nev(self, nev):
         self.szerzo_neve = nev
         
