@@ -46,7 +46,7 @@ def populate_games(self) -> None:
 def populate_games_fogado(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";"):
+            if sor.find(";") != -1:
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
@@ -105,6 +105,7 @@ def esemenyek_sorszam(line_num):
     #print(line_num)
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
+        #print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         esemenyek = sorok[line_num-1+alanyok_szama+1:line_num-1+alanyok_szama+1+esemenyek_szama]
