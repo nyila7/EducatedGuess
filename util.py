@@ -35,7 +35,7 @@ def szerzo_jatekai(szerzo):
     jatekok = []
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(szerzo) != -1:
+            if sor.find(";") != -1 and (sor.strip().split(";")[0] == szerzo):
                 jatekok.append(sor.strip().split(";")[1])
     return jatekok
 
