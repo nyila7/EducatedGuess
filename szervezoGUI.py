@@ -167,9 +167,10 @@ class SzervezoFrame(customtkinter.CTkFrame):
         # Toplevel létrehozása
         kivalaszto = customtkinter.CTkToplevel(self)
         kivalaszto.title("Fogadás leadása")
-        kivalaszto.geometry("800x600")
+        #kivalaszto.geometry("800x600")
         kivalaszto.grid_rowconfigure(0, weight=5)
         kivalaszto.grid_rowconfigure(1, weight=1)
+        kivalaszto.grid_columnconfigure(0, weight=1)
         matrix = customtkinter.CTkFrame(kivalaszto)
         matrix.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
@@ -181,11 +182,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Lezárás inputok
         for i in esemenyek:
-            customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10)
+            customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="ew")
             for j in szemelyek:
-                customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10)
+                customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10, sticky="ew")
                 lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts)
-                lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10)
+                lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="ew")
                 self.entryk.append(lezaras_inputok)
 
         # Lezárás gomb
@@ -215,6 +216,13 @@ class SzervezoFrame(customtkinter.CTkFrame):
         szerzo_nev = get_szervezo_by_name(jatek_nev) 
         line_num = get_jatekline_by_num(sorszam)
 
+        # Ha van üres mező, akkor sikertelen a lezárás
+        for i in eredmeny_matrix:
+            for j in i:
+                if j == "":
+                    self.entryk = []
+                    return toplevel_error(self, "Nem lehet üres mező")
+
         lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
         
         # Entryk törlése
@@ -237,7 +245,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
     # Túl hosszú input ellenőrzése
     def nev_ellenorzes(self, *args):
-        max_hossz = 20 # A maximális hossza a névnek
+        max_hossz = 100 # A maximális hossza a névnek
         ertek = self.jatek_nev_stringvar.get()
         # Ha a maximálisnál hosszabb, akkor a maximális hosszra vágjuk az elejétől kezdve [0:max_hossz]
         if len(ertek) > max_hossz:
