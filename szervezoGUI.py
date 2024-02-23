@@ -187,8 +187,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek : self.lezaras_fileba(x, y, z, a, b))\
         .grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
 
-        # Toplevel megjelenítésének beállításai
-        kivalaszto.transient(self)
+        # Toplevel megjelenítésének beállításai (fuj windows)
+        kivalaszto.transient(self) # type: ignore
         kivalaszto.grab_set()
         kivalaszto.focus_force()
         kivalaszto.wait_window()
