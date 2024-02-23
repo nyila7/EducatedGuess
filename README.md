@@ -19,6 +19,6 @@ Dusza2023-24
 |   penz.py - A program pénzügyi modulja
 |   fajlkezeles.py - A program fájlkezelési modulja
 |   util.py - A program segédmodulja
-
+```
 # Eredeti readme
 A main.py fájlt kell elindítani, feltéve ha az összes modul jelen van és a mappa nem írásvédett.
