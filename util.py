@@ -1,6 +1,7 @@
 import customtkinter
 from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
+import os
 
 def populate_games(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
@@ -111,9 +112,12 @@ def toplevel_input(self, message) -> str:
     customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
     customtkinter.CTkEntry(Up, font=("Comic Sans MS", 20), width=200, placeholder_text=message, textvariable=value).grid(row=1, column=0, padx=10, pady=10)
     customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=2, column=0, columnspan=2, padx=10, pady=10)
-
-    
     Up.focus_force()
+    Up.lift()
+    if os.name != "posix":
+        Up.grab_set()
+    
+    
     Up.wait_window()
 
 
