@@ -19,6 +19,7 @@ def penzvon(nev:str, osszeg:int) -> None:
 
         for i, sor in enumerate(sorok):
             f.write(sor.strip() + "\n")
+            
 def penzad(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
         sorok = f.readlines()

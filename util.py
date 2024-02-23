@@ -9,7 +9,7 @@ def populate_games(self) -> None:
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
-                jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo: self.jatek_lezaras(x,y), fg_color="red", hover_color="gray")
+                jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(self.jelenlegi_jatekok, text="lezárás", font=self.fonts, command=lambda x = sor.split(";")[1], y = self.jatekok_szamolo : self.jatek_lezaras(x, y), fg_color="red", hover_color="gray")
                 jelenlegi_jatek_lezaras_butt.grid(row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
 
 def populate_games_fogado(self) -> None:
@@ -62,8 +62,7 @@ def toplevel_error(self, message):
     customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
     customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
-def esemenyek_sorszam(sorszam):
-    line_num = get_jatekline_by_num(sorszam)
+def esemenyek_sorszam(line_num):
     #print(line_num)
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
@@ -73,8 +72,15 @@ def esemenyek_sorszam(sorszam):
         esemenyek = [x.strip() for x in esemenyek]
         return esemenyek
 
-def alanyok_sorszam(sorszam):
-    line_num = get_jatekline_by_num(sorszam)
+def line_num_by_name(name):
+    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+        sorok = f.readlines()
+        for i, sor in enumerate(sorok):
+            if sor.find(name) != -1:
+                return i+1
+
+
+def alanyok_sorszam(line_num):
     #print(line_num)
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()

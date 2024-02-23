@@ -1,7 +1,7 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name
 
 
 
@@ -154,8 +154,10 @@ class SzervezoFrame(customtkinter.CTkFrame):
         #TODO Játék eltüntetése     
         #TODO Pontszámítás
         #TODO Szerző csak a saját játékát tudja lezárni
-        esemenyek = esemenyek_sorszam(sorszam-1)
-        szemelyek = alanyok_sorszam(sorszam-1)
+        # Események és személyek kiolvasása
+        line_num = line_num_by_name(jatek_nev)
+        esemenyek = esemenyek_sorszam(line_num)
+        szemelyek = alanyok_sorszam(line_num)
 
         # Toplevel létrehozása
         kivalaszto = customtkinter.CTkToplevel(self)
@@ -183,15 +185,15 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Lezárás gomb
         customtkinter.CTkButton(kivalaszto, text="Lezárás",\
-        command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek : self.lezaras_fileba(x, y, z, a, b))\
-        .grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
+
+        command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek :\
+        [self.lezaras_fileba(x, y, z, a, b), kivalaszto.destroy()]).grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
 
         # Toplevel megjelenítésének beállításai
         kivalaszto.transient(self)
         kivalaszto.grab_set()
         kivalaszto.focus_force()
         kivalaszto.wait_window()
-        return
 
     def lezaras_fileba(self, szemelyek_szama, jatek_nev, sorszam, esemenyek, szemelyek): #TODO passthrough
         
@@ -207,9 +209,19 @@ class SzervezoFrame(customtkinter.CTkFrame):
         line_num = get_jatekline_by_num(sorszam - 1)
 
         lezaras(szerzo_nev, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d matrix
-        
         # Entryk törlése
         self.entryk = []
+        self.jatekok_szamolo -= 1
+        #TODO Jelenlegi játékok frissítése (repopulate?)
+        for widget in self.jelenlegi_jatekok.winfo_children():
+            #dont delete the label
+            if widget.winfo_class() != "CTkLabel":
+
+            
+                widget.destroy()
+        populate_games(self)
+
+
 
     ##############################################################################################
     #################################### FÜGGVÉNYEK ##############################################

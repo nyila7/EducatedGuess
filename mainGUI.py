@@ -31,6 +31,7 @@ class App(customtkinter.CTk):
             if not os.path.exists(file_path):
                 with open(file_path, mode="w", encoding="utf-8") as f:
                     f.write("")
+
         # A három frame hozzáadása a containerhez
         for F in (menuFrame, szervezoGUI.SzervezoFrame, fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
             frame = F(container, self)
