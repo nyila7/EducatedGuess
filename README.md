@@ -3,9 +3,12 @@ Dusza verseny
 
 ## Installation
 ```
-python -m venv Dusza
-source Dusza/bin/activate
+git clone https://github.com/nyila7/Dusza2023-24.git
+cd Dusza2023-24
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
+python mainGUI.py
 ```
 
 # Struktúra
@@ -20,7 +23,14 @@ Dusza2023-24
 |   fajlkezeles.py - A program fájlkezelési modulja
 |   util.py - A program segédmodulja
 |   users.py - A program felhasználó kezelő modulja
-
 ```
+
+# Dependencies
+```
+customtkinter - Könnyebbé teszi a tkinter használatát
+argon2-cffi - Jelszavak biztonságos tárolásához
+```
+
+
 # Eredeti readme
 A main.py fájlt kell elindítani, feltéve ha az összes modul jelen van és a mappa nem írásvédett.
