@@ -32,7 +32,7 @@ class App(customtkinter.CTk):
                 with open(file_path, mode="w", encoding="utf-8") as f:
                     f.write("")
 
-        # A három frame hozzáadása a containerhez
+        # A négy frame hozzáadása a containerhez
         for F in (menuFrame, szervezoGUI.SzervezoFrame, fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
             frame = F(container, self)
             self.frames[F] = frame
@@ -71,17 +71,23 @@ class App(customtkinter.CTk):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
             nev = self.nev_input_toplevel()
+
             ## HIBAKERESÉS ##
             if nev == "": # Ha nem adott meg nevet
                 return
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
-        
+
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
         if(cont == "main"):
             cont = menuFrame
+
+        #refresh frame before showing
         frame = self.frames[cont]
+        if cont == fogadoGUI.FogadoFrame or cont == ranglistGUI.RanglistaFrame: 
+            print("asd")
+            frame.populate_window()
         frame.tkraise()
 
 class menuFrame(customtkinter.CTkFrame):
