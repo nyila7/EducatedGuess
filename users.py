@@ -19,7 +19,10 @@ def get_hashed_password(username) -> str | None:
                 return sor.split(":")[1].strip()
     return None
 
-def add_user(username, password) -> None:
+def add_user(username, password) -> bool:
+    if get_hashed_password(username) != None:
+        return False
     with open("users.txt", mode="a", encoding="utf-8") as f:
         f.write(f"{username}:{hash_password(password)}\n")
+        return True
 

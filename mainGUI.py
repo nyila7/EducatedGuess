@@ -114,7 +114,9 @@ class menuFrame(customtkinter.CTkFrame):
         password = util.toplevel_input(self, "Jelszó megadása")
         if password == None or password == "":
             return
-        users.add_user(username, password)
-        util.toplevel_success(self, "Sikeres regisztráció")
+        if users.add_user(username, password):
+            util.toplevel_success(self, "Sikeres regisztráció")
+        else:
+            util.toplevel_error(self, "Már létezik ilyen felhasználó")
 app = App()
 app.mainloop()
