@@ -195,7 +195,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         kivalaszto.transient(self) # type: ignore
         if os.name != "posix":
             kivalaszto.grab_set()
-            
+        kivalaszto.lift()
         kivalaszto.focus_force()
         kivalaszto.wait_window()
 

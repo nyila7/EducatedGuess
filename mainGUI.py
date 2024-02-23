@@ -60,7 +60,7 @@ class App(customtkinter.CTk):
             Up.focus_force()
             if os.name != "posix":
                 Up.grab_set()
-
+            Up.lift()
 
             Up.wait_window()
             
