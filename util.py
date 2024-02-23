@@ -35,7 +35,7 @@ def szerzo_jatekai(szerzo):
     jatekok = []
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(szerzo) != -1:
+            if sor.find(";") and (sor.strip().split(";")[0] == szerzo):
                 jatekok.append(sor.strip().split(";")[1])
     return jatekok
 
@@ -150,13 +150,12 @@ def alanyok_sorszam(line_num):
         return alany
 
 def toplevel_input(self, message) -> str | None:
-    Up = customtkinter.CTkInputDialog(text=message, title="Input")
-
+    self.Up = customtkinter.CTkInputDialog(text=message, title="Input")
     if os.name != "posix":
-        Up.grab_set()
+        self.Up.grab_set()
 
 
-    return Up.get_input()
+    return self.Up.get_input()
 
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
