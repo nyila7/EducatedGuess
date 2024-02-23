@@ -15,7 +15,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
 
         self.fonts = ("Comic Sans MS", 30)
-
+        
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
         self.kijelentkezes = customtkinter.CTkButton(self.topbar, text="Kijelentkezés", font=self.fonts, command=lambda : controller.show_frame("main"))
@@ -24,7 +24,7 @@ class FogadoFrame(customtkinter.CTkFrame):
 
     def set_nev(self, nev):
         self.nev = nev
-        populate_games_fogado(self)
+        
     
     def fogadas(self, nev, sorszam):
         
@@ -59,7 +59,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         
         #print(alany, sorszam)
         try:
-            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni? Egyenleged: " + str(penzkerdez(self.nev)) + "Pont"))
+            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni? Egyenleged: " + str(penzkerdez(self.nev)) + "Pont")) # type: ignore
         except ValueError:
             return
         if penz_input == "":

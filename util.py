@@ -149,17 +149,9 @@ def alanyok_sorszam(line_num):
         alany = [x.strip() for x in alany]
         return alany
 
-def toplevel_input(self, message) -> str:
-    Up = customtkinter.CTkToplevel(self)
-    Up.title("Input")
-    Up.geometry("400x200")
-    Up.resizable(False, False)
-    value = customtkinter.StringVar()
-    customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
-    customtkinter.CTkEntry(Up, font=("Comic Sans MS", 20), width=200, placeholder_text=message, textvariable=value).grid(row=1, column=0, padx=10, pady=10)
-    customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=2, column=0, columnspan=2, padx=10, pady=10)
-    Up.focus_force()
-    Up.lift()
+def toplevel_input(self, message) -> str | None:
+    Up = customtkinter.CTkInputDialog(self, text=message, title="Input")
+
     if os.name != "posix":
         Up.grab_set()
     
@@ -167,7 +159,7 @@ def toplevel_input(self, message) -> str:
     Up.wait_window()
 
 
-    return value.get()
+    return Up.get_input()
 
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
