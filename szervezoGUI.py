@@ -91,7 +91,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         leadas_button = customtkinter.CTkButton(self.form, text="Létrehozás", corner_radius=10, font=self.fonts, fg_color="transparent", hover_color="gray", command=self.jatek_letrehozas)
         leadas_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10, sticky="s")
 
-
+        ## Kilépés ##
+        #kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )
         ########################################################################
         ########################## Jelenlegi játékok ###########################
         ########################################################################
@@ -189,8 +190,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
         command=lambda x = len(szemelyek), y = jatek_nev, z = sorszam, a = esemenyek, b = szemelyek :\
         [self.lezaras_fileba(x, y, z, a, b), kivalaszto.destroy()]).grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
 
-        # Toplevel megjelenítésének beállításai
-        kivalaszto.transient(self)
+        # Toplevel megjelenítésének beállításai (fuj windows)
+        kivalaszto.transient(self) # type: ignore
         kivalaszto.grab_set()
         kivalaszto.focus_force()
         kivalaszto.wait_window()

@@ -4,7 +4,7 @@ import sys
 from fogadas_leadasa import fogad
 from regi.jatek_letrehozasa import jatek_letrehozasa
 from jatek_lezarasa import lezaras
-from regi.lekerdezesek import lekerdezes
+from lekerdezesek import lekerdezes
 
 def menu() -> None:
     while True:
