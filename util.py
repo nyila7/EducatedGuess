@@ -3,13 +3,11 @@ from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
 import os
 
-
-
 def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(name) != -1:
+            if sor.find(jatek_nev) != -1:
                 fogadasok.append(sor)
     return fogadasok
 
@@ -93,7 +91,7 @@ def get_szervezo_by_name(jatek_nev):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
-            if sor.find(name) != -1:
+            if sor.find(jatek_nev) != -1:
                 return sor.split(";")[0]
 
 
