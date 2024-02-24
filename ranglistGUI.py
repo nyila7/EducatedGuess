@@ -1,6 +1,6 @@
 import customtkinter
 from util import get_ranglista, populate_games_statisztika, alanyok_sorszam, esemenyek_sorszam, get_jatekline_by_num, fogadasok_by_name, fogadas_statisztika
-
+import conf
 
 class RanglistaFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
@@ -12,27 +12,35 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
 
-        self.fonts = ("Segoe UI", 22)
+        self.fonts = ("Segoe UI", 24)
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(
             row=1,
             column=0,
             columnspan=3,
-            padx=10,
-            pady=10,
             sticky="nesw")
 
         self.kijelentkezes = customtkinter.CTkButton(
             self.topbar,
-            text="Vissza",
-            font=self.fonts,
-            command=lambda: controller.show_frame("main"))
+            text="Kijelentkezés",
+            font=conf.kijelentkezo_font,
+            command=lambda: controller.show_frame("main"),
+            fg_color="transparent",
+            text_color="firebrick1",
+            hover=False)
         self.kijelentkezes.grid(
             row=0,
             column=0,
             padx=10,
             pady=10,
             sticky="nesw")
+        self.kijelentkezes.bind("<Enter>", self.on_hover)
+        self.kijelentkezes.bind("<Leave>", self.on_leave)
+    def on_hover(self, event):
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1], "underline"))
+    def on_leave(self, event):
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1]))
+    
         #######################################################################
         ############################ PENZ RANGLISTA MEGJELENÍTÉSE #############
         #######################################################################

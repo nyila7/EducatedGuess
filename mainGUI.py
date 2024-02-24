@@ -23,7 +23,7 @@ class App(customtkinter.CTk):
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
-
+        self.nev = ""
         # A három frame dictionaryje
         self.frames = {}
 
@@ -57,40 +57,32 @@ class App(customtkinter.CTk):
         # A menü frame megjelenítése
         self.show_frame(menuFrame)
 
-    def show_frame(self, cont):
+    def show_frame(self, cont, bejelentkezve=False, nev=""):
         if (cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
-            # Név bekérése
-            nev, password = util.toplevel_username_password(
-                self, "Bejelentkezés")
-
-            # nev = util.toplevel_input(self, "Név megadása")
-            if nev is None:
-                return
-            if password is None:
-                return
-
-            # error checking
-            if (users.get_hashed_password(nev) is None) or not users.verify_password(
-                    users.get_hashed_password(nev), password):
-                return util.toplevel_error(self, "Sikertelen belépés")
+            if bejelentkezve == False:
+                return util.toplevel_error(self, "Kérem jelentkezzen be")
 
             if penz.penzkerdez(nev) == -1:  # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
 
-            #print("Sikeres bejelentkezés")
-
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
+       
+       
         if (cont == "main"):
             cont = menuFrame
 
         # refresh frame before showing
         frame = self.frames[cont]
+        
         if cont in (fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
-            #print("asd")
             frame.populate_window()
         # wait 0.15 sec before continuing
         self.after(150, frame.tkraise)
+
+
+
+
 
 
 class menuFrame(customtkinter.CTkFrame):
@@ -102,13 +94,25 @@ class menuFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
         szerepkorFont = ("Segoe UI", 30)
+        self.bejelentkezve = False
+        self.nev = ""
 
-        topbar = customtkinter.CTkFrame(self, fg_color="transparent")
-        topbar.grid(row=1, column=0, sticky="nesw")
+        self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
+        self.topbar.grid(row=1, column=0, sticky="nesw")
         register = customtkinter.CTkButton(
-            topbar, text="Regisztráció", font=(
+            self.topbar, text="Regisztráció", font=(
                 "Segoe UI", 20), command=self.register)
         register.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
+        self.bejelentkezesbutton = customtkinter.CTkButton(
+            self.topbar, text="Bejelentkezés", font=(
+                "Segoe UI", 20), command=self.bejelentkezes)
+        self.bejelentkezesbutton.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+       
+        self.kijelentkezesbutt = customtkinter.CTkButton(
+                self.topbar, text="Kijelentkezés", font=(
+                "Segoe UI", 20), command=self.kijelentkezes)
+        self.kijelentkezesbutt.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+        self.kijelentkezesbutt.grid_forget()
 
         ## GOMBOK ##
         self.buttonL = customtkinter.CTkButton(
@@ -117,7 +121,7 @@ class menuFrame(customtkinter.CTkFrame):
             corner_radius=10,
             font=szerepkorFont,
             command=lambda: controller.show_frame(
-                szervezoGUI.SzervezoFrame))
+                szervezoGUI.SzervezoFrame, self.bejelentkezve, self.nev))
         self.buttonL.grid(row=0, column=0, padx=10, pady=10, sticky="news")
         self.buttonR = customtkinter.CTkButton(
             self,
@@ -125,7 +129,7 @@ class menuFrame(customtkinter.CTkFrame):
             corner_radius=10,
             font=szerepkorFont,
             command=lambda: controller.show_frame(
-                fogadoGUI.FogadoFrame))
+                fogadoGUI.FogadoFrame, self.bejelentkezve, self.nev))
         self.buttonR.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
         self.buttonR = customtkinter.CTkButton(
             self,
@@ -135,6 +139,42 @@ class menuFrame(customtkinter.CTkFrame):
             command=lambda: controller.show_frame(
                 ranglistGUI.RanglistaFrame))
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+
+    
+    
+    
+    def bejelentkezes(self):
+        username, password = util.toplevel_username_password(
+            self, "Bejelentkezés")
+        
+        if username is None or password is None: return util.toplevel_error(self, "Sikertelen belépés")
+
+        if users.verify_password(users.get_hashed_password(username), password) != False:
+            util.toplevel_success(self, "Sikeres belépés")
+            self.bejelentkezve = True
+            self.nev = username
+                    
+            self.nevlabel = customtkinter.CTkLabel(
+                self, text="Bejelentkezve: " + self.nev, font=("Segoe UI", 20))
+            self.nevlabel.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+            
+            self.kijelentkezesbutt.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+            self.bejelentkezesbutton.grid_forget()
+
+            
+        else:
+            util.toplevel_error(self, "Sikertelen belépés")
+    
+    def kijelentkezes(self):
+        self.bejelentkezve = False
+        self.nev = ""
+
+
+        self.nevlabel.destroy()
+        self.kijelentkezesbutt.grid_forget()
+        self.bejelentkezesbutton.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+
+        util.toplevel_success(self, "Sikeres kijelentkezés")
 
     def register(self):
         username, password = util.toplevel_username_password(
