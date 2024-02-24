@@ -56,7 +56,8 @@ class App(customtkinter.CTk):
     def show_frame(self, cont):
         if (cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
-            nev, password = util.toplevel_username_password(self, "Bejelentkezés")
+            nev, password = util.toplevel_username_password(
+                self, "Bejelentkezés")
 
             # nev = util.toplevel_input(self, "Név megadása")
             if nev is None:
@@ -133,7 +134,8 @@ class menuFrame(customtkinter.CTkFrame):
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
 
     def register(self):
-        username, password = util.toplevel_username_password(self, "Regisztráció")
+        username, password = util.toplevel_username_password(
+            self, "Regisztráció")
         # username = util.toplevel_input(self, "Felhasználónév megadása")
         if username is None:
             return
