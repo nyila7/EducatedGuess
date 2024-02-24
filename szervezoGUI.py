@@ -171,6 +171,32 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="s")
+        self.szorzovalue = customtkinter.IntVar()
+        self.szorzo1radio = customtkinter.CTkRadioButton(
+            self.form,
+            text="Régi szorzó",
+            font=self.fonts,
+            variable=self.szorzovalue,
+            value=1)
+        self.szorzo1radio.grid(
+            row=13,
+            column=0,
+            padx=10,
+            pady=10,
+            sticky="nesw")
+        self.szorzo2radio = customtkinter.CTkRadioButton(
+            self.form,
+            text="Új szorzó",
+            font=self.fonts,
+            variable=self.szorzovalue,
+            value=2)
+        self.szorzo2radio.grid(
+            row=13,
+            column=1,
+            padx=10,
+            pady=10,
+            sticky="nesw")
+        
 
         ## Kilépés ##
         # kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )

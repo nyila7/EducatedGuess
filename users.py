@@ -14,7 +14,7 @@ def verify_password(hashed_password, password):
         return False
 
 
-def get_hashed_password(username) -> str:
+def get_hashed_password(username) -> str | None:
     with open("users.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
