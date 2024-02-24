@@ -59,8 +59,8 @@ def penzinit(nev: str) -> None:
 
 def penzkerdez(nev: str) -> float:
     """ Returns -1 if the name is not found"""
-    if not os.path.exists("penz.txt"):
-        f = open("penz.txt", "w")
+    if not os.path.exists(conf.path("penz.txt")):
+        f = open(conf.path("penz.txt"), "w")
         f.close()
     with open(conf.path("penz.txt"), mode="r", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
