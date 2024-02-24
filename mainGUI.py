@@ -21,16 +21,14 @@ class App(customtkinter.CTk):
         container.grid_rowconfigure(0, weight = 1)
         container.grid_columnconfigure(0, weight = 1)
 
-        
-
         # A három frame dictionaryje
         self.frames = {}
 
         # A fájlok létrehozása, ha nem léteznek
         current_dir = os.path.dirname(os.path.abspath(__file__))
 
-        for F in ("penz.txt", "fogadasok.txt", "jatekok.txt", "eredmenyek.txt", "users.txt"):
-            file_path = os.path.join(current_dir, F)
+        for file in ("penz.txt", "fogadasok.txt", "jatekok.txt", "eredmenyek.txt", "users.txt"):
+            file_path = os.path.join(current_dir, file)
             if not os.path.exists(file_path):
                 with open(file_path, mode="w", encoding="utf-8") as f:
                     f.write("")
@@ -40,19 +38,15 @@ class App(customtkinter.CTk):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
-        
-
 
         # A menü frame megjelenítése
         self.show_frame(menuFrame)
-
-    
 
     def show_frame(self, cont):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
             nev = util.toplevel_input(self, "Név megadása")
-            if nev == None or nev == "":
+            if (nev is None) or (nev == ""):
                 return
             
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
@@ -62,13 +56,12 @@ class App(customtkinter.CTk):
                 return util.toplevel_error(self, "Nincs ilyen felhasználó")
             
             password = util.toplevel_input(self, "Jelszó megadása")
-            if password == None or password == "":
+            if (password is None) or (password == ""):
                 return
             if not users.verify_password(users.get_hashed_password(nev), password):
                 return util.toplevel_error(self, "Hibás jelszó")
             
             print("Sikeres bejelentkezés")
-
 
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
@@ -83,7 +76,6 @@ class App(customtkinter.CTk):
         #wait 0.15 sec before continuing
         self.after(150, lambda: frame.tkraise())
         
-
 class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
@@ -118,5 +110,6 @@ class menuFrame(customtkinter.CTkFrame):
             util.toplevel_success(self, "Sikeres regisztráció")
         else:
             util.toplevel_error(self, "Már létezik ilyen felhasználó")
+
 app = App()
 app.mainloop()

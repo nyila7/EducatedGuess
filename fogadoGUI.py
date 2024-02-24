@@ -5,9 +5,8 @@ from fajlkezeles import ir
 class FogadoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
 
-
         customtkinter.CTkFrame.__init__(self, parent)
-        
+
         self.grid_columnconfigure(0, weight=6)
         self.grid_columnconfigure(1, weight=4)
         self.grid_columnconfigure(2, weight=6)
@@ -17,19 +16,16 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.nev = ""
 
         self.fonts = ("Comic Sans MS", 30)
-        
+
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
         self.kijelentkezes = customtkinter.CTkButton(self.topbar, text="Kijelentkezés", font=self.fonts, command=lambda : controller.show_frame("main"))
         self.kijelentkezes.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 
-
     def set_nev(self, nev):
         self.nev = nev
-        
     
     def fogadas(self, nev, sorszam):
-        
         # esemenyek clear
         for widget in self.esemenyek.winfo_children():
             widget.destroy()
@@ -41,7 +37,6 @@ class FogadoFrame(customtkinter.CTkFrame):
         for i,esemeny in enumerate(esemenyek):
             esemeny = esemeny.strip()
             customtkinter.CTkRadioButton(self.esemenyek, text=esemeny, font=self.fonts, variable=self.esemeny_value, value=esemeny, command=lambda x=sorszam, y = line_num: self.comm(x, y)).grid(row=i, column=0, padx=10, pady=10, sticky="nesw")
-        
 
     def comm(self, sorszam, line_num):
         #print(self.esemeny_value.get())
@@ -52,7 +47,6 @@ class FogadoFrame(customtkinter.CTkFrame):
             alany = alany.strip()
             customtkinter.CTkLabel(self.alanyok, text=alany, font=self.fonts).grid(row=i, column=0, padx=10, pady=10, sticky="nesw")
             customtkinter.CTkButton(self.alanyok, text="Fogadás", font=self.fonts, command=lambda x = alany, y = sorszam: self.fogad(x,y), fg_color="blue", hover_color="gray").grid(row=i, column=1, padx=10, pady=10, sticky="nesw")
-    
     
     def fogad(self, alany, sorszam):
         ########################################################################################################
@@ -75,7 +69,6 @@ class FogadoFrame(customtkinter.CTkFrame):
         if eredmeny == "":
             return toplevel_error(self, "Hibás bemenet")
 
-
         ########################################################################################################
         ######################## FOGADÁSOK FÁJLBA ÍRÁSA ########################################################
         ########################################################################################################
@@ -88,9 +81,6 @@ class FogadoFrame(customtkinter.CTkFrame):
     def populate_window(self):
         self.jatekok_szamolo = 0
         self.esemeny_value = customtkinter.StringVar()
-        
-
-
 
         self.jelenlegi_jatekok = customtkinter.CTkScrollableFrame(self)
         self.jelenlegi_jatekok.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
@@ -106,7 +96,6 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.alanyok.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
         #jelenlegi_alanyok_label = customtkinter.CTkLabel(self.alanyok, text="Alanyok", font=self.fonts)
         #jelenlegi_alanyok_label.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-        
         
         ##POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
         populate_games_fogado(self)

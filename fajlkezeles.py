@@ -38,8 +38,9 @@ def keres(fajlnev, keresendo) -> int: #?? EZ MII #Ez megmondja, hogy az adott st
             i+=1
             sor: str = f.readline()
             lista = sor.split(";")
-    if sor != "": return i
-    else: return -1
+    if sor != "": 
+        return i
+    return -1
 
 def jatek_torol(jatek_nev:str) -> None:
     jatekok: list = olvas("jatekok.txt")

@@ -40,7 +40,7 @@ def fogadasi_statisztika() -> None:
     jatek: str = ""
     i: int = 1
 
-    for s, lines in enumerate(jatekok_fajl):
+    for lines in jatekok_fajl:
         # ha fejlécben ; van
         if ";" in lines:
             fejlec_lista: list[str] = lines.split(";")
