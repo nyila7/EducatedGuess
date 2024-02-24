@@ -102,10 +102,11 @@ class menuFrame(customtkinter.CTkFrame):
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")        
     
     def register(self):
-        username = util.toplevel_input(self, "Felhasználónév megadása")
+        username, password = util.toplevel_username_password(self, "Regisztráció")
+        #username = util.toplevel_input(self, "Felhasználónév megadása")
         if username in {None, ""}:
             return
-        password = util.toplevel_input(self, "Jelszó megadása")
+        #password = util.toplevel_input(self, "Jelszó megadása")
         if password in {None, ""}:
             return
         if users.add_user(username, password):
