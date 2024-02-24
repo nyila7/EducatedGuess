@@ -139,9 +139,6 @@ class menuFrame(customtkinter.CTkFrame):
             command=lambda: controller.show_frame(
                 ranglistGUI.RanglistaFrame))
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-
-    
-    
     
     def bejelentkezes(self):
         username, password = util.toplevel_username_password(
