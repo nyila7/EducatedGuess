@@ -171,7 +171,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             hover_color="gray",
             command=self.jatek_letrehozas)
         leadas_button.grid(
-            row=12,
+            row=15,
             column=0,
             columnspan=2,
             padx=10,
@@ -320,7 +320,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Toplevel létrehozása
         kivalaszto = customtkinter.CTkToplevel(self)
-        kivalaszto.title("Fogadás leadása")
+        kivalaszto.title("Eredmény leadása")
         # kivalaszto.geometry("800x600")
         kivalaszto.grid_rowconfigure(0, weight=5)
         kivalaszto.grid_rowconfigure(1, weight=1)
