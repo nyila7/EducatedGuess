@@ -45,7 +45,9 @@ class App(customtkinter.CTk):
     def show_frame(self, cont):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
-            nev = util.toplevel_input(self, "Név megadása")
+            nev, password = util.toplevel_username_password(self, "Bejelentkezés")
+
+            # nev = util.toplevel_input(self, "Név megadása")
             if (nev is None) or (nev == ""):
                 return
             
@@ -55,7 +57,7 @@ class App(customtkinter.CTk):
             if users.get_hashed_password(nev) == None:
                 return util.toplevel_error(self, "Nincs ilyen felhasználó")
             
-            password = util.toplevel_input(self, "Jelszó megadása")
+            # password = util.toplevel_input(self, "Jelszó megadása")
             if (password is None) or (password == ""):
                 return
             if not users.verify_password(users.get_hashed_password(nev), password):
