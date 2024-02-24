@@ -9,7 +9,7 @@ def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(jatek_nev) != -1:
+            if sor.split(";")[1] == jatek_nev:
                 fogadasok.append(sor)
     return fogadasok
 
@@ -19,16 +19,13 @@ def fogadas_statisztika(jatek_nev:str):
     esemenyek: list[str] = esemenyek_sorszam(line_num)
     alanyok: list[str] = alanyok_sorszam(line_num)
 
-    for esemeny in esemenyek:
-        for alany in alanyok:
-            fogadasok_esemeny = []
-            for fogadas in fogadasok:
-                if fogadas.find(esemeny) != -1 and fogadas.find(alany) != -1:
-                    fogadasok_esemeny.append(fogadas)
-            print(fogadasok_esemeny)
+    for alany in alanyok:
+        for esemeny in esemenyek:
             osszes_tet = 0
-            for fogadas in fogadasok_esemeny:
-                osszes_tet += int(fogadas.split(";")[2])
+            for fogadas in fogadasok:
+                fogadas_lista = fogadas.split(";")
+                if (fogadas_lista[3] == alany) and (fogadas_lista[4] == esemeny):
+                    osszes_tet += int(fogadas_lista[2])
             yield (esemeny, alany, osszes_tet)
 
 def szerzo_jatekai(szerzo):
@@ -96,7 +93,7 @@ def get_szervezo_by_name(jatek_nev):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
-            if sor.find(jatek_nev) != -1:
+            if sor.split(";")[1] == jatek_nev:
                 return sor.split(";")[0]
 
 
@@ -118,7 +115,7 @@ def esemenyek_sorszam(line_num):
         #print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
-        esemenyek = sorok[line_num-1+alanyok_szama+1:line_num-1+alanyok_szama+1+esemenyek_szama]
+        esemenyek = sorok[line_num+alanyok_szama:line_num+alanyok_szama+esemenyek_szama]
         esemenyek = [x.strip() for x in esemenyek]
         return esemenyek
 
@@ -126,7 +123,7 @@ def line_num_by_name(name):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):
-            if sor.find(name) != -1:
+            if sor.split(";")[1] == name:
                 return i+1
 
 
@@ -152,7 +149,7 @@ def alanyok_sorszam(line_num):
         alany = [x.strip() for x in alany]
         return alany
 
-def toplevel_input(self, message) -> str | None:
+def toplevel_input(self, message) -> str:
     self.Up = customtkinter.CTkInputDialog(text=message, title="Input")
     
     if os.name != "posix":

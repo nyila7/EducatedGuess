@@ -11,7 +11,7 @@ def verify_password(hashed_password, password):
     except argon2.exceptions.VerifyMismatchError:
         return False
 
-def get_hashed_password(username) -> str | None:
+def get_hashed_password(username) -> str:
     with open("users.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:

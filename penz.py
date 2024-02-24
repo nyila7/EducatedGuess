@@ -4,7 +4,7 @@ def penzvon(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
         sorok: list[str] = [s.strip() for s in f.readlines()]
         for i, sor in enumerate(sorok):
-            if sor.find(nev) != -1:
+            if sor.split(":")[0] == nev:
                 balance: float = penzkerdez(nev)
                 if balance == -1:
                     return
@@ -24,7 +24,7 @@ def penzad(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         for i, sor in enumerate(sorok):
-            if sor.find(nev) != -1:
+            if sor.split(":")[0] == nev:
                 balance: float = penzkerdez(nev)
                 if balance == -1:
                     return
@@ -58,7 +58,7 @@ def penzkerdez(nev: str) -> float:
     with open("penz.txt", mode="r", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         for sor in sorok:
-            if sor.find(nev) != -1:
+            if sor.split(":")[0] == nev:
                 return float(sor.split(":")[1].strip())
     return -1
 
