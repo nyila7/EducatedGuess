@@ -1,7 +1,7 @@
+import os
 import customtkinter
 from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
-import os
 
 def fogadasok_by_name(jatek_nev):
     fogadasok = []
@@ -10,8 +10,26 @@ def fogadasok_by_name(jatek_nev):
             if ";" in sor:
                 if sor.split(";")[1] == jatek_nev:
                     fogadasok.append(sor)
-
     return fogadasok
+
+def nyeremeny_osszes(jatek_nev, alany, esemeny): # egy adott alany-esemenyhez kigyujti az ossznyeremenyt
+    eredmeny = ""
+    szorzo = 1
+    ossznyeremeny = 0
+
+    with open("eredmenyek.txt", mode="r") as f:
+        sorok = f.readlines()
+        for sor in sorok:
+            sorlista = sor.split()
+            if (sorlista[0], sorlista[1]) == (alany, esemeny):
+                eredmeny, szorzo = sorlista[2], sorlista[3]
+
+    fogadasok = fogadasok_by_name(jatek_nev)
+    for fogadas in fogadasok:
+        fogadas_lista = fogadas.split(";")
+        if (fogadas_lista[3], fogadas_lista[4], fogadas_lista[5]) == (alany, esemeny, eredmeny):
+            ossznyeremeny += fogadas_lista[2]*szorzo
+    return ossznyeremeny
 
 def fogadas_statisztika(jatek_nev:str):
     fogadasok = fogadasok_by_name(jatek_nev)
@@ -253,7 +271,8 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
             if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
                 k += 1
                 m += int(sor[2])
-    if k==0 or m==0: return 0
+    if k*m == 0: 
+        return 0
     return round(1+5/(1+2.7182**(3-m/k**2/20)),2)
 
 
