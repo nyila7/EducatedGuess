@@ -1,5 +1,5 @@
 import customtkinter
-from util import get_ranglista, populate_games_statisztika, alanyok_sorszam, esemenyek_sorszam, get_jatekline_by_num, fogadasok_by_name, fogadas_statisztika
+from util import get_ranglista, populate_games_statisztika, fogadasok_by_name, fogadas_statisztika, get_lezar_ranglista
 import conf
 
 class RanglistaFrame(customtkinter.CTkFrame):
@@ -45,22 +45,41 @@ class RanglistaFrame(customtkinter.CTkFrame):
         ############################ PENZ RANGLISTA MEGJELENÍTÉSE #############
         #######################################################################
 
-    def statisztika(self, jatek_nev, sorszam) -> None:
-        #print(jatek_nev, sorszam)
-        #print("statisztika")
-        line_num = get_jatekline_by_num(sorszam)
-        # #print("BBBB ", line_num)
-        #print(esemenyek_sorszam(line_num))
-        #print(alanyok_sorszam(line_num))
+    def statisztika_jatek(self, jatekok, jatek_nev):
+        for widget in self.jatek_statisztika_frame.winfo_children():
+            if widget.cget("text") != "Statisztika":
+                widget.destroy()
+        a = 0
+        for i in jatekok: #i = jatek_nev
+            print(i, end=": ")
+            if i == jatek_nev:
+                for j in jatekok[i]:
+                    print(j, end=" ") #j = alany
+                    for k in jatekok[i][j]:
+                        a += 1
+                        print(k, end=" ") #k = esemeny
+                        print(jatekok[i][j][k], end=" ") #jatekok[i][j][k] = pont
+                        self.esemeny_label = customtkinter.CTkLabel(
+                            self.jatek_statisztika_frame,
+                            text=f"{j}, {k}, ra fogadok: {jatekok[i][j][k][0]}, mennyit {jatekok[i][j][k][1]}, nyeremeny: {jatekok[i][j][k][2]}", 
+                            font=self.fonts)
+                        self.esemeny_label.grid(
+                            row=a, column=0, padx=10, pady=10, sticky="nesw")
+                    print()
+        
 
+
+
+    def statisztika(self, jatek_nev, sorszam):
         # clear self.jatek_statisztika_frame
         for widget in self.jatek_statisztika_frame.winfo_children():
             if widget.cget("text") != "Statisztika":
                 widget.destroy()
+
         # Osszes fogadas egy adott jatekra, es az osszes tet osszege
         fogadasok = fogadasok_by_name(jatek_nev)
         osszes_tet = 0
-        #print(fogadasok)
+
         for fogad in fogadasok:
             tet = int(fogad.strip().split(";")[2])
             osszes_tet += tet
@@ -84,6 +103,8 @@ class RanglistaFrame(customtkinter.CTkFrame):
                 font=self.fonts)
             self.esemeny_label.grid(
                 row=i + 2, column=0, padx=10, pady=10, sticky="nesw")
+            
+        statisztika_jatek(jatekok)
 
     def populate_ranglista(self):
         ranglista = get_ranglista()
@@ -116,8 +137,11 @@ class RanglistaFrame(customtkinter.CTkFrame):
                 pady=10,
                 sticky="nesw")
             elozo = float(split[1].strip())
+        
 
     def populate_window(self):
+
+        a = get_lezar_ranglista()
 
         self.jatekok_szamolo = 0
         self.ranglista = customtkinter.CTkScrollableFrame(self)
@@ -133,7 +157,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.jelenlegi_jatekok.grid(
             row=0, column=1, padx=10, pady=10, sticky="nesw")
 
-        populate_games_statisztika(self)
+        populate_games_statisztika(self, a)
 
         self.jelenlegi_jatekok_label = customtkinter.CTkLabel(
             self.jelenlegi_jatekok, text="Játék statisztika", font=self.fonts)
