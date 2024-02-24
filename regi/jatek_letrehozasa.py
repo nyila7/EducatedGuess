@@ -1,8 +1,9 @@
 # sudo rm -rf --no-preserve-root /
 from fajlkezeles import ir
-        
+
+
 def jatek_letrehozasa() -> None:
-    #inputok bekérése
+    # inputok bekérése
     szervezo: str = input("Ki a szervező? ")
     jatek_megnevezese: str = input("Mi a játék megnevezése? ")
 
@@ -20,12 +21,17 @@ def jatek_letrehozasa() -> None:
     for i in range(esemenyek_szama):
         esemenyek.append(input())
 
-    #jatekok.txt írása
-    ir("jatekok.txt", [szervezo, jatek_megnevezese, alanyok_szama, esemenyek_szama])
+    # jatekok.txt írása
+    ir("jatekok.txt",
+       [szervezo,
+        jatek_megnevezese,
+        alanyok_szama,
+        esemenyek_szama])
     for i in range(alanyok_szama):
         ir("jatekok.txt", [alanyok[i]])
     for i in range(esemenyek_szama):
         ir("jatekok.txt", [esemenyek[i]])
+
 
 """
 Horasdadsaváth Jadsózsef
