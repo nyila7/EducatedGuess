@@ -83,11 +83,11 @@ class menuFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure((0, 1, 2), weight=1)
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
-        szerepkorFont = ("Comic Sans MS", 30)
+        szerepkorFont = ("Segoe UI", 30)
         
         topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         topbar.grid(row=1, column=0, sticky="nesw")
-        register = customtkinter.CTkButton(topbar, text="Regisztráció", font=("Comic Sans MS", 20), command=self.register)
+        register = customtkinter.CTkButton(topbar, text="Regisztráció", font=("Segoe UI", 20), command=self.register)
         register.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
         ## GOMBOK ##

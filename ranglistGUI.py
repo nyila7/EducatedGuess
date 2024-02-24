@@ -11,7 +11,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
         
-        self.fonts = ("Comic Sans MS", 22)
+        self.fonts = ("Segoe UI", 22)
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
 

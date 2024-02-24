@@ -22,7 +22,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         # Default nevek
         self.names = ["Fruzsina","Ábel","Benjámin","Genovéva","Angel","Leona","Titusz","Simon","Boldizsár","Attila","Ramóna","Gyöngyvér","Marcell","Melánia","Ágota","Erno","Veronika","Bódog","Loránd","Loránt","Gusztáv","Antal","Antónia","Piroska","Sára","Márió","Sebestyén","Fábián","Ágnes","Artúr" ]
         
-        self.fonts = ("Comic Sans MS", 30)
+        self.fonts = ("Segoe UI", 30)
         
         self.szerzo_neve = ""
         self.toplevel_window = None

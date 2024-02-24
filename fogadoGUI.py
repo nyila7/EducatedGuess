@@ -15,7 +15,7 @@ class FogadoFrame(customtkinter.CTkFrame):
 
         self.nev = ""
 
-        self.fonts = ("Comic Sans MS", 30)
+        self.fonts = ("Segoe UI", 30)
 
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nesw")
