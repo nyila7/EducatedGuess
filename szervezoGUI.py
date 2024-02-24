@@ -118,9 +118,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
     def jatek_letrehozas(self):
         jatek_nevek = get_game_names()
-        alanyok_szama = len(alany_inputok) -1
+        alanyok_szama = len(alany_inputok)
         alanyok = [alany.get() for alany in alany_inputok]
-        esemenyek_szama = len(esemenyek_inputok) -1
+        esemenyek_szama = len(esemenyek_inputok)
         esemenyek = [esemenyek.get() for esemenyek in esemenyek_inputok]
 
         ## HIBAKEZELÉS ##
@@ -129,6 +129,17 @@ class SzervezoFrame(customtkinter.CTkFrame):
             return toplevel_error(self, "Ez a játék már létezik")
         if self.jatek_megnevezese == "":
             return toplevel_error(self, "A játék neve nem lehet üres")
+        # Ha üres valamelyik input, akkor nem számoljuk bele azt
+        # print(alanyok)
+        # print(esemenyek)
+        # print(alanyok_szama, esemenyek_szama)
+        for i in alanyok:
+            if '' == i:
+                alanyok_szama -= 1
+        for i in esemenyek:
+            if '' == i:
+                esemenyek_szama -= 1
+
 
         ## FÁJLBA ÍRÁS ##
         # Fejléc

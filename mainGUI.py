@@ -49,8 +49,6 @@ class App(customtkinter.CTk):
             if nev in {None, ""}:
                 return
             
-            if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
-                penz.penzinit(nev)
             
             if users.get_hashed_password(nev) is None:
                 return util.toplevel_error(self, "Nincs ilyen felhasználó")
@@ -61,6 +59,8 @@ class App(customtkinter.CTk):
             if not users.verify_password(users.get_hashed_password(nev), password):
                 return util.toplevel_error(self, "Hibás jelszó")
             
+            if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
+                penz.penzinit(nev)
             print("Sikeres bejelentkezés")
 
             # Név átadása a frame-nek

@@ -3,8 +3,6 @@ from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
 import os
 
-
-
 def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
@@ -12,6 +10,7 @@ def fogadasok_by_name(jatek_nev):
             if ";" in sor:
                 if sor.split(";")[1] == jatek_nev:
                     fogadasok.append(sor)
+
     return fogadasok
 
 def fogadas_statisztika(jatek_nev:str):
