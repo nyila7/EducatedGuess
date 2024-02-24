@@ -74,6 +74,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
             text="Kijelentkezés",
             font=self.fonts,
             command=lambda: controller.show_frame("main"))
+        self.kijelentkezes.bind("<Enter>", self.on_hover)
+        self.kijelentkezes.bind("<Leave>", self.on_leave)
         self.kijelentkezes.grid(
             row=0,
             column=0,
@@ -197,6 +199,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="nesw")
+        self.szorzo1radio.select() ## default
+        
+
         ## Kilépés ##
         # kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )
         #######################################################################
@@ -217,7 +222,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ##########################################################################
     #################################### JATEK LÉTREHOZÁSA ###################
     ##########################################################################
-
+    def on_hover(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1], "underline"))
+    def on_leave(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1]))
+        
     def jatek_letrehozas(self):
         jatek_nevek = get_game_names()
         alanyok_szama = len(alany_inputok)
@@ -238,7 +247,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
                 diff.append(alany)
             check.append(alany)
         if len(diff) > 0:
-            if not (diff == ['']):
+            if not (set(diff) == {''}):
                 return toplevel_error(self, "Nem lehet két ugyanolyan nevű alany")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
         # #print(alanyok)

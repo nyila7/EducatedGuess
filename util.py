@@ -200,7 +200,7 @@ def get_szervezo_by_name(jatek_nev):
                     return sor.split(";")[0]
 
 
-def toplevel_input(self, message) -> str:
+def toplevel_input(message) -> str:
     input_window = customtkinter.CTkInputDialog(text=message, title="Input")
     centre_window(input_window, 400, 300)
     value: str | None = input_window.get_input()

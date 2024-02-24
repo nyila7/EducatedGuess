@@ -70,7 +70,6 @@ class RanglistaFrame(customtkinter.CTkFrame):
 
         # populate self.jatek_statisztika_frame
         for i, data in enumerate(fogadas_statisztika(jatek_nev)):
-            # #print("CCCC ", data)
             self.esemeny_label = customtkinter.CTkLabel(
                 self.jatek_statisztika_frame,
                 text=f"{data[0]}, Alany: {data[1]}, összesen: {data[2]} pont",
