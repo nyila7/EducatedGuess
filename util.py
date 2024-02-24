@@ -116,33 +116,38 @@ def get_szervezo_by_name(jatek_nev):
                     return sor.split(";")[0]
 
 def toplevel_input(self, message) -> str:
-    Up = customtkinter.CTkInputDialog(text=message, title="Input")
+    input_window = customtkinter.CTkInputDialog(text=message, title="Input")
     
-    if os.name != "posix":
-        Up.grab_set()
-    Up.geometry("400x200")
+    centre_window(input_window)
 
 
-    return Up.get_input()
+    return input_window.get_input()
 
 def toplevel_error(self, message):
-    Up = customtkinter.CTkToplevel(self)
-    Up.title("Error")
-    Up.geometry("400x200")
-    Up.resizable(False, False)
-    if os.name != "posix":
-        Up.grab_set()
-    customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
-    customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+    error_window = customtkinter.CTkToplevel(self)
+    error_window.title("Error")
+    error_window.resizable(False, False)
+    centre_window(error_window)
+    customtkinter.CTkLabel(error_window, text=message).grid(row=0, column=0, padx=10, pady=10)
+    customtkinter.CTkButton(error_window, text="OK", command=error_window.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
-def toplevel_username_password(self, message):
+def centre_window(self, width = 400, height = 300):
+    x = (self.winfo_screenwidth()//2)-(width//2) 
+    y = (self.winfo_screenheight()//2)-(height//2) - 25 
+    self.geometry("{}x{}+{}+{}".format(width, height, x, y))
+    if os.name != "posix":
+        self.grab_set()
+
+def toplevel_username_password(self):
+
     popup = customtkinter.CTkToplevel(self)
     popup.title("Bejelentkezés")
     popup.resizable(False, False)
-    popup.geometry("400x300")
+
+    centre_window(popup)
 
     popup.grid_columnconfigure(0, weight=1)
-
+    
     username = customtkinter.StringVar()
     password = customtkinter.StringVar()
 
@@ -154,9 +159,6 @@ def toplevel_username_password(self, message):
     password_input.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
     customtkinter.CTkButton(popup, text="OK", command=popup.destroy).grid(row=4, column=0, padx=10, pady=10)
     
-
-    if os.name != "posix":
-        popup.grab_set()
     popup.wait_window()
 
     username_szoveg = username.get()
