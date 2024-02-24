@@ -12,3 +12,6 @@ jatekok.txt
 penz.txt
 valtozok.txt
 users.txt
+build/*
+dist/*
+mainGUI.spec

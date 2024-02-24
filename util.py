@@ -102,7 +102,7 @@ def populate_games(self) -> None:
 def populate_games_fogado(self) -> None:
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if ";" in sor:
+            if ";" in sor and (sor.strip().split(";")[0] != self.nev):
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(
                     self.jelenlegi_jatekok,
@@ -231,10 +231,10 @@ def centre_window(self, width=400, height=300):
         self.grab_set()
 
 
-def toplevel_username_password(self):
+def toplevel_username_password(self, title: str):
 
     popup = customtkinter.CTkToplevel(self)
-    popup.title("Bejelentkezés")
+    popup.title(title)
     popup.resizable(False, False)
 
     centre_window(popup)
