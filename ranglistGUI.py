@@ -12,7 +12,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=100)
         self.grid_rowconfigure(1, weight=1)
 
-        self.fonts = ("Segoe UI", 24)
+        self.fonts = ("Segoe UI", 20)
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(
             row=1,
@@ -64,7 +64,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
                         #jatekok[i][j][k] = pont
                         self.esemeny_label = customtkinter.CTkLabel(
                             self.jatek_statisztika_frame,
-                            text=f"{j}, {k}, ra fogadok: {jatekok[i][j][k][0]}, mennyit {jatekok[i][j][k][1]}, nyeremeny: {jatekok[i][j][k][2]}", 
+                            text=f"{j}, {k} | Fogadók: {jatekok[i][j][k][0]} | Mennyit: {jatekok[i][j][k][1]} | Nyeremény: {jatekok[i][j][k][2]}", 
                             font=self.fonts)
                         self.esemeny_label.grid(
                             row=a, column=0, padx=10, pady=10, sticky="nesw")
@@ -112,12 +112,11 @@ class RanglistaFrame(customtkinter.CTkFrame):
         for i, data in enumerate(fogadas_statisztika(jatek_nev)):
             self.esemeny_label = customtkinter.CTkLabel(
                 self.jatek_statisztika_frame,
-                text=f"{data[0]}, Alany: {data[1]}, összesen: {data[2]} pont",
+                text=f"{data[0]}, {data[1]}, összesen: {data[2]} pont",
                 font=self.fonts)
             self.esemeny_label.grid(
                 row=i + 2, column=0, padx=10, pady=10, sticky="nesw")
-            
-        statisztika_jatek(jatekok)
+
 
     def populate_ranglista(self):
         ranglista = get_ranglista()
@@ -180,6 +179,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         self.jatek_statisztika_frame = customtkinter.CTkScrollableFrame(self)
         self.jatek_statisztika_frame.grid(
             row=0, column=2, padx=10, pady=10, sticky="nesw")
+        self.jatek_statisztika_frame.grid_columnconfigure(0, weight=1)
 
         self.jatek_statisztika_frame_label = customtkinter.CTkLabel(
             self.jatek_statisztika_frame, text="Statisztika", font=self.fonts)
