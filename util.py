@@ -115,16 +115,57 @@ def get_szervezo_by_name(jatek_nev):
                 if sor.split(";")[1] == jatek_nev:
                     return sor.split(";")[0]
 
+def toplevel_input(self, message) -> str:
+    Up = customtkinter.CTkInputDialog(text=message, title="Input")
+    
+    if os.name != "posix":
+        Up.grab_set()
+    Up.geometry("400x200")
+
+
+    return Up.get_input()
 
 def toplevel_error(self, message):
     Up = customtkinter.CTkToplevel(self)
     Up.title("Error")
     Up.geometry("400x200")
     Up.resizable(False, False)
+    if os.name != "posix":
+        Up.grab_set()
     customtkinter.CTkLabel(Up, text=message).grid(row=0, column=0, padx=10, pady=10)
     customtkinter.CTkButton(Up, text="OK", command=Up.destroy).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+def toplevel_username_password(self, message):
+    popup = customtkinter.CTkToplevel(self)
+    popup.title("Bejelentkezés")
+    popup.resizable(False, False)
+    popup.geometry("400x300")
+
+    popup.grid_columnconfigure(0, weight=1)
+
+    username = customtkinter.StringVar()
+    password = customtkinter.StringVar()
+
+    customtkinter.CTkLabel(popup, text="Felhasználónév").grid(row=0, column=0, padx=10, pady=10)
+    username_input = customtkinter.CTkEntry(popup, textvariable=username)
+    username_input.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+    customtkinter.CTkLabel(popup, text="Jelszó").grid(row=2, column=0, padx=10, pady=10)
+    password_input = customtkinter.CTkEntry(popup, show="*", textvariable=password)
+    password_input.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+    customtkinter.CTkButton(popup, text="OK", command=popup.destroy).grid(row=4, column=0, padx=10, pady=10)
+    
+
     if os.name != "posix":
-        self.Up.grab_set()
+        popup.grab_set()
+    popup.wait_window()
+
+    username_szoveg = username.get()
+    password_szoveg = password.get()
+
+    if username_szoveg == "" or password_szoveg == "":
+        return None, None
+    return username_szoveg, password_szoveg
+
 
 
 def esemenyek_sorszam(line_num):
@@ -169,15 +210,6 @@ def alanyok_sorszam(line_num):
         alany = [x.strip() for x in alany]
         return alany
 
-def toplevel_input(self, message) -> str:
-    self.Up = customtkinter.CTkInputDialog(text=message, title="Input")
-    
-    if os.name != "posix":
-        self.Up.grab_set()
-    self.Up.geometry("400x200")
-
-
-    return self.Up.get_input()
 
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)

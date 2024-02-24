@@ -45,22 +45,22 @@ class App(customtkinter.CTk):
     def show_frame(self, cont):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
-            nev = util.toplevel_input(self, "Név megadása")
-            if nev in {None, ""}:
+            nev, password = util.toplevel_username_password(self, "Bejelentkezés")
+
+            # nev = util.toplevel_input(self, "Név megadása")
+            if nev is None:
+                return
+            if password is None:
                 return
             
             
-            if users.get_hashed_password(nev) is None:
-                return util.toplevel_error(self, "Nincs ilyen felhasználó")
-            
-            password = util.toplevel_input(self, "Jelszó megadása")
-            if password in {None, ""}:
-                return
-            if not users.verify_password(users.get_hashed_password(nev), password):
-                return util.toplevel_error(self, "Hibás jelszó")
+            if (users.get_hashed_password(nev) is None) or not users.verify_password(users.get_hashed_password(nev), password):
+                return util.toplevel_error(self, "Sikertelen belépés")
+
             
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
+                
             print("Sikeres bejelentkezés")
 
             # Név átadása a frame-nek
@@ -100,11 +100,12 @@ class menuFrame(customtkinter.CTkFrame):
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")        
     
     def register(self):
-        username = util.toplevel_input(self, "Felhasználónév megadása")
-        if username in {None, ""}:
+        username, password = util.toplevel_username_password(self, "Regisztráció")
+        #username = util.toplevel_input(self, "Felhasználónév megadása")
+        if username is None:
             return
-        password = util.toplevel_input(self, "Jelszó megadása")
-        if password in {None, ""}:
+        #password = util.toplevel_input(self, "Jelszó megadása")
+        if password is None:
             return
         if users.add_user(username, password):
             util.toplevel_success(self, "Sikeres regisztráció")
