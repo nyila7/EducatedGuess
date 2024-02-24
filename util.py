@@ -55,6 +55,7 @@ def fogadas_statisztika(jatek_nev: str):
                         fogadas_lista[4] == esemeny):
                     osszes_tet += int(fogadas_lista[2])
             yield (esemeny, alany, osszes_tet)
+            print(nyeremeny_osszes(jatek_nev, alany, esemeny))
 
 
 def szorzo_by_line_num(line_num):
@@ -417,13 +418,9 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
     with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
-        # #print("B BBBBBBBBBBBBBBB")
         for line in f:
             sor: list[str] = line.split(";")
-            # #print(sor)
             if sor[1] == jatek:
-                # #print("CCCCCCCCCCCCC")
                 fogado, tipp, tet = sor[0], sor[5], sor[2]
                 if tipp.strip() == eredmeny:
-                    # #print(fogado, tet, szorzo, "AAAAAAAAAAA")
                     penzad(fogado, float(tet) * szorzo)

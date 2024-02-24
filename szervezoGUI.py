@@ -231,6 +231,15 @@ class SzervezoFrame(customtkinter.CTkFrame):
             return toplevel_error(self, "Ez a játék már létezik")
         if self.jatek_megnevezese == "":
             return toplevel_error(self, "A játék neve nem lehet üres")
+        check = []
+        diff = []
+        for alany in alanyok:
+            if alany in check:
+                diff.append(alany)
+            check.append(alany)
+        if len(diff) > 0:
+            if not (diff == ['']):
+                return toplevel_error(self, "Nem lehet két ugyanolyan nevű alany")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
         # #print(alanyok)
         # #print(esemenyek)
