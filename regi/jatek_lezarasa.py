@@ -3,19 +3,25 @@
 import os
 from fajlkezeles import ir, sor_olvas, jatek_torol
 from penz import penzvon
-## TODO FUNCTINOK EXCPORT MASIK FAJL ? IDK
+# TODO FUNCTINOK EXCPORT MASIK FAJL ? IDK
+
+
 def szorzo_szamitas(jatek, szemely, esemeny):
     k = 0
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
-            if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
+            if (sor[1] == jatek) and (
+                    sor[3] == szemely) and (sor[4] == esemeny):
                 k += 1
-    if k==0: return 0
+    if k == 0:
+        return 0
     else:
-        return round(1+5/(2**(k-1)),2)
+        return round(1 + 5 / (2**(k - 1)), 2)
 
-def szemelyek_lekerdez(sorszam) -> list: # a játék fejlécének a sorszámát kell megadni
+
+# a játék fejlécének a sorszámát kell megadni
+def szemelyek_lekerdez(sorszam) -> list:
     sor: list[str] = sor_olvas("jatekok.txt", sorszam)
     szemelyek_szama = int(sor[2])
     szemelyek = []
@@ -23,13 +29,21 @@ def szemelyek_lekerdez(sorszam) -> list: # a játék fejlécének a sorszámát 
         szemelyek.append(sor_olvas("jatekok.txt", sorszam + i))
     return szemelyek
 
-def esemenyek_lekerdez(sorszam):# -> list: # a játék fejlécének a sorszámát kell megadni
+
+# -> list: # a játék fejlécének a sorszámát kell megadni
+def esemenyek_lekerdez(sorszam):
     sor: list[str] = sor_olvas("jatekok.txt", sorszam)
     esemenyek_szama, szemelyek_szama = int(sor[3]), int(sor[2])
     esemenyek: list = []
     for i in range(1, esemenyek_szama + 1):
-        esemenyek.append(sor_olvas("jatekok.txt", sorszam + szemelyek_szama + i))
+        esemenyek.append(
+            sor_olvas(
+                "jatekok.txt",
+                sorszam +
+                szemelyek_szama +
+                i))
     return esemenyek
+
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
@@ -38,7 +52,8 @@ def pontszamitas(jatek, eredmeny, szorzo) -> None:
             if sor[1] == jatek:
                 fogado, tipp, tet = sor[0], sor[5], sor[2]
                 if tipp == eredmeny:
-                    penzvon(fogado,-tet*szorzo)
+                    penzvon(fogado, -tet * szorzo)
+
 
 def lezaras() -> None:
     try:
@@ -52,15 +67,16 @@ def lezaras() -> None:
     sorszam = -1
     # keresse meg a kezdő sort (sorszam)
 
-    if not os.path.exists("jatekok.txt") or not os.path.exists("fogadasok.txt"):
+    if not os.path.exists(
+            "jatekok.txt") or not os.path.exists("fogadasok.txt"):
         print("Még nincs egy játék vagy fogadás se")
         return
 
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for i, sor in enumerate(f):
             if (nev + ";" + jatek) in sor:
-                sorszam: int = i+1
-    
+                sorszam: int = i + 1
+
     if sorszam != -1:
 
         ir("eredmenyek.txt", [jatek])
@@ -72,9 +88,11 @@ def lezaras() -> None:
             for esemeny in esemenyek:
                 print(szemely, esemeny)
                 szorzo = szorzo_szamitas(jatek, szemely, esemeny)
-                eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
+                eredmeny: str = input(str(
+                    szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
 
-                ir("eredmenyek.txt", [szemely[0], esemeny[0], eredmeny, szorzo])
+                ir("eredmenyek.txt", [szemely[0],
+                   esemeny[0], eredmeny, szorzo])
                 pontszamitas(jatek, eredmeny, szorzo)
 
         jatek_torol(jatek)
