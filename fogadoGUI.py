@@ -30,14 +30,24 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.kijelentkezes = customtkinter.CTkButton(
             self.topbar,
             text="Kijelentkezés",
-            font=self.fonts,
-            command=lambda: controller.show_frame("main"))
+            font=(self.fonts[0], self.fonts[1]),
+            command=lambda: controller.show_frame("main"),
+            fg_color="transparent",
+            text_color="firebrick1",
+            hover=False)
+        self.kijelentkezes.bind("<Enter>", self.on_hover)
+        self.kijelentkezes.bind("<Leave>", self.on_leave)
         self.kijelentkezes.grid(
             row=0,
             column=0,
             padx=10,
             pady=10,
             sticky="nesw")
+        
+    def on_hover(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1], "underline"))
+    def on_leave(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1]))
 
     def set_nev(self, nev):
         self.nev = nev

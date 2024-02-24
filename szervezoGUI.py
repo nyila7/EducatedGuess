@@ -74,6 +74,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
             text="Kijelentkezés",
             font=self.fonts,
             command=lambda: controller.show_frame("main"))
+        self.kijelentkezes.bind("<Enter>", self.on_hover)
+        self.kijelentkezes.bind("<Leave>", self.on_leave)
         self.kijelentkezes.grid(
             row=0,
             column=0,
@@ -217,7 +219,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ##########################################################################
     #################################### JATEK LÉTREHOZÁSA ###################
     ##########################################################################
-
+    def on_hover(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1], "underline"))
+    def on_leave(self, event):
+        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1]))
+        
     def jatek_letrehozas(self):
         jatek_nevek = get_game_names()
         alanyok_szama = len(alany_inputok)
