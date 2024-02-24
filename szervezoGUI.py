@@ -197,6 +197,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="nesw")
+        self.szorzo1radio.select() ## default
         
 
         ## Kilépés ##
@@ -240,7 +241,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
                 diff.append(alany)
             check.append(alany)
         if len(diff) > 0:
-            if not (diff == ['']):
+            if not (set(diff) == {''}):
                 return toplevel_error(self, "Nem lehet két ugyanolyan nevű alany")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
         # print(alanyok)
