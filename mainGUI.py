@@ -28,7 +28,11 @@ class App(customtkinter.CTk):
         self.frames = {}
 
         # A fájlok létrehozása, ha nem léteznek
-        current_dir = os.path.dirname(os.path.abspath(__file__))
+
+        #check if folder exists
+        if not os.path.exists(conf.assets_path):
+            os.mkdir(conf.assets_path)
+        
 
         for file in (
             "penz.txt",
