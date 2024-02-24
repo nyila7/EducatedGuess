@@ -166,9 +166,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
 
     def jatek_lezaras(self, jatek_nev, sorszam): #TODO passthrough
-        #TODO Játék eltüntetése     
         #TODO Pontszámítás
-        #TODO Szerző csak a saját játékát tudja lezárni
         # Események és személyek kiolvasása
         line_num = line_num_by_name(jatek_nev)
         esemenyek = esemenyek_sorszam(line_num)
@@ -196,7 +194,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
             customtkinter.CTkLabel(matrix, text=i, font=self.fonts).grid(row=0, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="ew")
             for j in szemelyek:
                 customtkinter.CTkLabel(matrix, text=j, font=self.fonts).grid(row=szemelyek.index(j)+1, column=0, padx=10, pady=10, sticky="ew")
-                lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts)
+                lezaras_inputok = customtkinter.CTkEntry(matrix, font=self.fonts, width=300)
+                #make it 100px wide
                 lezaras_inputok.grid(row=szemelyek.index(j)+1, column=esemenyek.index(i)+1, padx=10, pady=10, sticky="ew")
                 self.entryk.append(lezaras_inputok)
 

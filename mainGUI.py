@@ -13,8 +13,7 @@ class App(customtkinter.CTk):
 
         ## Ablak beállítások ##
         self.title("Fogadói rendszer")
-        self.geometry("1600x900")
-        #self.resizable(False, False)
+        util.centre_window(self, 1600, 900)
         customtkinter.set_appearance_mode("dark")  # Módok: system (default), light, dark
         container = customtkinter.CTkFrame(self)
         container.pack(side = "top", fill = "both", expand = True)
@@ -45,7 +44,7 @@ class App(customtkinter.CTk):
     def show_frame(self, cont):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
-            nev, password = util.toplevel_username_password(self, "Bejelentkezés")
+            nev, password = util.toplevel_username_password(self)
 
             # nev = util.toplevel_input(self, "Név megadása")
             if nev is None:
@@ -60,7 +59,7 @@ class App(customtkinter.CTk):
             
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
-                
+
             print("Sikeres bejelentkezés")
 
             # Név átadása a frame-nek
@@ -100,7 +99,7 @@ class menuFrame(customtkinter.CTkFrame):
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")        
     
     def register(self):
-        username, password = util.toplevel_username_password(self, "Regisztráció")
+        username, password = util.toplevel_username_password(self)
         #username = util.toplevel_input(self, "Felhasználónév megadása")
         if username is None:
             return
