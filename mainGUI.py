@@ -52,7 +52,7 @@ class App(customtkinter.CTk):
             if password is None:
                 return
             
-            
+            # error checking
             if (users.get_hashed_password(nev) is None) or not users.verify_password(users.get_hashed_password(nev), password):
                 return util.toplevel_error(self, "Sikertelen belépés")
 
