@@ -1,7 +1,7 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num, szerzo_jatekai, szorzo_by_line_num
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num, szerzo_jatekai, szorzo_by_line_num, centre_window
 import os
 import conf
 
@@ -303,8 +303,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     #################################### JÁTÉK LEZÁRÁSA ######################
     ##########################################################################
 
-    def jatek_lezaras(self, jatek_nev, sorszam):  # TODO passthrough
-        # TODO Pontszámítás
+    def jatek_lezaras(self, jatek_nev, sorszam): 
         # Események és személyek kiolvasása
         line_num = line_num_by_name(jatek_nev)
         esemenyek = esemenyek_sorszam(line_num)
@@ -380,11 +379,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="nesw")
+        centre_window(kivalaszto, 0, 0)
 
         # Toplevel megjelenítésének beállításai (fuj windows)
         kivalaszto.transient(self)  # type: ignore
-        if os.name != "posix":
-            kivalaszto.grab_set()
+
         kivalaszto.lift()
         kivalaszto.focus_force()
         kivalaszto.wait_window()

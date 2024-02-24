@@ -202,7 +202,7 @@ def get_szervezo_by_name(jatek_nev):
 
 def toplevel_input(self, message) -> str:
     input_window = customtkinter.CTkInputDialog(text=message, title="Input")
-    centre_window(input_window)
+    centre_window(input_window, 400, 300)
     value: str | None = input_window.get_input()
     return value if value is not None else ""
 
@@ -211,7 +211,7 @@ def toplevel_error(self, message):
     error_window = customtkinter.CTkToplevel(self)
     error_window.title("Error")
     error_window.resizable(False, False)
-    centre_window(error_window)
+    centre_window(error_window, 400, 300)
     customtkinter.CTkLabel(
         error_window,
         text=message).grid(
@@ -230,12 +230,21 @@ def toplevel_error(self, message):
         pady=10)
 
 
-def centre_window(self, width=400, height=300):
-    x = (self.winfo_screenwidth() // 2) - (width // 2)
-    y = (self.winfo_screenheight() // 2) - (height // 2) - 25
-    self.geometry("{}x{}+{}+{}".format(width, height, x, y))
-    if os.name != "posix":
-        self.grab_set()
+def centre_window(self, width, height):
+    if width != 0 and height != 0:
+        x = (self.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.winfo_screenheight() // 2) - (height // 2) - 25
+        self.geometry("{}x{}+{}+{}".format(width, height, x, y))
+        if os.name != "posix":
+            self.grab_set()
+    else:
+        self.update_idletasks()
+        self.update()
+        x = (self.winfo_screenwidth() // 2) - (self.winfo_width() // 2)
+        y = (self.winfo_screenheight() // 2) - (self.winfo_height() // 2) - 25
+        self.geometry("+{}+{}".format(x, y))
+        if os.name != "posix":
+            self.grab_set()
 
 
 def toplevel_username_password(self, title: str):
@@ -244,7 +253,7 @@ def toplevel_username_password(self, title: str):
     popup.title(title)
     popup.resizable(False, False)
 
-    centre_window(popup)
+    centre_window(popup, 400, 300)
 
     popup.grid_columnconfigure(0, weight=1)
 
@@ -339,7 +348,8 @@ def name_sorszam(sorszam):
 def toplevel_success(self, message):
     Up = customtkinter.CTkToplevel(self)
     Up.title("Success")
-    Up.geometry("400x200")
+    centre_window(Up, 400, 300)
+
     Up.resizable(False, False)
     customtkinter.CTkLabel(
         Up,
