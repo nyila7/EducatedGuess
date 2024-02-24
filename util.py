@@ -99,8 +99,8 @@ def get_jatekline_by_num(num) -> int:
             counter += 1
     return sorsz
 
-def get_game_names():
-    game_names = []
+def get_game_names() -> list[str]:
+    game_names: list[str] = []
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
