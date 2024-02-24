@@ -1,11 +1,11 @@
 import customtkinter
-from util import get_ranglista, populate_games_statisztika, fogadasok_by_name, fogadas_statisztika, get_lezar_ranglista
+from util import get_ranglista, populate_games_statisztika, fogadasok_by_name, fogadas_statisztika, get_lezar_ranglista, toplevel_error
 import conf
 
 class RanglistaFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
-
+        self.controller = controller
         self.grid_columnconfigure(0, weight=2)
         self.grid_columnconfigure(1, weight=2)
         self.grid_columnconfigure(2, weight=3)
@@ -153,9 +153,10 @@ class RanglistaFrame(customtkinter.CTkFrame):
 
     def populate_window(self):
 
+        
         a = get_lezar_ranglista()
-
         self.jatekok_szamolo = 0
+        
         self.ranglista = customtkinter.CTkScrollableFrame(self)
         self.ranglista.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
 

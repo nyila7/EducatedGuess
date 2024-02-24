@@ -169,29 +169,30 @@ def populate_games_statisztika(self, jatekok) -> None:
                     hover_color="gray")
                 jelenlegi_jatek_lezaras_butt.grid(
                     row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
-    for i in jatekok:
-        self.jatekok_szamolo += 1
-        jelenlegi_jatekok_list = customtkinter.CTkLabel(
-            self.jelenlegi_jatekok,
-            text=i,
-            font=self.fonts,
-            fg_color="gray",
-            corner_radius=10)
-        jelenlegi_jatekok_list.grid(
-            row=self.jatekok_szamolo,
-            column=0,
-            padx=10,
-            pady=10,
-            sticky="nesw")
-        jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(
-            self.jelenlegi_jatekok,
-            text="Statisztika",
-            font=self.fonts,
-            command=lambda x = jatekok, y = i: self.statisztika_jatek(x, y),
-            fg_color="blue",
-            hover_color="gray")
-        jelenlegi_jatek_lezaras_butt.grid(
-            row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
+    if jatekok is not None:
+        for i in jatekok:
+            self.jatekok_szamolo += 1
+            jelenlegi_jatekok_list = customtkinter.CTkLabel(
+                self.jelenlegi_jatekok,
+                text=i,
+                font=self.fonts,
+                fg_color="gray",
+                corner_radius=10)
+            jelenlegi_jatekok_list.grid(
+                row=self.jatekok_szamolo,
+                column=0,
+                padx=10,
+                pady=10,
+                sticky="nesw")
+            jelenlegi_jatek_lezaras_butt = customtkinter.CTkButton(
+                self.jelenlegi_jatekok,
+                text="Statisztika",
+                font=self.fonts,
+                command=lambda x = jatekok, y = i: self.statisztika_jatek(x, y),
+                fg_color="blue",
+                hover_color="gray")
+            jelenlegi_jatek_lezaras_butt.grid(
+                row=self.jatekok_szamolo, column=1, padx=10, pady=10, sticky="nesw")
 
 
 def get_jatekline_by_num(num) -> int:
@@ -457,23 +458,24 @@ def get_lezar_ranglista():
 
 
 
-    
-    jatekok = defaultdict(lambda : defaultdict(lambda : defaultdict(lambda : [0, 0, 0])))# jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit, mennyit kaptak vissza
-    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
-        jatekok["asd"]["a1"]["e1"] = [4, 2, 0]
-        for line in f: # 0: nev, 1: jatek, 2: tet, 3: alany, 4: esemeny, 5: tipp
-            line = line.strip().split(";")
-            jatekok[str(line[1])][str(line[3])][str(line[4])][0] += 1
-            jatekok[str(line[1])][str(line[3])][str(line[4])][1] += int(line[2])
-    with open(conf.path("eredmenyek.txt"), mode="r", encoding="utf-8") as f:
-        for line in f: # nev \n alany;esemeny;eredmeny;szorzo;osszpontszam
-            if ";" not in line:
-                jatek = line.strip()
-            else:
+    try:
+        jatekok = defaultdict(lambda : defaultdict(lambda : defaultdict(lambda : [0, 0, 0])))# jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit, mennyit kaptak vissza
+        with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
+            jatekok["asd"]["a1"]["e1"] = [4, 2, 0]
+            for line in f: # 0: nev, 1: jatek, 2: tet, 3: alany, 4: esemeny, 5: tipp
                 line = line.strip().split(";")
-                jatekok[jatek][str(line[0])][str(line[1])][2] += float(line[4])
-    return(jatekok)
-
+                jatekok[str(line[1])][str(line[3])][str(line[4])][0] += 1
+                jatekok[str(line[1])][str(line[3])][str(line[4])][1] += int(line[2])
+        with open(conf.path("eredmenyek.txt"), mode="r", encoding="utf-8") as f:
+            for line in f: # nev \n alany;esemeny;eredmeny;szorzo;osszpontszam
+                if ";" not in line:
+                    jatek = line.strip()
+                else:
+                    line = line.strip().split(";")
+                    jatekok[jatek][str(line[0])][str(line[1])][2] += float(line[4])
+        return(jatekok)
+    except Exception as e:
+        return None
 
 def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek, szorzovalue) -> None:  # sorszam a 1, 5, 9, 16
     ##print(szerzo, jatek_nev, line_num, eredmeny_matrix)
