@@ -75,7 +75,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Alanyok input belekattintáskor új input mező létrehozása
         alany_inputok[-1].bind("<1>", self.alany_input_click)
-        alany_inputok[-1].bind("<Tab>", self.alany_input_click)
+        alany_inputok[-2].bind("<Tab>", self.alany_input_click)
 
         ## ESEMÉNYEK ##
         # Események label
@@ -91,7 +91,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         esemenyek_inputok.append(esemenyek_input2)
         # Események input belekattintáskor új input mező létrehozása
         esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
-        esemenyek_inputok[-1].bind("<Tab>", self.esemenyek_input_click)
+        esemenyek_inputok[-2].bind("<Tab>", self.esemenyek_input_click)
 
         ## LEADÁS ##
         # Létrehozás gomb
@@ -288,7 +288,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             alany_inputok.append(customtkinter.CTkEntry(self.form, font=self.fonts, placeholder_text=placeholder))
             alany_inputok[-1].grid(row=len(alany_inputok)+2, column=0, padx=30, pady=10, sticky="news")
             alany_inputok[-1].bind("<1>", self.alany_input_click)
-            alany_inputok[-1].bind("<Tab>", self.alany_input_click)
+            alany_inputok[-2].bind("<Tab>", self.alany_input_click)
 
     # Új esemény input mező létrehozása
     def esemenyek_input_click(self, event): #TODO passthrough
@@ -297,5 +297,5 @@ class SzervezoFrame(customtkinter.CTkFrame):
             esemenyek_inputok.append(customtkinter.CTkEntry(self.form, font=self.fonts, placeholder_text="asd"))
             esemenyek_inputok[-1].grid(row=len(esemenyek_inputok)+2, column=1, padx=30, pady=10, sticky="news")
             esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)
-            esemenyek_inputok[-1].bind("<Tab>", self.esemenyek_input_click)
+            esemenyek_inputok[-2].bind("<Tab>", self.esemenyek_input_click)
             
