@@ -39,7 +39,7 @@ def keres(fajlnev, keresendo) -> int:  # ?? EZ MII #Ez megmondja, hogy az adott 
     n: int = len(keresendo)
     with open(conf.path(fajlnev), mode="r", encoding="utf-8") as f:
         while (lista[:(n)] != keresendo) and (sor != ""):
-            #print(lista[:(n)])
+            # print(lista[:(n)])
             i += 1
             sor: str = f.readline()
             lista = sor.split(";")

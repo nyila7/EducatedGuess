@@ -6,7 +6,6 @@ import conf
 from collections import defaultdict
 
 
-
 def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
@@ -68,6 +67,7 @@ def szorzo_by_line_num(line_num):
             if ";" in sor:
                 if i + 1 == line_num:
                     return str(sor.split(";")[4])
+
 
 def szerzo_jatekai(szerzo):
     jatekok = []
@@ -188,7 +188,7 @@ def populate_games_statisztika(self, jatekok) -> None:
                 self.jelenlegi_jatekok,
                 text="Statisztika",
                 font=self.fonts,
-                command=lambda x = jatekok, y = i: self.statisztika_jatek(x, y),
+                command=lambda x=jatekok, y=i: self.statisztika_jatek(x, y),
                 fg_color="blue",
                 hover_color="gray")
             jelenlegi_jatek_lezaras_butt.grid(
@@ -348,7 +348,7 @@ def sorszam_by_line_num(line_num):
             if ";" in sor:
                 sorszam += 1
             if i + 1 == line_num:
-                #print("sorszambylinenume", sorszam)
+                # print("sorszambylinenume", sorszam)
                 return sorszam
 
 
@@ -361,7 +361,8 @@ def alanyok_sorszam(line_num):
         # strip all \n
         alany = [x.strip() for x in alany]
         return alany
-    
+
+
 def alanyok_sorszam_eredmenyek(jatek_nev):
     alanyok = False
     alany = []
@@ -376,6 +377,7 @@ def alanyok_sorszam_eredmenyek(jatek_nev):
             else:
                 if alanyok:
                     alany.append(line.split(";")[0])
+
 
 def esemenyek_sorszam_eredmenyek(jatek_nev):
     alanyok = False
@@ -394,12 +396,9 @@ def esemenyek_sorszam_eredmenyek(jatek_nev):
                     alany.append(line.split(";")[1])
 
 
-
-
-
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
-    #print("name sorszam::: ", line_num)
+    # print("name sorszam::: ", line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         jatek = sorok[get_jatekline_by_num(sorszam) - 1]
@@ -435,6 +434,7 @@ def get_ranglista():
     penzek.sort(key=lambda x: x[1], reverse=True)
     return [f"{elem[0]}: {elem[1]}" for elem in penzek]
 
+
 def get_eredmenyek_nevek():
     with open(conf.path("eredmenyek.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
@@ -444,7 +444,10 @@ def get_eredmenyek_nevek():
                 lezart_nevek.append(sor.strip())
         return lezart_nevek
 
-#TODO asddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsddddddddddddddddddd
+# TODO
+# asddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsddddddddddddddddddd
+
+
 def get_lezar_ranglista():
     # nevek = get_eredmenyek_nevek()
     # print(nevek)
@@ -455,36 +458,42 @@ def get_lezar_ranglista():
     #         for esemeny in esemenyek:
     #             pass
 
-
-
-
     try:
-        jatekok = defaultdict(lambda : defaultdict(lambda : defaultdict(lambda : [0, 0, 0])))# jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit, mennyit kaptak vissza
+        # jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit,
+        # mennyit kaptak vissza
+        jatekok = defaultdict(
+            lambda: defaultdict(
+                lambda: defaultdict(
+                    lambda: [
+                        0, 0, 0])))
         with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
             jatekok["asd"]["a1"]["e1"] = [4, 2, 0]
-            for line in f: # 0: nev, 1: jatek, 2: tet, 3: alany, 4: esemeny, 5: tipp
+            for line in f:  # 0: nev, 1: jatek, 2: tet, 3: alany, 4: esemeny, 5: tipp
                 line = line.strip().split(";")
                 jatekok[str(line[1])][str(line[3])][str(line[4])][0] += 1
-                jatekok[str(line[1])][str(line[3])][str(line[4])][1] += int(line[2])
+                jatekok[str(line[1])][str(line[3])][str(
+                    line[4])][1] += int(line[2])
         with open(conf.path("eredmenyek.txt"), mode="r", encoding="utf-8") as f:
-            for line in f: # nev \n alany;esemeny;eredmeny;szorzo;osszpontszam
+            for line in f:  # nev \n alany;esemeny;eredmeny;szorzo;osszpontszam
                 if ";" not in line:
                     jatek = line.strip()
                 else:
                     line = line.strip().split(";")
-                    jatekok[jatek][str(line[0])][str(line[1])][2] += float(line[4])
-        return(jatekok)
+                    jatekok[jatek][str(line[0])][str(
+                        line[1])][2] += float(line[4])
+        return (jatekok)
     except Exception as e:
         return None
 
+
 def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek, szorzovalue) -> None:  # sorszam a 1, 5, 9, 16
-    ##print(szerzo, jatek_nev, line_num, eredmeny_matrix)
+    # print(szerzo, jatek_nev, line_num, eredmeny_matrix)
 
     ir("eredmenyek.txt", [jatek_nev])
     for i, esemeny in enumerate(esemenyek):
         for j, szemely in enumerate(szemelyek):
             # igen
-            
+
             if szorzovalue.strip() == "1":
 
                 szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
@@ -493,10 +502,9 @@ def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek, 
             # eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
             eredmeny = eredmeny_matrix[i][j]
 
-
-
             osszpontszam = pontszamitas(jatek_nev, eredmeny, szorzo)
-            ir("eredmenyek.txt", [szemely, esemeny, eredmeny, szorzo, osszpontszam])
+            ir("eredmenyek.txt", [szemely, esemeny,
+               eredmeny, szorzo, osszpontszam])
 
         jatek_torol(jatek_nev)
 

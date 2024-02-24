@@ -29,10 +29,9 @@ class App(customtkinter.CTk):
 
         # A fájlok létrehozása, ha nem léteznek
 
-        #check if folder exists
+        # check if folder exists
         if not os.path.exists(conf.assets_path):
             os.mkdir(conf.assets_path)
-        
 
         for file in (
             "penz.txt",
@@ -59,30 +58,26 @@ class App(customtkinter.CTk):
 
     def show_frame(self, cont, bejelentkezve=False, nev=""):
         if (cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
-            if bejelentkezve == False:
+            if not bejelentkezve:
                 return util.toplevel_error(self, "Kérem jelentkezzen be")
 
-            if penz.penzkerdez(nev) == -1:  # Ha a nev nem létezik a penz.txt-ben
+            if penz.penzkerdez(nev) == - \
+                    1:  # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
 
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
-       
-       
+
         if (cont == "main"):
             cont = menuFrame
 
         # refresh frame before showing
         frame = self.frames[cont]
-        
+
         if cont in (fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
             frame.populate_window()
         # wait 0.15 sec before continuing
         self.after(150, frame.tkraise)
-
-
-
-
 
 
 class menuFrame(customtkinter.CTkFrame):
@@ -106,12 +101,14 @@ class menuFrame(customtkinter.CTkFrame):
         self.bejelentkezesbutton = customtkinter.CTkButton(
             self.topbar, text="Bejelentkezés", font=(
                 "Segoe UI", 20), command=self.bejelentkezes)
-        self.bejelentkezesbutton.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-       
+        self.bejelentkezesbutton.grid(
+            row=0, column=2, padx=10, pady=10, sticky="nesw")
+
         self.kijelentkezesbutt = customtkinter.CTkButton(
-                self.topbar, text="Kijelentkezés", font=(
+            self.topbar, text="Kijelentkezés", font=(
                 "Segoe UI", 20), command=self.kijelentkezes)
-        self.kijelentkezesbutt.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+        self.kijelentkezesbutt.grid(
+            row=0, column=2, padx=10, pady=10, sticky="nesw")
         self.kijelentkezesbutt.grid_forget()
 
         ## GOMBOK ##
@@ -139,37 +136,40 @@ class menuFrame(customtkinter.CTkFrame):
             command=lambda: controller.show_frame(
                 ranglistGUI.RanglistaFrame))
         self.buttonR.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-    
+
     def bejelentkezes(self):
         username, password = util.toplevel_username_password(
             self, "Bejelentkezés")
-        
-        if username is None or password is None: return util.toplevel_error(self, "Sikertelen belépés")
 
-        if users.verify_password(users.get_hashed_password(username), password) != False:
+        if username is None or password is None:
+            return util.toplevel_error(self, "Sikertelen belépés")
+
+        if users.verify_password(
+                users.get_hashed_password(username),
+                password):
             util.toplevel_success(self, "Sikeres belépés")
             self.bejelentkezve = True
             self.nev = username
-                    
+
             self.nevlabel = customtkinter.CTkLabel(
                 self, text="Bejelentkezve: " + self.nev, font=("Segoe UI", 20))
             self.nevlabel.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
-            
-            self.kijelentkezesbutt.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+
+            self.kijelentkezesbutt.grid(
+                row=0, column=2, padx=10, pady=10, sticky="nesw")
             self.bejelentkezesbutton.grid_forget()
 
-            
         else:
             util.toplevel_error(self, "Sikertelen belépés")
-    
+
     def kijelentkezes(self):
         self.bejelentkezve = False
         self.nev = ""
 
-
         self.nevlabel.destroy()
         self.kijelentkezesbutt.grid_forget()
-        self.bejelentkezesbutton.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+        self.bejelentkezesbutton.grid(
+            row=0, column=2, padx=10, pady=10, sticky="nesw")
 
         util.toplevel_success(self, "Sikeres kijelentkezés")
 

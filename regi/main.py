@@ -9,12 +9,13 @@ from lekerdezesek import lekerdezes
 
 def menu() -> None:
     while True:
-        #print("""
-1-\tJáték létrehozása
-2-\tFogadás leadása
-3-\tJáték lezárása
-4-\tLekérdezések
-5-\tKilépés
+
+        # print("""
+1 -\tJáték létrehozása
+2 -\tFogadás leadása
+3 -\tJáték lezárása
+4 -\tLekérdezések
+5 -\tKilépés
 """)
         a = 0
         try:

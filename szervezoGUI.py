@@ -202,8 +202,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="nesw")
-        self.szorzo1radio.select() ## default
-        
+        self.szorzo1radio.select()  # default
 
         ## Kilépés ##
         # kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )
@@ -225,7 +224,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ##########################################################################
     #################################### JATEK LÉTREHOZÁSA ###################
     ##########################################################################
-        
+
     def jatek_letrehozas(self):
         jatek_nevek = get_game_names()
         alanyok_szama = len(alany_inputok)
@@ -247,7 +246,8 @@ class SzervezoFrame(customtkinter.CTkFrame):
             check.append(alany)
         if len(diff) > 0:
             if not (set(diff) == {''}):
-                return toplevel_error(self, "Nem lehet két ugyanolyan nevű alany")
+                return toplevel_error(
+                    self, "Nem lehet két ugyanolyan nevű alany")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
         # #print(alanyok)
         # #print(esemenyek)
@@ -263,11 +263,11 @@ class SzervezoFrame(customtkinter.CTkFrame):
         # Fejléc
         ir("jatekok.txt",
             [self.szerzo_neve,
-            self.jatek_megnevezese,
-            alanyok_szama,
-            esemenyek_szama,
-            self.szorzovalue.get()])
-        
+             self.jatek_megnevezese,
+             alanyok_szama,
+             esemenyek_szama,
+             self.szorzovalue.get()])
+
         # Alanyok
         for i in range(alanyok_szama):
             ir("jatekok.txt", [alanyok[i]])
@@ -311,7 +311,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     #################################### JÁTÉK LEZÁRÁSA ######################
     ##########################################################################
 
-    def jatek_lezaras(self, jatek_nev, sorszam): 
+    def jatek_lezaras(self, jatek_nev, sorszam):
         # Események és személyek kiolvasása
         line_num = line_num_by_name(jatek_nev)
         esemenyek = esemenyek_sorszam(line_num)
@@ -400,9 +400,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Eredmények kiolvasása, és 2D mátrixba rendezése
         eredmeny_matrix = []
-        
+
         for i in range(len(self.entryk)):
-            #print(self.entryk[i].get())
+            # print(self.entryk[i].get())
             if i % szemelyek_szama == 0:
                 eredmeny_matrix.append([])
             eredmeny_matrix[-1].append(self.entryk[i].get().strip())
@@ -448,9 +448,17 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ##########################################################################
 
     def on_hover(self, event):
-        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1], "underline"))
+        self.kijelentkezes.configure(
+            font=(
+                conf.kijelentkezo_font[0],
+                conf.kijelentkezo_font[1],
+                "underline"))
+
     def on_leave(self, event):
-        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1]))
+        self.kijelentkezes.configure(
+            font=(
+                conf.kijelentkezo_font[0],
+                conf.kijelentkezo_font[1]))
     # Túl hosszú input ellenőrzése
 
     def nev_ellenorzes(self, *args):
