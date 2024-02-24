@@ -52,6 +52,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         a = 2
         
         fogadasok = 0
+        fogadasok_osszeg = 0
         osszes_tet = 0
 
         for i in jatekok: #i = jatek_nev
@@ -70,10 +71,11 @@ class RanglistaFrame(customtkinter.CTkFrame):
                             row=a, column=0, padx=10, pady=10, sticky="nesw")
                         fogadasok += jatekok[i][j][k][0]
                         osszes_tet += jatekok[i][j][k][1]
+                        fogadasok_osszeg += jatekok[i][j][k][2]
 
         self.ossztet_label = customtkinter.CTkLabel(
             self.jatek_statisztika_frame,
-            text=f"{fogadasok} fogadas, összesen: {osszes_tet} pont",
+            text=f"Fogadások száma: {fogadasok} | Feltett tét: {fogadasok_osszeg} | Nyeremény: {osszes_tet} pont",
             font=self.fonts)
         self.ossztet_label.grid(
             row=1,
@@ -99,7 +101,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
 
         self.ossztet_label = customtkinter.CTkLabel(
             self.jatek_statisztika_frame,
-            text=f"{len(fogadasok)} fogadas, összesen: {osszes_tet} pont",
+            text=f"Fogadások száma: {len(fogadasok)} | Feltett tét: {osszes_tet} pont",
             font=self.fonts)
         self.ossztet_label.grid(
             row=1,
@@ -112,7 +114,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         for i, data in enumerate(fogadas_statisztika(jatek_nev)):
             self.esemeny_label = customtkinter.CTkLabel(
                 self.jatek_statisztika_frame,
-                text=f"{data[0]}, {data[1]}, összesen: {data[2]} pont",
+                text=f"{data[0]} | {data[1]} | Összesen: {data[2]} pont",
                 font=self.fonts)
             self.esemeny_label.grid(
                 row=i + 2, column=0, padx=10, pady=10, sticky="nesw")

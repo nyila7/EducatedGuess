@@ -463,6 +463,7 @@ def get_lezar_ranglista():
         jatekok["asd"]["a1"]["e1"] = [4, 2, 0]
         for line in f: # 0: nev, 1: jatek, 2: tet, 3: alany, 4: esemeny, 5: tipp
             line = line.strip().split(";")
+            print(line)
             jatekok[str(line[1])][str(line[3])][str(line[4])][0] += 1
             jatekok[str(line[1])][str(line[3])][str(line[4])][1] += int(line[2])
     with open(conf.path("eredmenyek.txt"), mode="r", encoding="utf-8") as f:
