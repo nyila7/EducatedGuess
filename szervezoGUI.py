@@ -1,7 +1,7 @@
 import customtkinter
 import random
 from fajlkezeles import ir
-from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num, szerzo_jatekai
+from util import populate_games, get_jatekline_by_num, get_game_names, toplevel_error, esemenyek_sorszam, alanyok_sorszam, lezaras, get_szervezo_by_name, line_num_by_name, sorszam_by_line_num, szerzo_jatekai, szorzo_by_line_num
 import os
 import conf
 
@@ -172,7 +172,31 @@ class SzervezoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="s")
-
+        self.szorzovalue = customtkinter.IntVar()
+        self.szorzo1radio = customtkinter.CTkRadioButton(
+            self.form,
+            text="Régi szorzó",
+            font=self.fonts,
+            variable=self.szorzovalue,
+            value=1)
+        self.szorzo1radio.grid(
+            row=13,
+            column=0,
+            padx=10,
+            pady=10,
+            sticky="nesw")
+        self.szorzo2radio = customtkinter.CTkRadioButton(
+            self.form,
+            text="Új szorzó",
+            font=self.fonts,
+            variable=self.szorzovalue,
+            value=2)
+        self.szorzo2radio.grid(
+            row=13,
+            column=1,
+            padx=10,
+            pady=10,
+            sticky="nesw")
         ## Kilépés ##
         # kilepes_button = customtkinter.CTkButton(self.form, text="Vissza", corner_radius=10, font=self.fonts, )
         #######################################################################
@@ -208,9 +232,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
         if self.jatek_megnevezese == "":
             return toplevel_error(self, "A játék neve nem lehet üres")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
-        # print(alanyok)
-        # print(esemenyek)
-        # print(alanyok_szama, esemenyek_szama)
+        # #print(alanyok)
+        # #print(esemenyek)
+        # #print(alanyok_szama, esemenyek_szama)
         for i in alanyok:
             if '' == i:
                 alanyok_szama -= 1
@@ -224,7 +248,9 @@ class SzervezoFrame(customtkinter.CTkFrame):
             [self.szerzo_neve,
             self.jatek_megnevezese,
             alanyok_szama,
-            esemenyek_szama])
+            esemenyek_szama,
+            self.szorzovalue.get()])
+        
         # Alanyok
         for i in range(alanyok_szama):
             ir("jatekok.txt", [alanyok[i]])
@@ -358,31 +384,36 @@ class SzervezoFrame(customtkinter.CTkFrame):
 
         # Eredmények kiolvasása, és 2D mátrixba rendezése
         eredmeny_matrix = []
+        
         for i in range(len(self.entryk)):
+            #print(self.entryk[i].get())
             if i % szemelyek_szama == 0:
                 eredmeny_matrix.append([])
             eredmeny_matrix[-1].append(self.entryk[i].get().strip())
 
-        # A lezárás function passthrougholjásai
-        szerzo_nev = get_szervezo_by_name(jatek_nev)
-        line_num = get_jatekline_by_num(sorszam)
-
-        # Ha van üres mező, akkor sikertelen a lezárás
+        # Nem lehet üres mező
         for i in eredmeny_matrix:
             for j in i:
                 if j == "":
                     self.entryk = []
                     return toplevel_error(self, "Nem lehet üres mező")
 
+        # A lezárás function passthrougholjásai
+        szerzo_nev = get_szervezo_by_name(jatek_nev)
+        line_num = get_jatekline_by_num(sorszam)
+
         # Játek szerző neve, jatek neve, sor szama fileban (1..5..9..15), 2d
         # matrix
+        szorzo = szorzo_by_line_num(line_num)
+
         lezaras(
             szerzo_nev,
             jatek_nev,
             line_num,
             eredmeny_matrix,
             esemenyek,
-            szemelyek)
+            szemelyek,
+            szorzo)
 
         # Entryk törlése
         self.entryk = []

@@ -12,14 +12,14 @@ def penzvon(nev: str, osszeg: int) -> None:
                     if balance == -1:
                         return
                     # ezekre már asszem nincs szükség
-                    print(f"{nev} egyenlege: {balance}")
-                    print(sorok[i])
+                    #print(f"{nev} egyenlege: {balance}")
+                    #print(sorok[i])
                     sorok[i] = f"{nev}:{balance-osszeg}"
 
         f.truncate(0)
         f.seek(0)
 
-        print(sorok)
+        #print(sorok)
 
         for i, sor in enumerate(sorok):
             f.write(sor.strip() + "\n")
@@ -33,14 +33,14 @@ def penzad(nev: str, osszeg: int) -> None:
                 balance: float = penzkerdez(nev)
                 if balance == -1:
                     return
-                print(f"{nev} egyenlege: {balance}")
-                print(sorok[i])
+                #print(f"{nev} egyenlege: {balance}")
+                #print(sorok[i])
                 sorok[i] = f"{nev}:{balance+osszeg}"
 
         f.truncate(0)
         f.seek(0)
 
-        print(sorok)
+        #print(sorok)
 
         for i, sor in enumerate(sorok):
             f.write(sor.strip() + "\n")

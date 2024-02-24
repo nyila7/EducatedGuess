@@ -77,7 +77,7 @@ class App(customtkinter.CTk):
             if penz.penzkerdez(nev) == -1:  # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
 
-            print("Sikeres bejelentkezés")
+            #print("Sikeres bejelentkezés")
 
             # Név átadása a frame-nek
             self.frames[cont].set_nev(nev)
@@ -87,7 +87,7 @@ class App(customtkinter.CTk):
         # refresh frame before showing
         frame = self.frames[cont]
         if cont in (fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame):
-            print("asd")
+            #print("asd")
             frame.populate_window()
         # wait 0.15 sec before continuing
         self.after(150, frame.tkraise)

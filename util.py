@@ -57,7 +57,13 @@ def fogadas_statisztika(jatek_nev: str):
             yield (esemeny, alany, osszes_tet)
 
 
-
+def szorzo_by_line_num(line_num):
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
+        sorok = f.readlines()
+        for i, sor in enumerate(sorok):
+            if ";" in sor:
+                if i + 1 == line_num:
+                    return str(sor.split(";")[4])
 
 def szerzo_jatekai(szerzo):
     jatekok = []
@@ -274,10 +280,10 @@ def toplevel_username_password(self, title: str):
 
 
 def esemenyek_sorszam(line_num):
-    # print(line_num)
+    # #print(line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
-        # print("AAA ", sorok[line_num-1])
+        # #print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         esemenyek = sorok[line_num +
@@ -305,12 +311,12 @@ def sorszam_by_line_num(line_num):
             if ";" in sor:
                 sorszam += 1
             if i + 1 == line_num:
-                print("sorszambylinenume", sorszam)
+                #print("sorszambylinenume", sorszam)
                 return sorszam
 
 
 def alanyok_sorszam(line_num):
-    # print(line_num)
+    # #print(line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
@@ -322,7 +328,7 @@ def alanyok_sorszam(line_num):
 
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
-    print("name sorszam::: ", line_num)
+    #print("name sorszam::: ", line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         jatek = sorok[get_jatekline_by_num(sorszam) - 1]
@@ -358,14 +364,20 @@ def get_ranglista():
     return [f"{elem[0]}: {elem[1]}" for elem in penzek]
 
 
-def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) -> None:  # sorszam a 1, 5, 9, 16
-    print(szerzo, jatek_nev, line_num, eredmeny_matrix)
+
+def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek, szorzovalue) -> None:  # sorszam a 1, 5, 9, 16
+    ##print(szerzo, jatek_nev, line_num, eredmeny_matrix)
 
     ir("eredmenyek.txt", [jatek_nev])
     for i, esemeny in enumerate(esemenyek):
         for j, szemely in enumerate(szemelyek):
             # igen
-            szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
+            
+            if szorzovalue.strip() == "1":
+
+                szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
+            else:
+                szorzo = szorzo_szamitas2(jatek_nev, szemely, esemeny)
             # eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
             eredmeny = eredmeny_matrix[i][j]
 
@@ -405,13 +417,13 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
     with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
-        # print("B BBBBBBBBBBBBBBB")
+        # #print("B BBBBBBBBBBBBBBB")
         for line in f:
             sor: list[str] = line.split(";")
-            # print(sor)
+            # #print(sor)
             if sor[1] == jatek:
-                # print("CCCCCCCCCCCCC")
+                # #print("CCCCCCCCCCCCC")
                 fogado, tipp, tet = sor[0], sor[5], sor[2]
                 if tipp.strip() == eredmeny:
-                    # print(fogado, tet, szorzo, "AAAAAAAAAAA")
+                    # #print(fogado, tet, szorzo, "AAAAAAAAAAA")
                     penzad(fogado, float(tet) * szorzo)

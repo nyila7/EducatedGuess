@@ -10,14 +10,14 @@ def jatek_letrehozasa() -> None:
     # alanyok beolvasása soronként
     alanyok_szama = int(input("Hány alany van? "))
     alanyok: list = []
-    print("Kik az alanyok? (enter-rel elválasztva) ")
+    #print("Kik az alanyok? (enter-rel elválasztva) ")
     for i in range(alanyok_szama):
         alanyok.append(input())
 
     # események beolvasása soronként
     esemenyek_szama = int(input("Hány esemény van? "))
     esemenyek: list = []
-    print("Mik az események? (enter-rel elválasztva) ")
+    #print("Mik az események? (enter-rel elválasztva) ")
     for i in range(esemenyek_szama):
         esemenyek.append(input())
 
