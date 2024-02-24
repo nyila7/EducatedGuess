@@ -9,4 +9,5 @@ def path(fajl_nev: str) -> str:
 ## Fontok, Színek ##
 kis_font = ("Segoe UI", 16)
 nagy_font = ("Segoe UI", 24)
+kijelentkezo_font = ("Segoe UI", 24)
 

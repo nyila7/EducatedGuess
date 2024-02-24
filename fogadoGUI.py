@@ -2,7 +2,7 @@ import customtkinter
 from util import populate_games_fogado, esemenyek_sorszam, alanyok_sorszam, toplevel_error, toplevel_input, name_sorszam, toplevel_success, line_num_by_name
 from penz import penzvon, penzkerdez
 from fajlkezeles import ir
-
+import conf
 
 class FogadoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
@@ -30,7 +30,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         self.kijelentkezes = customtkinter.CTkButton(
             self.topbar,
             text="Kijelentkezés",
-            font=(self.fonts[0], self.fonts[1]),
+            font=conf.kijelentkezo_font,
             command=lambda: controller.show_frame("main"),
             fg_color="transparent",
             text_color="firebrick1",
@@ -45,9 +45,9 @@ class FogadoFrame(customtkinter.CTkFrame):
             sticky="nesw")
         
     def on_hover(self, event):
-        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1], "underline"))
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1], "underline"))
     def on_leave(self, event):
-        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1]))
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1]))
 
     def set_nev(self, nev):
         self.nev = nev

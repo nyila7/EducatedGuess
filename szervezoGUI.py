@@ -72,7 +72,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         self.kijelentkezes = customtkinter.CTkButton(
             self.topbar,
             text="Kijelentkezés",
-            font=self.fonts,
+            font=conf.kijelentkezo_font,
             command=lambda: controller.show_frame("main"),
             fg_color="transparent",
             text_color="firebrick1",
@@ -225,10 +225,6 @@ class SzervezoFrame(customtkinter.CTkFrame):
     ##########################################################################
     #################################### JATEK LÉTREHOZÁSA ###################
     ##########################################################################
-    def on_hover(self, event):
-        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1], "underline"))
-    def on_leave(self, event):
-        self.kijelentkezes.configure(font=(self.fonts[0], self.fonts[1]))
         
     def jatek_letrehozas(self):
         jatek_nevek = get_game_names()
@@ -451,6 +447,10 @@ class SzervezoFrame(customtkinter.CTkFrame):
     #################################### FÜGGVÉNYEK ##########################
     ##########################################################################
 
+    def on_hover(self, event):
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1], "underline"))
+    def on_leave(self, event):
+        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1]))
     # Túl hosszú input ellenőrzése
 
     def nev_ellenorzes(self, *args):
