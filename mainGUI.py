@@ -1,9 +1,9 @@
+import os
 import customtkinter
 import szervezoGUI
 import fogadoGUI
 import ranglistGUI
 import penz
-import os
 import util
 import users
 
@@ -46,17 +46,17 @@ class App(customtkinter.CTk):
         if(cont == szervezoGUI.SzervezoFrame or cont == fogadoGUI.FogadoFrame):
             # Név bekérése
             nev = util.toplevel_input(self, "Név megadása")
-            if (nev is None) or (nev == ""):
+            if nev in {None, ""}:
                 return
             
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
             
-            if users.get_hashed_password(nev) == None:
+            if users.get_hashed_password(nev) is None:
                 return util.toplevel_error(self, "Nincs ilyen felhasználó")
             
             password = util.toplevel_input(self, "Jelszó megadása")
-            if (password is None) or (password == ""):
+            if password in {None, ""}:
                 return
             if not users.verify_password(users.get_hashed_password(nev), password):
                 return util.toplevel_error(self, "Hibás jelszó")
@@ -70,11 +70,11 @@ class App(customtkinter.CTk):
 
         #refresh frame before showing
         frame = self.frames[cont]
-        if cont == fogadoGUI.FogadoFrame or cont == ranglistGUI.RanglistaFrame: 
+        if cont in (fogadoGUI.FogadoFrame, ranglistGUI.RanglistaFrame): 
             print("asd")
             frame.populate_window()
         #wait 0.15 sec before continuing
-        self.after(150, lambda: frame.tkraise())
+        self.after(150, frame.tkraise)
         
 class menuFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
@@ -88,7 +88,7 @@ class menuFrame(customtkinter.CTkFrame):
         
         topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         topbar.grid(row=1, column=0, sticky="nesw")
-        register = customtkinter.CTkButton(topbar, text="Regisztráció", font=("Comic Sans MS", 20), command=lambda : self.register())
+        register = customtkinter.CTkButton(topbar, text="Regisztráció", font=("Comic Sans MS", 20), command=self.register)
         register.grid(row=0, column=0, padx=10, pady=10, sticky="nesw")
         
         ## GOMBOK ##
@@ -101,10 +101,10 @@ class menuFrame(customtkinter.CTkFrame):
     
     def register(self):
         username = util.toplevel_input(self, "Felhasználónév megadása")
-        if username == None or username == "":
+        if username in {None, ""}:
             return
         password = util.toplevel_input(self, "Jelszó megadása")
-        if password == None or password == "":
+        if password in {None, ""}:
             return
         if users.add_user(username, password):
             util.toplevel_success(self, "Sikeres regisztráció")

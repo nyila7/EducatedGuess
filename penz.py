@@ -4,13 +4,14 @@ def penzvon(nev:str, osszeg:int) -> None:
     with open("penz.txt", mode="r+", encoding="utf-8") as f:
         sorok: list[str] = [s.strip() for s in f.readlines()]
         for i, sor in enumerate(sorok):
-            if sor.split(":")[0] == nev:
-                balance: float = penzkerdez(nev)
-                if balance == -1:
-                    return
-                print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
-                print(sorok[i])
-                sorok[i] = f"{nev}:{balance-osszeg}"
+            if ":" in sor:
+                if sor.split(":")[0] == nev:
+                    balance: float = penzkerdez(nev)
+                    if balance == -1:
+                        return
+                    print(f"{nev} egyenlege: {balance}") # ezekre már asszem nincs szükség
+                    print(sorok[i])
+                    sorok[i] = f"{nev}:{balance-osszeg}"
         
         f.truncate(0)
         f.seek(0)
@@ -58,8 +59,9 @@ def penzkerdez(nev: str) -> float:
     with open("penz.txt", mode="r", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         for sor in sorok:
-            if sor.split(":")[0] == nev:
-                return float(sor.split(":")[1].strip())
+            if ":" in sor:
+                if sor.split(":")[0] == nev:
+                    return float(sor.split(":")[1].strip())
     return -1
 
 
