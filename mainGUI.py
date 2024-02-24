@@ -6,7 +6,7 @@ import ranglistGUI
 import penz
 import util
 import users
-
+# pep8
 class App(customtkinter.CTk):
     def __init__(self):
         customtkinter.CTk.__init__(self)
