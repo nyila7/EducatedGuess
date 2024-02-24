@@ -24,9 +24,10 @@ def nyeremeny_osszes(jatek_nev, alany, esemeny):
     with open(conf.path("eredmenyek.txt"), mode="r") as f:
         sorok = f.readlines()
         for sor in sorok:
-            sorlista = sor.split()
-            if (sorlista[0], sorlista[1]) == (alany, esemeny):
-                eredmeny, szorzo = sorlista[2], sorlista[3]
+            if ";" in sor:
+                sorlista = sor.split(";")
+                if (sorlista[0], sorlista[1]) == (alany, esemeny):
+                    eredmeny, szorzo = sorlista[2], sorlista[3]
 
     fogadasok = fogadasok_by_name(jatek_nev)
     for fogadas in fogadasok:
