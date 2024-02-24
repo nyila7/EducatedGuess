@@ -22,7 +22,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
 
         self.kijelentkezes = customtkinter.CTkButton(
             self.topbar,
-            text="Kijelentkezés",
+            text="Vissza",
             font=conf.kijelentkezo_font,
             command=lambda: controller.show_frame("main"),
             fg_color="transparent",
