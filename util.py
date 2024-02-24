@@ -9,7 +9,7 @@ def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.split(";")[1] == jatek_nev:
+            if sor.find(name) != -1:
                 fogadasok.append(sor)
     return fogadasok
 
@@ -93,7 +93,7 @@ def get_szervezo_by_name(jatek_nev):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
-            if sor.split(";")[1] == jatek_nev:
+            if sor.find(name) != -1:
                 return sor.split(";")[0]
 
 
@@ -123,7 +123,7 @@ def line_num_by_name(name):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):
-            if sor.split(";")[1] == name:
+            if sor.find(name) != -1:
                 return i+1
 
 
