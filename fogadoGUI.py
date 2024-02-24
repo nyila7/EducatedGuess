@@ -55,9 +55,11 @@ class FogadoFrame(customtkinter.CTkFrame):
     def fogadas(self, nev, sorszam):
         # esemenyek clear
         for widget in self.esemenyek.winfo_children():
-            widget.destroy()
+            if widget.cget("text") != "Események":
+                widget.destroy()
         for widget in self.alanyok.winfo_children():
-            widget.destroy()
+            if widget.cget("text") != "Alanyok":
+                widget.destroy()
         # ESEMÉNYEK KIÍRÁSA
         line_num = line_num_by_name(nev)
         esemenyek = esemenyek_sorszam(line_num)
@@ -73,7 +75,7 @@ class FogadoFrame(customtkinter.CTkFrame):
                 y=line_num: self.comm(
                     x,
                     y)).grid(
-                row=i,
+                row=i+1,
                 column=0,
                 padx=10,
                 pady=10,
@@ -83,12 +85,13 @@ class FogadoFrame(customtkinter.CTkFrame):
         # #print(self.esemeny_value.get())
         alanyok = alanyok_sorszam(line_num)
         for widget in self.alanyok.winfo_children():
-            widget.destroy()
+            if widget.cget("text") != "Alanyok":
+                widget.destroy()
         for i, alany in enumerate(alanyok):
             alany = alany.strip()
             customtkinter.CTkLabel(
                 self.alanyok, text=alany, font=self.fonts).grid(
-                row=i, column=0, padx=10, pady=10, sticky="nesw")
+                row=i+1, column=0, padx=10, pady=10, sticky="nesw")
             customtkinter.CTkButton(
                 self.alanyok,
                 text="Fogadás",
@@ -99,7 +102,7 @@ class FogadoFrame(customtkinter.CTkFrame):
                     y),
                 fg_color="blue",
                 hover_color="gray").grid(
-                row=i,
+                row=i+1,
                 column=1,
                 padx=10,
                 pady=10,

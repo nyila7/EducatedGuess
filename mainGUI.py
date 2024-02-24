@@ -95,7 +95,7 @@ class menuFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         szerepkorFont = ("Segoe UI", 30)
         self.bejelentkezve = False
-
+        self.nev = ""
 
         self.topbar = customtkinter.CTkFrame(self, fg_color="transparent")
         self.topbar.grid(row=1, column=0, sticky="nesw")
