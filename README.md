@@ -2,14 +2,7 @@
 Dusza verseny
 
 ## Installation
-```
-git clone https://github.com/nyila7/Dusza2023-24.git
-cd Dusza2023-24
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python mainGUI.py
-```
+[Wiki](https://github.com/nyila7/Dusza2023-24/wiki)
 
 # Struktúra
 ```
