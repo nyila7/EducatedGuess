@@ -117,11 +117,9 @@ def get_szervezo_by_name(jatek_nev):
 
 def toplevel_input(self, message) -> str:
     input_window = customtkinter.CTkInputDialog(text=message, title="Input")
-    
     centre_window(input_window)
-
-
-    return input_window.get_input()
+    value: str | None = input_window.get_input()
+    return value if value is not None else ""
 
 def toplevel_error(self, message):
     error_window = customtkinter.CTkToplevel(self)
