@@ -73,7 +73,10 @@ class SzervezoFrame(customtkinter.CTkFrame):
             self.topbar,
             text="Kijelentkezés",
             font=self.fonts,
-            command=lambda: controller.show_frame("main"))
+            command=lambda: controller.show_frame("main"),
+            fg_color="transparent",
+            text_color="firebrick1",
+            hover=False)
         self.kijelentkezes.bind("<Enter>", self.on_hover)
         self.kijelentkezes.bind("<Leave>", self.on_leave)
         self.kijelentkezes.grid(
