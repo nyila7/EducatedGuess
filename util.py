@@ -120,21 +120,33 @@ def toplevel_error(self, message):
 def toplevel_username_password(self, message):
     popup = customtkinter.CTkToplevel(self)
     popup.title("Bejelentkezés")
-    popup.geometry("400x200")
     popup.resizable(False, False)
+    popup.geometry("400x300")
+
+    popup.grid_columnconfigure(0, weight=1)
+
     username = customtkinter.StringVar()
     password = customtkinter.StringVar()
+
+    customtkinter.CTkLabel(popup, text="Felhasználónév").grid(row=0, column=0, padx=10, pady=10)
     username_input = customtkinter.CTkEntry(popup, textvariable=username)
-    username_input.grid(row=0, column=0, padx=10, pady=10)
+    username_input.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+    customtkinter.CTkLabel(popup, text="Jelszó").grid(row=2, column=0, padx=10, pady=10)
     password_input = customtkinter.CTkEntry(popup, show="*", textvariable=password)
-    password_input.grid(row=1, column=0, padx=10, pady=10)
-    customtkinter.CTkButton(popup, text="OK", command=popup.destroy).grid(row=2, column=0, padx=10, pady=10)
+    password_input.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+    customtkinter.CTkButton(popup, text="OK", command=popup.destroy).grid(row=4, column=0, padx=10, pady=10)
     
+
     if os.name != "posix":
         popup.grab_set()
     popup.wait_window()
 
-    return username.get(), password.get()
+    username_szoveg = username.get()
+    password_szoveg = password.get()
+
+    if username_szoveg == "" or password_szoveg == "":
+        return None, None
+    return username_szoveg, password_szoveg
 
 
 

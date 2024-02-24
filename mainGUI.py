@@ -48,21 +48,19 @@ class App(customtkinter.CTk):
             nev, password = util.toplevel_username_password(self, "Bejelentkezés")
 
             # nev = util.toplevel_input(self, "Név megadása")
-            if (nev is None) or (nev == ""):
+            if nev is None:
+                return
+            if password is None:
                 return
             
             
-            if users.get_hashed_password(nev) is None:
-                return util.toplevel_error(self, "Nincs ilyen felhasználó")
-            
-            # password = util.toplevel_input(self, "Jelszó megadása")
-            if (password is None) or (password == ""):
-                return
-            if not users.verify_password(users.get_hashed_password(nev), password):
-                return util.toplevel_error(self, "Hibás jelszó")
+            if (users.get_hashed_password(nev) is None) or not users.verify_password(users.get_hashed_password(nev), password):
+                return util.toplevel_error(self, "Sikertelen belépés")
+
             
             if penz.penzkerdez(nev) == -1: # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
+                
             print("Sikeres bejelentkezés")
 
             # Név átadása a frame-nek
@@ -104,10 +102,10 @@ class menuFrame(customtkinter.CTkFrame):
     def register(self):
         username, password = util.toplevel_username_password(self, "Regisztráció")
         #username = util.toplevel_input(self, "Felhasználónév megadása")
-        if username in {None, ""}:
+        if username is None:
             return
         #password = util.toplevel_input(self, "Jelszó megadása")
-        if password in {None, ""}:
+        if password is None:
             return
         if users.add_user(username, password):
             util.toplevel_success(self, "Sikeres regisztráció")
