@@ -59,17 +59,17 @@ def lezaras() -> None:
     try:
         nev: str = input("Szervező neve: ")
     except ValueError:
-        #print("Hibás bemenet")
+        # print("Hibás bemenet")
     try:
         jatek: str = input("Játék neve: ")
     except ValueError:
-        #print("Hibás bemenet")
+        # print("Hibás bemenet")
     sorszam = -1
     # keresse meg a kezdő sort (sorszam)
 
     if not os.path.exists(
             "jatekok.txt") or not os.path.exists("fogadasok.txt"):
-        #print("Még nincs egy játék vagy fogadás se")
+        # print("Még nincs egy játék vagy fogadás se")
         return
 
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
@@ -83,10 +83,10 @@ def lezaras() -> None:
 
         esemenyek = esemenyek_lekerdez(sorszam)
         szemelyek = szemelyek_lekerdez(sorszam)
-        #print(esemenyek, szemelyek)
+        # print(esemenyek, szemelyek)
         for szemely in szemelyek:
             for esemeny in esemenyek:
-                #print(szemely, esemeny)
+                # print(szemely, esemeny)
                 szorzo = szorzo_szamitas(jatek, szemely, esemeny)
                 eredmeny: str = input(str(
                     szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
@@ -97,4 +97,4 @@ def lezaras() -> None:
 
         jatek_torol(jatek)
     else:
-        #print("A játék sajnos nem található.")
+        # print("A játék sajnos nem található.")

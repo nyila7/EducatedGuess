@@ -4,6 +4,7 @@ from penz import penzvon, penzkerdez
 from fajlkezeles import ir
 import conf
 
+
 class FogadoFrame(customtkinter.CTkFrame):
     def __init__(self, parent, controller):
 
@@ -43,11 +44,19 @@ class FogadoFrame(customtkinter.CTkFrame):
             padx=10,
             pady=10,
             sticky="nesw")
-        
+
     def on_hover(self, event):
-        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1], "underline"))
+        self.kijelentkezes.configure(
+            font=(
+                conf.kijelentkezo_font[0],
+                conf.kijelentkezo_font[1],
+                "underline"))
+
     def on_leave(self, event):
-        self.kijelentkezes.configure(font=(conf.kijelentkezo_font[0], conf.kijelentkezo_font[1]))
+        self.kijelentkezes.configure(
+            font=(
+                conf.kijelentkezo_font[0],
+                conf.kijelentkezo_font[1]))
 
     def set_nev(self, nev):
         self.nev = nev
@@ -75,7 +84,7 @@ class FogadoFrame(customtkinter.CTkFrame):
                 y=line_num: self.comm(
                     x,
                     y)).grid(
-                row=i+1,
+                row=i + 1,
                 column=0,
                 padx=10,
                 pady=10,
@@ -91,7 +100,7 @@ class FogadoFrame(customtkinter.CTkFrame):
             alany = alany.strip()
             customtkinter.CTkLabel(
                 self.alanyok, text=alany, font=self.fonts).grid(
-                row=i+1, column=0, padx=10, pady=10, sticky="nesw")
+                row=i + 1, column=0, padx=10, pady=10, sticky="nesw")
             customtkinter.CTkButton(
                 self.alanyok,
                 text="Fogadás",
@@ -102,7 +111,7 @@ class FogadoFrame(customtkinter.CTkFrame):
                     y),
                 fg_color="blue",
                 hover_color="gray").grid(
-                row=i+1,
+                row=i + 1,
                 column=1,
                 padx=10,
                 pady=10,
@@ -131,7 +140,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         if penz_input > penzkerdez(self.nev):
             toplevel_error(self, "Nincs elég pénzed")
             return
-        #print(sorszam)
+        # print(sorszam)
         jatek_nev = name_sorszam(sorszam)
         eredmeny = toplevel_input("Mi a tipped?")
         if eredmeny == "":
@@ -165,13 +174,17 @@ class FogadoFrame(customtkinter.CTkFrame):
 
         self.esemenyek = customtkinter.CTkScrollableFrame(self)
         self.esemenyek.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
-        jelenlegi_esemenyek_label = customtkinter.CTkLabel(self.esemenyek, text="Események", font=self.fonts)
-        jelenlegi_esemenyek_label.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
+        jelenlegi_esemenyek_label = customtkinter.CTkLabel(
+            self.esemenyek, text="Események", font=self.fonts)
+        jelenlegi_esemenyek_label.grid(
+            row=0, column=1, padx=10, pady=10, sticky="nesw")
 
         self.alanyok = customtkinter.CTkScrollableFrame(self)
         self.alanyok.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-        jelenlegi_alanyok_label = customtkinter.CTkLabel(self.alanyok, text="Alanyok", font=self.fonts)
-        jelenlegi_alanyok_label.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+        jelenlegi_alanyok_label = customtkinter.CTkLabel(
+            self.alanyok, text="Alanyok", font=self.fonts)
+        jelenlegi_alanyok_label.grid(
+            row=0, column=2, padx=10, pady=10, sticky="nesw")
 
         # POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
         populate_games_fogado(self)
