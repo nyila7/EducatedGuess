@@ -7,8 +7,10 @@ def fogadasok_by_name(jatek_nev):
     fogadasok = []
     with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(jatek_nev) != -1:
-                fogadasok.append(sor)
+            if ";" in sor:
+                if sor.split(";")[1] == jatek_nev:
+                    fogadasok.append(sor)
+
     return fogadasok
 
 def fogadas_statisztika(jatek_nev:str):
@@ -30,14 +32,14 @@ def szerzo_jatekai(szerzo):
     jatekok = []
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1 and (sor.strip().split(";")[0] == szerzo):
+            if ";" in sor and (sor.strip().split(";")[0] == szerzo):
                 jatekok.append(sor.strip().split(";")[1])
     return jatekok
 
 def populate_games(self) -> None:        
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1:
+            if ";" in sor:
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
@@ -47,7 +49,7 @@ def populate_games(self) -> None:
 def populate_games_fogado(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1:
+            if ";" in sor:
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.strip().split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
@@ -57,7 +59,7 @@ def populate_games_fogado(self) -> None:
 def populate_games_statisztika(self) -> None:
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1:
+            if ";" in sor:
                 self.jatekok_szamolo += 1
                 jelenlegi_jatekok_list = customtkinter.CTkLabel(self.jelenlegi_jatekok, text=sor.split(";")[1], font=self.fonts, fg_color="gray", corner_radius=10)
                 jelenlegi_jatekok_list.grid(row=self.jatekok_szamolo, column=0, padx=10, pady=10, sticky="nesw")
@@ -72,7 +74,7 @@ def get_jatekline_by_num(num) -> int:
     counter = 1
     sorsz = -1
     for i, sor in enumerate(sorok):
-        if sor.find(";") != -1:
+        if ";" in sor:
             if counter == num:
                 sorsz = i + 1
                 break
@@ -83,7 +85,7 @@ def get_game_names():
     game_names = []
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
-            if sor.find(";") != -1:
+            if ";" in sor:
                 game_names.append(sor.split(";")[1])
     return game_names
 
@@ -91,8 +93,9 @@ def get_szervezo_by_name(jatek_nev):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
-            if sor.find(jatek_nev) != -1:
-                return sor.split(";")[0]
+            if ";" in sor:
+                if sor.split(";")[1] == jatek_nev:
+                    return sor.split(";")[0]
 
 def toplevel_input(self, message) -> str:
     Up = customtkinter.CTkInputDialog(text=message, title="Input")
@@ -150,8 +153,9 @@ def line_num_by_name(name):
     with open("jatekok.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):
-            if sor.find(name) != -1:
-                return i+1
+            if ";" in sor:
+                if sor.split(";")[1] == name:
+                    return i+1
 
 
 def sorszam_by_line_num(line_num):
@@ -225,8 +229,7 @@ def szorzo_szamitas1(jatek, szemely, esemeny) -> float:
             if (sor[1]==jatek) and (sor[3]==szemely) and (sor[4]==esemeny):
                 k += 1
     if k==0: return 0
-    else:
-        return round(1+5/(2**(k-1)),2)
+    return round(1+5/(2**(k-1)),2)
 def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
     k: int = 0
     m: int = 0
@@ -237,8 +240,7 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
                 k += 1
                 m += int(sor[2])
     if k==0 or m==0: return 0
-    else:
-        return round(1+5/(1+2.7182**(3-m/k**2/20)),2)
+    return round(1+5/(1+2.7182**(3-m/k**2/20)),2)
 
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:

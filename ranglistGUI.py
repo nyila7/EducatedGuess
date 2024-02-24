@@ -41,13 +41,15 @@ class RanglistaFrame(customtkinter.CTkFrame):
             tet = int(fogad.strip().split(";")[2])
             osszes_tet += tet
 
-        self.ossztet_label = customtkinter.CTkLabel(self.jatek_statisztika_frame, text=f"Játék: {jatek_nev}, {len(fogadasok)} fogadas, összesen: {osszes_tet} pont", font=self.fonts)
+        self.ossztet_label = customtkinter.CTkLabel(self.jatek_statisztika_frame, text=f"{len(fogadasok)} fogadas, összesen: {osszes_tet} pont", font=self.fonts)
         self.ossztet_label.grid(row=1, column=0, padx=10, pady=10, sticky="nesw")
+
+
 
         ## populate self.jatek_statisztika_frame
         for i, data in enumerate(fogadas_statisztika(jatek_nev)):
             #print("CCCC ", data)
-            self.esemeny_label = customtkinter.CTkLabel(self.jatek_statisztika_frame, text=f"Esemény: {data[0]}, Alany: {data[1]}, összesen: {data[2]} pont", font=self.fonts)
+            self.esemeny_label = customtkinter.CTkLabel(self.jatek_statisztika_frame, text=f"{data[0]}, Alany: {data[1]}, összesen: {data[2]} pont", font=self.fonts)
             self.esemeny_label.grid(row=i+2, column=0, padx=10, pady=10, sticky="nesw")
 
     def populate_ranglista(self):

@@ -15,12 +15,13 @@ def get_hashed_password(username) -> str:
     with open("users.txt", mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
-            if sor.split(":")[0] == username:
-                return sor.split(":")[1].strip()
+            if ":" in sor:
+                if sor.split(":")[0] == username:
+                    return sor.split(":")[1].strip()
     return None
 
 def add_user(username, password) -> bool:
-    if get_hashed_password(username) != None:
+    if get_hashed_password(username) is not None:
         return False
     with open("users.txt", mode="a", encoding="utf-8") as f:
         f.write(f"{username}:{hash_password(password)}\n")
