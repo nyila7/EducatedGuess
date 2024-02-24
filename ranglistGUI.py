@@ -38,12 +38,12 @@ class RanglistaFrame(customtkinter.CTkFrame):
         #######################################################################
 
     def statisztika(self, jatek_nev, sorszam) -> None:
-        print(jatek_nev, sorszam)
-        print("statisztika")
+        #print(jatek_nev, sorszam)
+        #print("statisztika")
         line_num = get_jatekline_by_num(sorszam)
-        # print("BBBB ", line_num)
-        print(esemenyek_sorszam(line_num))
-        print(alanyok_sorszam(line_num))
+        # #print("BBBB ", line_num)
+        #print(esemenyek_sorszam(line_num))
+        #print(alanyok_sorszam(line_num))
 
         # clear self.jatek_statisztika_frame
         for widget in self.jatek_statisztika_frame.winfo_children():
@@ -52,7 +52,7 @@ class RanglistaFrame(customtkinter.CTkFrame):
         # Osszes fogadas egy adott jatekra, es az osszes tet osszege
         fogadasok = fogadasok_by_name(jatek_nev)
         osszes_tet = 0
-        print(fogadasok)
+        #print(fogadasok)
         for fogad in fogadasok:
             tet = int(fogad.strip().split(";")[2])
             osszes_tet += tet
@@ -70,7 +70,6 @@ class RanglistaFrame(customtkinter.CTkFrame):
 
         # populate self.jatek_statisztika_frame
         for i, data in enumerate(fogadas_statisztika(jatek_nev)):
-            # print("CCCC ", data)
             self.esemeny_label = customtkinter.CTkLabel(
                 self.jatek_statisztika_frame,
                 text=f"{data[0]}, Alany: {data[1]}, összesen: {data[2]} pont",

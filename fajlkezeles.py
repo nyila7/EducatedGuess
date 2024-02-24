@@ -39,7 +39,7 @@ def keres(fajlnev, keresendo) -> int:  # ?? EZ MII #Ez megmondja, hogy az adott 
     n: int = len(keresendo)
     with open(conf.path(fajlnev), mode="r", encoding="utf-8") as f:
         while (lista[:(n)] != keresendo) and (sor != ""):
-            print(lista[:(n)])
+            #print(lista[:(n)])
             i += 1
             sor: str = f.readline()
             lista = sor.split(";")
@@ -51,7 +51,7 @@ def keres(fajlnev, keresendo) -> int:  # ?? EZ MII #Ez megmondja, hogy az adott 
 def jatek_torol(jatek_nev: str) -> None:
     jatekok: list = olvas("jatekok.txt")
     for i, line in enumerate(jatekok):
-        # print(line)
+        # #print(line)
         if ";" in line:
             jatek_fejlec: list = line.split(";")
             if jatek_fejlec[1] == jatek_nev:
@@ -66,7 +66,7 @@ def jatek_torol(jatek_nev: str) -> None:
 
 # def jatek_esemeny_keresese(s): #s = sor indexe ahonnan kezdődik
 #     with open(conf.path("jatekok.txt"),  mode = "r", encoding = "utf-8") as f:
-#         print(f[s])
+#         #print(f[s])
 
 # jatek_esemeny_keresese(0)
-# print(sor_olvas("jatekok.txt", 1))
+# #print(sor_olvas("jatekok.txt", 1))

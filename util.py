@@ -58,7 +58,13 @@ def fogadas_statisztika(jatek_nev: str):
             print(nyeremeny_osszes(jatek_nev, alany, esemeny))
 
 
-
+def szorzo_by_line_num(line_num):
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
+        sorok = f.readlines()
+        for i, sor in enumerate(sorok):
+            if ";" in sor:
+                if i + 1 == line_num:
+                    return str(sor.split(";")[4])
 
 def szerzo_jatekai(szerzo):
     jatekok = []
@@ -194,7 +200,7 @@ def get_szervezo_by_name(jatek_nev):
                     return sor.split(";")[0]
 
 
-def toplevel_input(self, message) -> str:
+def toplevel_input(message) -> str:
     input_window = customtkinter.CTkInputDialog(text=message, title="Input")
     centre_window(input_window)
     value: str | None = input_window.get_input()
@@ -275,10 +281,10 @@ def toplevel_username_password(self, title: str):
 
 
 def esemenyek_sorszam(line_num):
-    # print(line_num)
+    # #print(line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
-        # print("AAA ", sorok[line_num-1])
+        # #print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         esemenyek = sorok[line_num +
@@ -306,12 +312,12 @@ def sorszam_by_line_num(line_num):
             if ";" in sor:
                 sorszam += 1
             if i + 1 == line_num:
-                print("sorszambylinenume", sorszam)
+                #print("sorszambylinenume", sorszam)
                 return sorszam
 
 
 def alanyok_sorszam(line_num):
-    # print(line_num)
+    # #print(line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
@@ -323,7 +329,7 @@ def alanyok_sorszam(line_num):
 
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
-    print("name sorszam::: ", line_num)
+    #print("name sorszam::: ", line_num)
     with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         jatek = sorok[get_jatekline_by_num(sorszam) - 1]
@@ -359,14 +365,20 @@ def get_ranglista():
     return [f"{elem[0]}: {elem[1]}" for elem in penzek]
 
 
-def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) -> None:  # sorszam a 1, 5, 9, 16
-    print(szerzo, jatek_nev, line_num, eredmeny_matrix)
+
+def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek, szorzovalue) -> None:  # sorszam a 1, 5, 9, 16
+    ##print(szerzo, jatek_nev, line_num, eredmeny_matrix)
 
     ir("eredmenyek.txt", [jatek_nev])
     for i, esemeny in enumerate(esemenyek):
         for j, szemely in enumerate(szemelyek):
             # igen
-            szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
+            
+            if szorzovalue.strip() == "1":
+
+                szorzo = szorzo_szamitas1(jatek_nev, szemely, esemeny)
+            else:
+                szorzo = szorzo_szamitas2(jatek_nev, szemely, esemeny)
             # eredmeny: str = input(str(szemely[0]) + " alany " + str(esemeny[0]) + " eseményéhez tartozó eredmény: ")
             eredmeny = eredmeny_matrix[i][j]
 

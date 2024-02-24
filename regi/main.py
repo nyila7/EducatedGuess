@@ -9,7 +9,7 @@ from lekerdezesek import lekerdezes
 
 def menu() -> None:
     while True:
-        print("""
+        #print("""
 1-\tJáték létrehozása
 2-\tFogadás leadása
 3-\tJáték lezárása

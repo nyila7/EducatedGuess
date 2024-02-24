@@ -12,7 +12,7 @@ def ranglista() -> None:
     elozo_ertek = 0
     hossz: int = len(lista)
     for i in range(1, hossz + 1):
-        print(str(lista[hossz - i][1]) + " játékos " +
+        #print(str(lista[hossz - i][1]) + " játékos " +
               str(elozo_j) + ". helyezett")
         if lista[hossz - i][0] != elozo_ertek:
             elozo_j: int = j
@@ -35,7 +35,7 @@ def jatek_statisztika() -> None:
             else:
                 tetek_pontszama[sor[1]] += int(sor[2])
     for k in fogadasok_szama.keys():
-        print(k +
+        #print(k +
               " játékban " +
               str(fogadasok_szama[k]) +
               " fogadás történt és a tétek összpontszáma " +
@@ -52,7 +52,7 @@ def fogadasi_statisztika() -> None:
         # ha fejlécben ; van
         if ";" in lines:
             fejlec_lista: list[str] = lines.split(";")
-            print(f"{i}-\t{fejlec_lista[1]}")
+            #print(f"{i}-\t{fejlec_lista[1]}")
             i += 1
             jatekok.append(fejlec_lista[1])
     jatek_sorszam: int = int(
@@ -71,16 +71,16 @@ def fogadasi_statisztika() -> None:
                     fogadasok_szama[(sor[4], sor[3])] = 1
                 else:
                     fogadasok_szama[(sor[4], sor[3])] += 1
-    print(f"A tétek összepontszáma: {osszes_tet}")
-    print("Az egyes alany-esemény pároshoz tartozó fogadások száma: ")
+    #print(f"A tétek összepontszáma: {osszes_tet}")
+    #print("Az egyes alany-esemény pároshoz tartozó fogadások száma: ")
     for key in fogadasok_szama.keys():
-        print(f"{key[1]} - {key[0]}: {fogadasok_szama[key]} fogadás")
+        #print(f"{key[1]} - {key[0]}: {fogadasok_szama[key]} fogadás")
 
 
 def lekerdezes() -> None:
     lekerdez = True
     while lekerdez:
-        print("""
+        #print("""
 1-\tRanglista
 2-\tJáték statisztika
 3-\tFogadási statisztika
@@ -90,7 +90,7 @@ def lekerdezes() -> None:
         try:
             a = int(input())
         except ValueError:
-            print("Hibás bemenet")
+            #print("Hibás bemenet")
         if a == 1:
             ranglista()
         elif a == 2:

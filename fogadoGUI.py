@@ -70,7 +70,7 @@ class FogadoFrame(customtkinter.CTkFrame):
                 sticky="nesw")
 
     def comm(self, sorszam, line_num):
-        # print(self.esemeny_value.get())
+        # #print(self.esemeny_value.get())
         alanyok = alanyok_sorszam(line_num)
         for widget in self.alanyok.winfo_children():
             widget.destroy()
@@ -100,11 +100,10 @@ class FogadoFrame(customtkinter.CTkFrame):
         ######################## FOGADÁSOK INPUTOK ############################
         #######################################################################
 
-        # print(alany, sorszam)
+        # #print(alany, sorszam)
         try:
             penz_input = int(
                 toplevel_input(
-                    self,
                     "Mennyit szeretnél fogadni? Egyenleged: " +
                     str(
                         penzkerdez(
@@ -119,9 +118,9 @@ class FogadoFrame(customtkinter.CTkFrame):
         if penz_input > penzkerdez(self.nev):
             toplevel_error(self, "Nincs elég pénzed")
             return
-        print(sorszam)
+        #print(sorszam)
         jatek_nev = name_sorszam(sorszam)
-        eredmeny = toplevel_input(self, "Mi a tipped?")
+        eredmeny = toplevel_input("Mi a tipped?")
         if eredmeny == "":
             return toplevel_error(self, "Hibás bemenet")
 
@@ -129,7 +128,6 @@ class FogadoFrame(customtkinter.CTkFrame):
         ######################## FOGADÁSOK FÁJLBA ÍRÁSA #######################
         #######################################################################
         # jatekos_nev;jatek_nev;penz;alany;esemeny;eredmeny
-        print("Penz input: ", penz_input)
         penzvon(self.nev, penz_input)
         ir("fogadasok.txt",
            [self.nev,
@@ -154,13 +152,13 @@ class FogadoFrame(customtkinter.CTkFrame):
 
         self.esemenyek = customtkinter.CTkScrollableFrame(self)
         self.esemenyek.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
-        # jelenlegi_esemenyek_label = customtkinter.CTkLabel(self.esemenyek, text="Események", font=self.fonts)
-        # jelenlegi_esemenyek_label.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
+        jelenlegi_esemenyek_label = customtkinter.CTkLabel(self.esemenyek, text="Események", font=self.fonts)
+        jelenlegi_esemenyek_label.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
 
         self.alanyok = customtkinter.CTkScrollableFrame(self)
         self.alanyok.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
-        # jelenlegi_alanyok_label = customtkinter.CTkLabel(self.alanyok, text="Alanyok", font=self.fonts)
-        # jelenlegi_alanyok_label.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
+        jelenlegi_alanyok_label = customtkinter.CTkLabel(self.alanyok, text="Alanyok", font=self.fonts)
+        jelenlegi_alanyok_label.grid(row=0, column=2, padx=10, pady=10, sticky="nesw")
 
         # POPULATE GAMES FUNCTION FROM szervezoGUI_utils.py
         populate_games_fogado(self)
