@@ -55,7 +55,7 @@ class FogadoFrame(customtkinter.CTkFrame):
         
         #print(alany, sorszam)
         try:
-            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni? Egyenleged: " + str(penzkerdez(self.nev)) + "Pont")) # type: ignore
+            penz_input = int(toplevel_input(self, "Mennyit szeretnél fogadni? Egyenleged: " + str(penzkerdez(self.nev)) + " pont")) # type: ignore
         except ValueError:
             toplevel_error(self, "Nullánál nagyobb egész számot kell megadni")
             return
