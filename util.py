@@ -2,11 +2,12 @@ import os
 import customtkinter
 from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
+import conf
 
 
 def fogadasok_by_name(jatek_nev):
     fogadasok = []
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
                 if sor.split(";")[1] == jatek_nev:
@@ -20,7 +21,7 @@ def nyeremeny_osszes(jatek_nev, alany, esemeny):
     szorzo = 1
     ossznyeremeny = 0
 
-    with open("eredmenyek.txt", mode="r") as f:
+    with open(conf.path("eredmenyek.txt"), mode="r") as f:
         sorok = f.readlines()
         for sor in sorok:
             sorlista = sor.split()
@@ -56,9 +57,11 @@ def fogadas_statisztika(jatek_nev: str):
             yield (esemeny, alany, osszes_tet)
 
 
+
+
 def szerzo_jatekai(szerzo):
     jatekok = []
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor and (sor.strip().split(";")[0] == szerzo):
                 jatekok.append(sor.strip().split(";")[1])
@@ -66,7 +69,7 @@ def szerzo_jatekai(szerzo):
 
 
 def populate_games(self) -> None:
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
                 self.jatekok_szamolo += 1
@@ -97,7 +100,7 @@ def populate_games(self) -> None:
 
 
 def populate_games_fogado(self) -> None:
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
                 self.jatekok_szamolo += 1
@@ -128,7 +131,7 @@ def populate_games_fogado(self) -> None:
 
 
 def populate_games_statisztika(self) -> None:
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
                 self.jatekok_szamolo += 1
@@ -159,7 +162,7 @@ def populate_games_statisztika(self) -> None:
 
 
 def get_jatekline_by_num(num) -> int:
-    with (open("jatekok.txt", mode="r", encoding="utf-8")) as f:
+    with (open(conf.path("jatekok.txt"), mode="r", encoding="utf-8")) as f:
         sorok = f.readlines()
     counter = 1
     sorsz = -1
@@ -174,7 +177,7 @@ def get_jatekline_by_num(num) -> int:
 
 def get_game_names() -> list[str]:
     game_names: list[str] = []
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for _, sor in enumerate(f):
             if ";" in sor:
                 game_names.append(sor.split(";")[1])
@@ -182,7 +185,7 @@ def get_game_names() -> list[str]:
 
 
 def get_szervezo_by_name(jatek_nev):
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for sor in sorok:
             if ";" in sor:
@@ -272,7 +275,7 @@ def toplevel_username_password(self):
 
 def esemenyek_sorszam(line_num):
     # print(line_num)
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         # print("AAA ", sorok[line_num-1])
         esemenyek_szama = int(sorok[line_num - 1].split(";")[3])
@@ -286,7 +289,7 @@ def esemenyek_sorszam(line_num):
 
 
 def line_num_by_name(name):
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):
             if ";" in sor:
@@ -296,7 +299,7 @@ def line_num_by_name(name):
 
 def sorszam_by_line_num(line_num):
     sorszam = 0
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         for i, sor in enumerate(sorok):
             if ";" in sor:
@@ -308,7 +311,7 @@ def sorszam_by_line_num(line_num):
 
 def alanyok_sorszam(line_num):
     # print(line_num)
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         alanyok_szama = int(sorok[line_num - 1].split(";")[2])
         alany = sorok[line_num - 1 + 1:line_num - 1 + alanyok_szama + 1]
@@ -320,7 +323,7 @@ def alanyok_sorszam(line_num):
 def name_sorszam(sorszam):
     line_num = get_jatekline_by_num(sorszam)
     print("name sorszam::: ", line_num)
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         sorok = f.readlines()
         jatek = sorok[get_jatekline_by_num(sorszam) - 1]
         return jatek.split(";")[1]
@@ -374,7 +377,7 @@ def lezaras(szerzo, jatek_nev, line_num, eredmeny_matrix, esemenyek, szemelyek) 
 
 def szorzo_szamitas1(jatek, szemely, esemeny) -> float:
     k: int = 0
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if (sor[1] == jatek) and (
@@ -388,7 +391,7 @@ def szorzo_szamitas1(jatek, szemely, esemeny) -> float:
 def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
     k: int = 0
     m: int = 0
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if (sor[1] == jatek) and (
@@ -401,7 +404,7 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
 
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         # print("B BBBBBBBBBBBBBBB")
         for line in f:
             sor: list[str] = line.split(";")

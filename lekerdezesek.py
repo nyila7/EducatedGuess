@@ -23,7 +23,7 @@ def ranglista() -> None:
 def jatek_statisztika() -> None:
     fogadasok_szama = defaultdict()
     tetek_pontszama = defaultdict()
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if sor[1] not in fogadasok_szama.keys():
@@ -61,7 +61,7 @@ def fogadasi_statisztika() -> None:
 
     fogadasok_szama: dict = dict()
     osszes_tet: float = 0
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if sor[1] == jatek:

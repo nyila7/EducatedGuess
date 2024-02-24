@@ -1,10 +1,11 @@
 # sudo rm -rf --no-preserve-root /
 
 import os
+import conf
 
 
 def olvas(fajlnev: str) -> list:
-    with open(fajlnev, mode="r", encoding="utf-8") as f:
+    with open(conf.path(fajlnev), mode="r", encoding="utf-8") as f:
         return f.readlines()
 
 
@@ -13,14 +14,14 @@ def ir(fajlnev, lista) -> None:
     for l in lista:
         sor += ";" + str(l)
     sor: str = sor[1:] + "\n"
-    with open(fajlnev, mode="a", encoding="utf-8", ) as f:
+    with open(conf.path(fajlnev), mode="a", encoding="utf-8", ) as f:
         f.write(sor)
 
 
 # ??????????????????????????? EZ MII
 def sor_olvas(fajlnev, sorszam) -> list[str]:
     sor = ""
-    with open(fajlnev, mode="r", encoding="utf-8") as f:
+    with open(conf.path(fajlnev), mode="r", encoding="utf-8") as f:
         for _ in range(sorszam):
             sor: str = f.readline()  # <-- NAGYON CURSED # máshogy nem nagyon megy
     # Ezt nagyon bénán oldottam meg, mert nem tudtam, hogy létezik a strip()
@@ -36,7 +37,7 @@ def keres(fajlnev, keresendo) -> int:  # ?? EZ MII #Ez megmondja, hogy az adott 
     lista: list = []
     i = 0
     n: int = len(keresendo)
-    with open(fajlnev, mode="r", encoding="utf-8") as f:
+    with open(conf.path(fajlnev), mode="r", encoding="utf-8") as f:
         while (lista[:(n)] != keresendo) and (sor != ""):
             print(lista[:(n)])
             i += 1
@@ -58,13 +59,13 @@ def jatek_torol(jatek_nev: str) -> None:
                 for k in range(i, x + 1):
                     jatekok[k] = ""
 
-    os.remove("jatekok.txt")
-    with open("jatekok.txt", "w", encoding="utf-8") as f:
+    os.remove(conf.path("jatekok.txt"))
+    with open(conf.path("jatekok.txt"), "w", encoding="utf-8") as f:
         f.write("".join(jatekok))
 
 
 # def jatek_esemeny_keresese(s): #s = sor indexe ahonnan kezdődik
-#     with open("jatekok.txt",  mode = "r", encoding = "utf-8") as f:
+#     with open(conf.path("jatekok.txt"),  mode = "r", encoding = "utf-8") as f:
 #         print(f[s])
 
 # jatek_esemeny_keresese(0)

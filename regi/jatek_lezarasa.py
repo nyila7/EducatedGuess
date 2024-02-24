@@ -8,7 +8,7 @@ from penz import penzvon
 
 def szorzo_szamitas(jatek, szemely, esemeny):
     k = 0
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if (sor[1] == jatek) and (
@@ -46,7 +46,7 @@ def esemenyek_lekerdez(sorszam):
 
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
-    with open("fogadasok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("fogadasok.txt"), mode="r", encoding="utf-8") as f:
         for line in f:
             sor: list[str] = line.split(";")
             if sor[1] == jatek:
@@ -72,7 +72,7 @@ def lezaras() -> None:
         print("Még nincs egy játék vagy fogadás se")
         return
 
-    with open("jatekok.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("jatekok.txt"), mode="r", encoding="utf-8") as f:
         for i, sor in enumerate(f):
             if (nev + ";" + jatek) in sor:
                 sorszam: int = i + 1

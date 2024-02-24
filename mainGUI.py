@@ -6,6 +6,7 @@ import ranglistGUI
 import penz
 import util
 import users
+import conf
 # pep8
 
 
@@ -35,9 +36,8 @@ class App(customtkinter.CTk):
             "jatekok.txt",
             "eredmenyek.txt",
                 "users.txt"):
-            file_path = os.path.join(current_dir, file)
-            if not os.path.exists(file_path):
-                with open(file_path, mode="w", encoding="utf-8") as f:
+            if not os.path.exists(conf.path(file)):
+                with open(conf.path(file), mode="w", encoding="utf-8") as f:
                     f.write("")
 
         # A négy frame hozzáadása a containerhez
@@ -69,8 +69,7 @@ class App(customtkinter.CTk):
                     users.get_hashed_password(nev), password):
                 return util.toplevel_error(self, "Sikertelen belépés")
 
-            if penz.penzkerdez(nev) == - \
-                    1:  # Ha a nev nem létezik a penz.txt-ben
+            if penz.penzkerdez(nev) == -1:  # Ha a nev nem létezik a penz.txt-ben
                 penz.penzinit(nev)
 
             print("Sikeres bejelentkezés")

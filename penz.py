@@ -1,9 +1,9 @@
 # sudo rm -rf --no-preserve-root /
 import os
-
+import conf
 
 def penzvon(nev: str, osszeg: int) -> None:
-    with open("penz.txt", mode="r+", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="r+", encoding="utf-8") as f:
         sorok: list[str] = [s.strip() for s in f.readlines()]
         for i, sor in enumerate(sorok):
             if ":" in sor:
@@ -26,7 +26,7 @@ def penzvon(nev: str, osszeg: int) -> None:
 
 
 def penzad(nev: str, osszeg: int) -> None:
-    with open("penz.txt", mode="r+", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="r+", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         for i, sor in enumerate(sorok):
             if sor.split(":")[0] == nev:
@@ -48,10 +48,10 @@ def penzad(nev: str, osszeg: int) -> None:
 
 def penzinit(nev: str) -> None:
     """sor = "a"
-    with open("penz.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="r", encoding="utf-8") as f:
         while (sor != "") or (sor != "\n"):
             sor = f.readline()"""
-    with open("penz.txt", mode="a", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="a", encoding="utf-8") as f:
         # if sor == "":
         #    f.write("\n")
         f.write(f"{nev}:100\n")
@@ -62,7 +62,7 @@ def penzkerdez(nev: str) -> float:
     if not os.path.exists("penz.txt"):
         f = open("penz.txt", "w")
         f.close()
-    with open("penz.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="r", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         for sor in sorok:
             if ":" in sor:
@@ -72,7 +72,7 @@ def penzkerdez(nev: str) -> float:
 
 
 def tuplelista() -> list[tuple[str, float]]:
-    with open("penz.txt", mode="r", encoding="utf-8") as f:
+    with open(conf.path("penz.txt"), mode="r", encoding="utf-8") as f:
         sorok: list[str] = f.readlines()
         kulcsok: list[float] = [
             float(sor.split(":")[1].strip()) for sor in sorok]
