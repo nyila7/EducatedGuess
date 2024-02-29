@@ -15,7 +15,8 @@ class App(customtkinter.CTk):
 
         ## Ablak beállítások ##
         self.title("Fogadói rendszer")
-        util.centre_window(self, 1600, 900) # Módok: system (default), light, dark
+        # Módok: system (default), light, dark
+        util.centre_window(self, 1600, 900)
         customtkinter.set_appearance_mode("dark")
         container = customtkinter.CTkFrame(self)
         container.pack(side="top", fill="both", expand=True)
