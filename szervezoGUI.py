@@ -91,7 +91,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
         #######################################################################
 
         # A form frame létrehozása, és a grid beállítása
-        self.form = customtkinter.CTkFrame(self)
+        self.form = customtkinter.CTkScrollableFrame(self)
         self.form.grid(row=0, column=1, padx=10, pady=10, sticky="nesw")
         self.form.grid_columnconfigure(0, weight=1)
         self.form.grid_columnconfigure(1, weight=1)
@@ -171,7 +171,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             hover_color="gray",
             command=self.jatek_letrehozas)
         leadas_button.grid(
-            row=15,
+            row=1000,
             column=0,
             columnspan=2,
             padx=10,
@@ -185,7 +185,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             variable=self.szorzovalue,
             value=1)
         self.szorzo1radio.grid(
-            row=13,
+            row=999,
             column=0,
             padx=10,
             pady=10,
@@ -197,7 +197,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
             variable=self.szorzovalue,
             value=2)
         self.szorzo2radio.grid(
-            row=13,
+            row=999,
             column=1,
             padx=10,
             pady=10,
@@ -248,6 +248,17 @@ class SzervezoFrame(customtkinter.CTkFrame):
             if not (set(diff) == {''}):
                 return toplevel_error(
                     self, "Nem lehet két ugyanolyan nevű alany")
+
+        check = []
+        diff = []
+        for alany in esemenyek:
+            if alany in check:
+                diff.append(alany)
+            check.append(alany)
+        if len(diff) > 0:
+            if not (set(diff) == {''}):
+                return toplevel_error(
+                    self, "Nem lehet két ugyanolyan nevű esemény")
         # Ha üres valamelyik input, akkor nem számoljuk bele azt
         # #print(alanyok)
         # #print(esemenyek)
@@ -515,7 +526,7 @@ class SzervezoFrame(customtkinter.CTkFrame):
     # Új alany input mező létrehozása
     def alany_input_click(self, event):  # TODO passthrough
         # Ha az előző input mező nem üres, és nincs több, mint 6 input mező
-        if (alany_inputok[-2].get() != "" and len(alany_inputok) < 6):
+        if (alany_inputok[-2].get() != ""):
             alany_inputok[-1].unbind("<1>")
             placeholder = random.choice(self.names)
             alany_inputok.append(
@@ -531,13 +542,13 @@ class SzervezoFrame(customtkinter.CTkFrame):
     # Új esemény input mező létrehozása
     def esemenyek_input_click(self, event):  # TODO passthrough
         # Ha az előző input mező nem üres, és nincs több, mint 6 input mező
-        if (esemenyek_inputok[-2].get() != "" and len(esemenyek_inputok) < 6):
+        if (esemenyek_inputok[-2].get() != ""):
             esemenyek_inputok[-1].unbind("<1>")
             esemenyek_inputok.append(
                 customtkinter.CTkEntry(
                     self.form,
                     font=self.fonts,
-                    placeholder_text="asd"))
+                    placeholder_text="Esemény"))
             esemenyek_inputok[-1].grid(row=len(esemenyek_inputok) + 2,
                                        column=1, padx=30, pady=10, sticky="news")
             esemenyek_inputok[-1].bind("<1>", self.esemenyek_input_click)

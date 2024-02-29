@@ -444,19 +444,8 @@ def get_eredmenyek_nevek():
                 lezart_nevek.append(sor.strip())
         return lezart_nevek
 
-# TODO
-# asddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsdddddddddddddddddddasddasdasdadadsddddddddddddddddddd
-
-
 def get_lezar_ranglista():
-    # nevek = get_eredmenyek_nevek()
-    # print(nevek)
-    # for i in nevek:
-    #     alanyok = alanyok_sorszam_eredmenyek(i)
-    #     esemenyek = esemenyek_sorszam_eredmenyek(i)
-    #     for alany in alanyok:
-    #         for esemeny in esemenyek:
-    #             pass
+
 
     try:
         # jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit,

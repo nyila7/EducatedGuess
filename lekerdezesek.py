@@ -12,7 +12,6 @@ def ranglista() -> None:
     elozo_ertek = 0
     hossz: int = len(lista)
     for i in range(1, hossz + 1):
-        # print(str(lista[hossz - i][1]) + " játékos " +
               str(elozo_j) + ". helyezett")
         if lista[hossz - i][0] != elozo_ertek:
             elozo_j: int=j
