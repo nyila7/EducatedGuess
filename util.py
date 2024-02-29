@@ -4,6 +4,7 @@ from penz import penzvon, tuplelista, penzad
 from fajlkezeles import ir, jatek_torol
 import conf
 from collections import defaultdict
+import math
 
 
 def fogadasok_by_name(jatek_nev):
@@ -522,7 +523,7 @@ def szorzo_szamitas2(jatek, szemely, esemeny) -> float:
                 m += int(sor[2])
     if k * m == 0:
         return 0
-    return round(1 + 5 / (1 + 2.7182**(3 - m / k**2 / 20)), 2)
+    return round(1 + 5 / (1 + math.e**(3 - m / k**2 / 20)), 2)
 
 
 def pontszamitas(jatek, eredmeny, szorzo) -> None:
