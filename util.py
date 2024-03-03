@@ -445,8 +445,8 @@ def get_eredmenyek_nevek():
                 lezart_nevek.append(sor.strip())
         return lezart_nevek
 
-def get_lezar_ranglista():
 
+def get_lezar_ranglista():
 
     try:
         # jatek, alany, esemeny --> hanyan fogadtak ra, osszesen mennyit,
